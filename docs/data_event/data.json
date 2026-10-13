@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-13",
+ "updated": "2026-10-14",
  "events": [
   {
    "date": "2021-01-28",
@@ -1242,6 +1242,15 @@
    "note": "10月29日（木）・30日（金） の2日目に結果公表",
    "source": "boj",
    "url": "https://www.boj.or.jp/mopo/mpmsche_minu/index.htm"
+  },
+  {
+   "date": "2026-10-30",
+   "time": "決算発表",
+   "name": "決算 キオクシアホールディングス",
+   "country": "JP",
+   "note": "285A・3月期第２",
+   "source": "kessan",
+   "url": "https://kabutan.jp/stock/?code=285A"
   },
   {
    "date": "2026-10-30",
