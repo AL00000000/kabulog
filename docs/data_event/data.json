@@ -1246,15 +1246,6 @@
   {
    "date": "2026-10-30",
    "time": "決算発表",
-   "name": "決算 キオクシアホールディングス",
-   "country": "JP",
-   "note": "285A・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=285A"
-  },
-  {
-   "date": "2026-10-30",
-   "time": "決算発表",
    "name": "決算 レーザーテック",
    "country": "JP",
    "note": "6920・6月期第１",
@@ -1352,6 +1343,15 @@
    "url": "https://kabutan.jp/stock/?code=6525"
   },
   {
+   "date": "2026-11-09",
+   "time": "決算発表",
+   "name": "決算 古河電気工業",
+   "country": "JP",
+   "note": "5801・3月期第２",
+   "source": "kessan",
+   "url": "https://kabutan.jp/stock/?code=5801"
+  },
+  {
    "date": "2026-11-10",
    "time": "08:30",
    "name": "日本雇用統計(労働力調査)",
@@ -1377,6 +1377,15 @@
    "note": "660A・上場承認 2026/10/06",
    "source": "ipo",
    "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
+   "date": "2026-11-10",
+   "time": "決算発表",
+   "name": "決算 ソフトバンクグループ",
+   "country": "JP",
+   "note": "9984・3月期第２",
+   "source": "kessan",
+   "url": "https://kabutan.jp/stock/?code=9984"
   },
   {
    "date": "2026-11-10",
