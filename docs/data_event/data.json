@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-14",
+ "updated": "2026-10-18",
  "events": [
   {
    "date": "2021-01-28",
@@ -1109,27 +1109,9 @@
    "url": "https://www.stat.go.jp/data/roudou/pdf/kohyo26.pdf"
   },
   {
-   "date": "2026-10-14",
-   "time": "21:30頃",
-   "name": "決算 ASML",
-   "country": "US",
-   "note": "ASML・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/ASML/"
-  },
-  {
-   "date": "2026-10-15",
-   "time": "21:30頃",
-   "name": "決算 TSMC",
-   "country": "US",
-   "note": "TSM・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/TSM/"
-  },
-  {
    "date": "2026-10-15",
    "time": "上場日",
-   "name": "IPO （株）ルクレ",
+   "name": "IPO （株）ルクレ代表者インタビュー",
    "country": "JP",
    "note": "648A・上場承認 2026/09/08",
    "source": "ipo",
@@ -1449,6 +1431,15 @@
    "note": "10月分",
    "source": "jp_cpi",
    "url": "https://www.stat.go.jp/data/cpi/index.html"
+  },
+  {
+   "date": "2026-11-25",
+   "time": "上場日",
+   "name": "IPO （株）TOKIUM",
+   "country": "JP",
+   "note": "664A・上場承認 2026/10/16",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
    "date": "2026-11-26",
