@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-19",
+  "as_of": "2026-10-19 16:00",
+  "updated": "2026-10-19",
+  "generated": "2026-10-19T21:38:25+09:00",
+  "min_value": 1000,
+  "window_days": 365,
+  "ma_days": 5,
+  "counts": {
+    "scanned": 650,
+    "universe": 625,
+    "hit": 2,
+    "day_low": 2,
+    "ma_low": 0,
+    "watch": 0,
+    "failed": 1,
+    "stale": 0,
+    "skipped": 4
+  },
+  "failed": [
+    "1605"
+  ],
+  "stocks": [
+    {
+      "rank": 466,
+      "code": "9024",
+      "name": "西武ＨＤ",
+      "market": "東Ｐ",
+      "close": 3600.0,
+      "change_pct": -0.55,
+      "value": 1732.0,
+      "watch": null,
+      "volume": 480400.0,
+      "prev_min": 494900.0,
+      "ma": 708560,
+      "ma_prev_min": 640080,
+      "is_low": true,
+      "ma_low": false,
+      "avg52": 1560157,
+      "vs_avg_pct": 30.8,
+      "prev_date": "2026-04-20",
+      "gap": 120,
+      "hist_days": 242,
+      "short_hist": false
+    },
+    {
+      "rank": 351,
+      "code": "3402",
+      "name": "東レ",
+      "market": "東Ｐ",
+      "close": 1240.5,
+      "change_pct": -0.44,
+      "value": 2634.0,
+      "watch": null,
+      "volume": 2124600.0,
+      "prev_min": 2161200.0,
+      "ma": 3694260,
+      "ma_prev_min": 2804080,
+      "is_low": true,
+      "ma_low": false,
+      "avg52": 5137628,
+      "vs_avg_pct": 41.4,
+      "prev_date": "2025-12-25",
+      "gap": 195,
+      "hist_days": 242,
+      "short_hist": false
+    }
+  ]
+}
