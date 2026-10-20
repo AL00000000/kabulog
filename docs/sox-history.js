@@ -95,8 +95,12 @@ function renderCharts(){
   $('stats').innerHTML=`<span>日足 <b>${number(prices.rows.length)}</b> 日</span><span>最高値更新 <b>${analysis.records[$('metric').value].length}</b> 回</span><span>表示対象の高値の点 <b>${displayedRecords().length}</b> 個</span><span>1日5％以上下落 <b>${analysis.drops.length}</b> 日</span><span>登録事象 <b>${analysis.events.length}</b> 件</span><span>前回更新から30日以上 <b>${analysis.breakouts[$('metric').value].length}</b> 回</span>`;
   renderRecords();renderEvents();renderResearch();renderDrops();
 }
+function corroborationHTML(c){
+  if(!c)return '';
+  return `<div class="corroboration"><p><b>裏付け調査：</b>${esc(c.summary)}</p><details><summary>照合した${c.items.length}資料と、分かったこと・限界</summary><p class="caption">確認日：${esc(c.checked_at)}。引用原文ではなく資料の要約です。</p>${c.items.map(item=>`<p><b>${esc(item.date)} ${esc(item.label)}</b><br>${esc(item.finding)}<br><span class="caption">${esc(item.limit)}</span><br><a href="${esc(item.url)}" target="_blank" rel="noopener">資料を確認 ↗</a></p>`).join('')}</details></div>`;
+}
 function hypothesisHTML(day){
-  return research.hypotheses.filter(h=>h.record_date===day).map(h=>`<div class="hypothesis">${h.title?`<h3>${esc(h.title)}</h3>`:''}<b>${esc(h.author)}・${esc(h.status)}</b><p>${esc(h.text)}</p><details><summary>${h.period_start?'確認できる背景・時期の補足・検証方法':'別の説明候補・検証方法'}</summary><p>${esc(h.counterpoint)}</p><p>${esc(h.test)}</p>${h.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join('<br>')}</details></div>`).join('');
+  return research.hypotheses.filter(h=>h.record_date===day).map(h=>`<div class="hypothesis">${h.title?`<h3>${esc(h.title)}</h3>`:''}<b>${esc(h.author)}・${esc(h.status)}</b><p>${esc(h.text)}</p>${corroborationHTML(h.corroboration)}<details><summary>${h.period_start?'確認できる背景・時期の補足・検証方法':'別の説明候補・検証方法'}</summary><p>${esc(h.counterpoint)}</p><p>${esc(h.test)}</p>${h.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join('<br>')}</details></div>`).join('');
 }
 function recordRow(r,ev=[],withId=false){
   const roleClass=r.role==='始点'?'start':r.role==='終点'?'end':'';
