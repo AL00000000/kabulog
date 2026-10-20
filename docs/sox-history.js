@@ -90,13 +90,13 @@ function renderCharts(){
     for(let year=Number(prices.start.slice(0,4));year<=Number(prices.end.slice(0,4));year+=years)ranges.push([`${year}-01-01`,`${year+years-1}-12-31`,`${year}〜${Math.min(year+years-1,Number(prices.end.slice(0,4)))}年`]);
     ranges.reverse();
   }else{const year=Number(selected);ranges=[[`${year}-01-01`,`${year+years-1}-12-31`,`${year}〜${Math.min(year+years-1,Number(prices.end.slice(0,4)))}年`]];}
-  $('charts').innerHTML=ranges.map(([a,b,title])=>{const start=a<prices.start?prices.start:a,end=b>prices.end?prices.end:b;return `<section class="chartsection"><h2>${esc(title)}</h2><p class="caption">${start}〜${end} / ${$('metric').value==='close'?'終値':'日中高値'}基準。◆を押すと名前と出典を表示、高値の点を押すと直前の事象へ移動します。</p><div class="scroll">${makeChart(start,end)}</div></section>`;}).join('');
+  $('charts').innerHTML=ranges.map(([a,b,title])=>{const start=a<prices.start?prices.start:a,end=b>prices.end?prices.end:b;const periodNotes=research.hypotheses.filter(h=>h.period_start&&h.period_start<=end&&h.period_end>=start);return `<section class="chartsection"><h2>${esc(title)}</h2><p class="caption">${start}〜${end} / ${$('metric').value==='close'?'終値':'日中高値'}基準。◆を押すと名前と出典を表示、高値の点を押すと直前の事象へ移動します。</p><div class="scroll">${makeChart(start,end)}</div>${periodNotes.map(h=>`<p class="hypothesis"><a href="#record-${h.record_date}">期間メモ：${esc(h.period_start)}〜${esc(h.period_end)} ${esc(h.title)}</a><br><span class="caption">ユーザーの印象をまとめた振り返り。起点の日に発表されたニュースではありません。</span></p>`).join('')}</section>`;}).join('');
   renderOverview();
   $('stats').innerHTML=`<span>日足 <b>${number(prices.rows.length)}</b> 日</span><span>最高値更新 <b>${analysis.records[$('metric').value].length}</b> 回</span><span>表示対象の高値の点 <b>${displayedRecords().length}</b> 個</span><span>1日5％以上下落 <b>${analysis.drops.length}</b> 日</span><span>登録事象 <b>${analysis.events.length}</b> 件</span><span>前回更新から30日以上 <b>${analysis.breakouts[$('metric').value].length}</b> 回</span>`;
   renderRecords();renderEvents();renderResearch();renderDrops();
 }
 function hypothesisHTML(day){
-  return research.hypotheses.filter(h=>h.record_date===day).map(h=>`<div class="hypothesis"><b>${esc(h.author)}・${esc(h.status)}</b><p>${esc(h.text)}</p><details><summary>別の説明候補・検証方法</summary><p>${esc(h.counterpoint)}</p><p>${esc(h.test)}</p>${h.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join('<br>')}</details></div>`).join('');
+  return research.hypotheses.filter(h=>h.record_date===day).map(h=>`<div class="hypothesis">${h.title?`<h3>${esc(h.title)}</h3>`:''}<b>${esc(h.author)}・${esc(h.status)}</b><p>${esc(h.text)}</p><details><summary>${h.period_start?'確認できる背景・時期の補足・検証方法':'別の説明候補・検証方法'}</summary><p>${esc(h.counterpoint)}</p><p>${esc(h.test)}</p>${h.sources.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join('<br>')}</details></div>`).join('');
 }
 function recordRow(r,ev=[],withId=false){
   const roleClass=r.role==='始点'?'start':r.role==='終点'?'end':'';
@@ -106,6 +106,7 @@ function renderRecords(){
   const news=firstSoxNews(analysis.records[$('metric').value],analysis.events,Number($('lookback').value));
   const rows=new Map(displayedRecords().map(r=>[r.date,r]));
   if($('recordScope').value==='endpoints')for(const day of news.keys())if(!rows.has(day))rows.set(day,{...analysis.records[$('metric').value].find(r=>r.date===day),role:'ニュース後初回（途中）'});
+  for(const h of research.hypotheses)if(!rows.has(h.record_date)){const record=analysis.records[$('metric').value].find(r=>r.date===h.record_date);if(record)rows.set(h.record_date,{...record,role:'指定メモの起点'});}
   $('breakouts').innerHTML=[...rows.values()].sort((a,b)=>b.date.localeCompare(a.date)).map(r=>recordRow(r,news.get(r.date)||[],true)).join('');
 }
 function renderDrops(){

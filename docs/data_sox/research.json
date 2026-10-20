@@ -340,6 +340,36 @@
   ],
   "hypotheses": [
     {
+      "id": "ai-agent-awareness-winter-2025",
+      "record_date": "2025-12-08",
+      "period_start": "2025-12-08",
+      "period_end": "2026-01-29",
+      "title": "AIの実用能力・エージェントへの認知拡大",
+      "author": "ユーザーの印象を要約（原文ではない）",
+      "status": "期間の振り返り・未検証の仮説",
+      "text": "対象期間：2025年12月8日〜2026年1月29日。単一の大きなニュースをきっかけとするより、Claudeなどの高度なコーディング能力、AIのサイバーセキュリティ能力、AIエージェントツールの実用性が、最先端の技術者に限らず個人投資家など一般の人にも知られ始めた時期だったのではないか、という印象。半導体需要への期待を支えた可能性がある。12月8日は指定された整理上の起点で、ニュースの発表日や普及開始日を特定したものではない。期間末までの変化を後からまとめたメモであり、12月8日の高値更新の直前材料を示すものではない。",
+      "counterpoint": "確認できる背景：Anthropicは2025年11月13日にClaudeを悪用したサイバー活動の調査報告、11月24日にコーディング・エージェント能力の向上を掲げたOpus 4.5を公表。いずれも指定期間より前。期間内では2026年1月12日に一般業務向けCoworkを研究プレビューとして公開（1月13日の公式記事で確認）。これらの発表だけでは、日本の個人投資家などへの認知拡大の時期・規模やSOX上昇との因果は確認できない。ユーザーが挙げたMythos Previewの公表は2026年4月7日で期間外のため、この期間の出来事には含めない。",
+      "test": "当時の日本語報道・検索関心・投資家の投稿や言及数を時系列で調べ、専門家以外への認知の広がりを確認する。SOXの相対リターン、半導体企業の受注・設備投資見通しや他の材料と照合する。後日判明した情報を当時の材料にさかのぼって扱わない。",
+      "sources": [
+        {
+          "label": "2025/11/13 Anthropic：AIを悪用したサイバー活動の調査報告（期間前）",
+          "url": "https://www.anthropic.com/news/disrupting-AI-espionage"
+        },
+        {
+          "label": "2025/11/24 Anthropic：Claude Opus 4.5（期間前）",
+          "url": "https://www.anthropic.com/news/claude-opus-4-5"
+        },
+        {
+          "label": "2026/1/13 Anthropic：Coworkを前日に研究プレビュー公開",
+          "url": "https://www.anthropic.com/news/introducing-anthropic-labs"
+        },
+        {
+          "label": "2026/4/7 Anthropic：Mythos Preview / Project Glasswing（期間外）",
+          "url": "https://www.anthropic.com/glasswing"
+        }
+      ]
+    },
+    {
       "id": "iran-inflation-rotation",
       "record_date": "2026-04-08",
       "author": "ユーザー指定",
