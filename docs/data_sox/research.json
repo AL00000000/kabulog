@@ -1,0 +1,364 @@
+{
+  "researched_at": "2026-10-20",
+  "scope": "終値・日中高値の連続更新の始点118日を対象に、直前1〜14暦日のニュース候補を調査。67対象月の検索と企業・政府の発表照合。月単位の検索は全日付の記事精査や網羅を意味しない。",
+  "searches": [
+    {
+      "month": "1994-05",
+      "query": "semiconductor chip stocks rally earnings news May 1994",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1994-07",
+      "query": "semiconductor chip stocks rally earnings news July 1994",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1994-08",
+      "query": "semiconductor chip stocks rally earnings news August 1994",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1994-10",
+      "query": "semiconductor chip stocks rally earnings news October 1994",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1994-11",
+      "query": "semiconductor chip stocks rally earnings news November 1994",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-01",
+      "query": "semiconductor chip stocks rally earnings news January 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-02",
+      "query": "semiconductor chip stocks rally earnings news February 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-03",
+      "query": "semiconductor chip stocks rally earnings news March 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-04",
+      "query": "semiconductor chip stocks rally earnings news April 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-05",
+      "query": "semiconductor chip stocks rally earnings news May 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-06",
+      "query": "semiconductor chip stocks rally earnings news June 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-07",
+      "query": "semiconductor chip stocks rally earnings news July 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-08",
+      "query": "semiconductor chip stocks rally earnings news August 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1995-09",
+      "query": "semiconductor chip stocks rally earnings news September 1995",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1997-05",
+      "query": "semiconductor chip stocks rally earnings news May 1997",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1997-07",
+      "query": "semiconductor chip stocks rally earnings news July 1997",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1997-08",
+      "query": "semiconductor chip stocks rally earnings news August 1997",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1999-01",
+      "query": "semiconductor chip stocks rally earnings news January 1999",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1999-05",
+      "query": "semiconductor chip stocks rally earnings news May 1999",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1999-06",
+      "query": "semiconductor chip stocks rally earnings news June 1999",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1999-08",
+      "query": "semiconductor chip stocks rally earnings news August 1999",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1999-09",
+      "query": "semiconductor chip stocks rally earnings news September 1999",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1999-11",
+      "query": "semiconductor chip stocks rally earnings news November 1999",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "1999-12",
+      "query": "semiconductor chip stocks rally earnings news December 1999",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2000-01",
+      "query": "semiconductor chip stocks rally earnings news January 2000",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2000-02",
+      "query": "semiconductor chip stocks rally earnings news February 2000",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2017-11",
+      "query": "semiconductor chip stocks rally earnings news November 2017",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2018-01",
+      "query": "semiconductor chip stocks rally earnings news January 2018",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2018-02",
+      "query": "semiconductor chip stocks rally earnings news February 2018",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2018-03",
+      "query": "semiconductor chip stocks rally earnings news March 2018",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2019-04",
+      "query": "semiconductor chip stocks rally earnings news April 2019",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2019-07",
+      "query": "semiconductor chip stocks rally earnings news July 2019",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2019-09",
+      "query": "semiconductor chip stocks rally earnings news \"September\" \"2019\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2019-10",
+      "query": "semiconductor chip stocks rally earnings news \"October\" \"2019\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2019-11",
+      "query": "semiconductor chip stocks rally earnings news \"November\" \"2019\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2019-12",
+      "query": "semiconductor chip stocks rally earnings news \"December\" \"2019\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2020-01",
+      "query": "semiconductor chip stocks rally earnings news \"January\" \"2020\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2020-02",
+      "query": "semiconductor chip stocks rally earnings news \"February\" \"2020\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2020-06",
+      "query": "semiconductor chip stocks rally earnings news \"June\" \"2020\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2020-07",
+      "query": "semiconductor chip stocks rally earnings news \"July\" \"2020\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2020-08",
+      "query": "semiconductor chip stocks rally earnings news \"August\" \"2020\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2020-10",
+      "query": "semiconductor chip stocks rally earnings news \"October\" \"2020\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2020-11",
+      "query": "semiconductor chip stocks rally earnings news \"November\" \"2020\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-01",
+      "query": "semiconductor chip stocks rally earnings news \"January\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-02",
+      "query": "semiconductor chip stocks rally earnings news \"February\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-04",
+      "query": "semiconductor chip stocks rally earnings news \"April\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-06",
+      "query": "semiconductor chip stocks rally earnings news \"June\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-07",
+      "query": "semiconductor chip stocks rally earnings news \"July\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-08",
+      "query": "semiconductor chip stocks rally earnings news \"August\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-09",
+      "query": "semiconductor chip stocks rally earnings news \"September\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-11",
+      "query": "semiconductor chip stocks rally earnings news \"November\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2021-12",
+      "query": "semiconductor chip stocks rally earnings news \"December\" \"2021\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2022-01",
+      "query": "semiconductor chip stocks rally earnings news \"January\" \"2022\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2023-12",
+      "query": "semiconductor chip stocks rally earnings news \"December\" \"2023\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2024-01",
+      "query": "semiconductor chip stocks rally earnings news \"January\" \"2024\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2024-02",
+      "query": "semiconductor chip stocks rally earnings news \"February\" \"2024\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2024-05",
+      "query": "semiconductor chip stocks rally earnings news \"May\" \"2024\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2024-06",
+      "query": "semiconductor chip stocks rally earnings news \"June\" \"2024\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2024-07",
+      "query": "semiconductor chip stocks rally earnings news \"July\" \"2024\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2025-09",
+      "query": "semiconductor chip stocks rally earnings news \"September\" \"2025\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2025-10",
+      "query": "semiconductor chip stocks rally earnings news \"October\" \"2025\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2025-12",
+      "query": "semiconductor chip stocks rally earnings news \"December\" \"2025\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2026-01",
+      "query": "semiconductor chip stocks rally earnings news \"January\" \"2026\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2026-02",
+      "query": "semiconductor chip stocks rally earnings news \"February\" \"2026\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2026-04",
+      "query": "semiconductor chip stocks rally earnings news \"April\" \"2026\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2026-05",
+      "query": "semiconductor chip stocks rally earnings news \"May\" \"2026\"",
+      "checked_at": "2026-10-20"
+    },
+    {
+      "month": "2026-06",
+      "query": "semiconductor chip stocks rally earnings news \"June\" \"2026\"",
+      "checked_at": "2026-10-20"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "iran-inflation-rotation",
+      "record_date": "2026-04-08",
+      "author": "ユーザー指定",
+      "status": "未検証の仮説",
+      "text": "直前にイラン戦争と原油高があり、これによるインフレ懸念で、半導体以外に買うものがなくなった可能性。",
+      "counterpoint": "4月8日の当日報道は、米国・イランの停戦合意と原油急落を受けた幅広い株式の上昇も伝えている。半導体だけへの資金集中があったかは未検証。",
+      "test": "SOXと他業種の相対リターン・資金フロー、原油・期待インフレ率の時系列を比較する必要がある。",
+      "sources": [
+        {
+          "label": "Reuters 2026/4/8：停戦合意・原油急落・株式上昇",
+          "url": "https://www.investing.com/news/stock-market-news/oil-dives-stocks-surge-as-trump-agrees-twoweek-ceasefire-4601841"
+        },
+        {
+          "label": "Reuters 2026/4/8：航空株なども上昇",
+          "url": "https://ca.investing.com/news/stock-market-news/wall-street-rallies-on-usiran-ceasefire-4555281?ampMode=1"
+        }
+      ]
+    }
+  ],
+  "drop_research_scope": "185急落日は全件計算。主要危機と一部個別日の発表・当日報道を追加照合したが、全185日の引き金を個別精査・確定したものではない。",
+  "deepseek_scope": "2025年1月27日の急落、2025年2月27日のNVIDIA決算後下落、複数モデル発表を区別。ショックの回数は未確定。"
+}

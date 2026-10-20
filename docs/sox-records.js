@@ -12,4 +12,19 @@ function groupSoxRecords(records) {
     return group.length===1?[decorate(group[0],'単独')]:[decorate(group[0],'始点'),decorate(group.at(-1),'終点')];
   });
 }
-if(typeof module!=='undefined')module.exports=groupSoxRecords;
+function firstSoxNews(records,events,days=14){
+  const byDate=new Map();
+  for(const event of events){
+    if(event.evidence==='価格データから算出')continue;
+    // Determine the first subsequent record from the unabridged history.
+    // Never reassign an event to a later endpoint when the first date is hidden.
+    const record=records.find(r=>r.date>event.date&&r.date>=(event.market_date||event.date));
+    if(!record)continue;
+    const age=(Date.parse(record.date)-Date.parse(event.date))/86400000;
+    if(age<1||age>days)continue;
+    if(!byDate.has(record.date))byDate.set(record.date,[]);
+    byDate.get(record.date).push({...event,days_before:age});
+  }
+  return byDate;
+}
+if(typeof module!=='undefined'){module.exports=groupSoxRecords;module.exports.firstSoxNews=firstSoxNews;}

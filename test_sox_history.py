@@ -50,6 +50,18 @@ class SoxHistory(unittest.TestCase):
         self.assertEqual(event['plot_date'], '2026-10-19')
         self.assertIsNone(event['sox_5session_pct'])
 
+    def test_drop_threshold_raw_return_and_announcement_availability(self):
+        rows = [['2026-01-01', 100, 100], ['2026-01-02', 95, 97],
+                ['2026-01-05', 90.25001, 96], ['2026-01-06', 80, 90]]
+        events = [{'id': 'before', 'date': '2026-01-01'},
+                  {'id': 'afterclose', 'date': '2026-01-02', 'market_date': '2026-01-05'},
+                  {'id': 'future', 'date': '2026-01-07'}]
+        drops = analyse(rows, events)['drops']
+        self.assertEqual([d['date'] for d in drops], ['2026-01-02', '2026-01-06'])
+        self.assertEqual(drops[0]['event_ids'], ['before'])
+        self.assertEqual(drops[1]['event_ids'], ['afterclose'])
+        self.assertEqual(drops[0]['change_pct'], -5)
+
 
 if __name__ == '__main__':
     unittest.main()

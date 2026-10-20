@@ -17,3 +17,21 @@ for(const records of Object.values(analysis.records)){
   assert.equal(points.filter(r=>r.role!=='終点').reduce((sum,r)=>sum+r.run_count,0),records.length);
 }
 console.log('SOX record grouping: boundary, endpoints, full-history checks passed');
+const {firstSoxNews}=require('./docs/sox-records.js');
+const news=firstSoxNews(rows,[
+  {id:'one',date:'2025-12-31'},
+  {id:'hidden',date:'2026-01-01'},
+  {id:'later',date:'2026-01-01',market_date:'2026-01-08'},
+  {id:'old',date:'2025-01-01'},
+  {id:'future',date:'2027-01-01'},
+  {id:'derived',date:'2026-01-01',evidence:'価格データから算出'}
+]);
+assert.deepEqual([...news.values()].flat().map(e=>e.id),['one','hidden','later']);
+assert.deepEqual(news.get('2026-01-02').map(e=>e.id),['hidden']);
+assert.equal(news.get('2026-01-08')[0].id,'later');
+assert.equal(news.get('2026-01-01')[0].days_before,1);
+for(const records of Object.values(analysis.records)){
+  const links=[...firstSoxNews(records,analysis.events).values()].flat();
+  assert.equal(new Set(links.map(e=>e.id)).size,links.length);
+}
+console.log('SOX news assignment: first record, hidden dates, future leakage, unique notes passed');

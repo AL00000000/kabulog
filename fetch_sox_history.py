@@ -95,7 +95,23 @@ def analyse(rows, events):
             item['sox_change_pct'] = None
             item['sox_5session_pct'] = None
         analysed.append(item)
-    result = {'events': analysed, 'records': {}, 'breakouts': {}}
+    drops = []
+    assigned = set()
+    for i, row in enumerate(rows):
+        if not i:
+            continue
+        change = (row[1] / rows[i - 1][1] - 1) * 100
+        # Test the raw return, not its rounded display value.
+        if change > -5:
+            continue
+        candidates = [e['id'] for e in events if e['id'] not in assigned
+                      and e.get('evidence') != '価格データから算出'
+                      and e.get('market_date', e['date']) <= row[0]
+                      and 0 <= (date.fromisoformat(row[0]) - date.fromisoformat(e['date'])).days <= 7]
+        assigned.update(candidates)
+        drops.append({'date': row[0], 'close': row[1], 'previous_close': rows[i-1][1],
+                      'change_pct': round(change, 4), 'event_ids': candidates})
+    result = {'events': analysed, 'records': {}, 'breakouts': {}, 'drops': drops}
     for name, column in [('close', 1), ('high', 2)]:
         result['records'][name] = records(rows, column)
         result['breakouts'][name] = [{**r, 'event_ids': preceding_events(r['date'], events)}
