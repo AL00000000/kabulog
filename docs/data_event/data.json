@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-20",
+ "updated": "2026-10-21",
  "events": [
   {
    "date": "2021-01-28",
@@ -1134,6 +1134,15 @@
    "note": "9月分",
    "source": "jp_cpi",
    "url": "https://www.stat.go.jp/data/cpi/index.html"
+  },
+  {
+   "date": "2026-10-27",
+   "time": "決算発表",
+   "name": "決算 SKハイニックス",
+   "country": "KR",
+   "note": "000660.KS・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/000660.KS/"
   },
   {
    "date": "2026-10-28",
