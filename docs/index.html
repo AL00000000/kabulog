@@ -292,6 +292,7 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="baibai">売買代金</button>
         <button class="tab" data-tab="search">株探検索ランキング</button>
         <button class="tab" data-tab="event">金融イベント</button>
+        <button class="tab" data-tab="congestion">コールセンター混雑</button>
         <button class="tab" data-tab="selran">セルラン</button>
         <button class="tab" data-tab="intraday">15:24→引け 分析</button>
         <button class="tab" data-tab="yori">寄付からの値上がり率</button>
@@ -1009,6 +1010,11 @@ footer a { color: var(--accent); }
   <div id="view-topix" hidden>
     <div class="embed-note">2026年10月のTOPIX初回定期入替で<b>新規採用される銘柄・除外される銘柄の推計</b>と、その日足チャート一覧。<b>足切りの当落線上は両側とも掲載</b> — <a href="./topix.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
     <iframe class="embed" title="TOPIX入替確定(推定)" data-src="./topix.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-congestion" hidden>
+    <div class="embed-note">証券各社の混雑目安・更新履歴 — <a href="./congestion.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="証券各社 コールセンター混雑・更新履歴" data-src="./congestion.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-shinyo" hidden>
@@ -4396,7 +4402,7 @@ const VIEW_ID = {
   wk: "view-wk", fx: "view-fx",
   selran: "view-selran", baibai: "view-baibai", search: "view-search",
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun",
-  kenshotob: "view-kenshotob",
+  kenshotob: "view-kenshotob", congestion: "view-congestion",
 };
 function switchTab(name) {
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
@@ -4434,6 +4440,7 @@ document.querySelectorAll(".tab").forEach(b => { b.onclick = () => switchTab(b.d
    daily=更新されて当たり前なので出さない / ended=もう更新されないので出す意味がない。
    最終更新日のツールチップは3分類とも付ける。 */
 const FEEDS = {
+  congestion: { kind: "field", url: "./data_congestion/data.json", field: "updated", freq: "daily" },
   ranking:  { kind: "index", url: "./data/index.json", freq: "daily" },
   intraday: { kind: "index", url: "./data_intraday/index.json", freq: "daily" },
   yori:     { kind: "index", url: "/Yoritsukikaranoneagari-ranking/data/index.json", freq: "daily" },
