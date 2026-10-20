@@ -1599,6 +1599,26 @@
       }
     },
     {
+      "id": "jobs-shock-2026jun",
+      "date": "2026-06-05",
+      "title": "雇用統計ショック",
+      "short": "雇用統計ショック",
+      "kind": "macro",
+      "requested": true,
+      "evidence": "統計は公式確認・市場反応は当日の解説で確認（名称はユーザー指定）",
+      "note": "米国時間6月5日8時30分に5月の米雇用統計を公表。非農業部門雇用者数は前月比17.2万人増、失業率は4.3％。Charles Schwabの当日引け後の解説は、強い雇用統計を受けた利上げ懸念・米国債利回り上昇を半導体株売りの背景に挙げた。同時にBroadcomの業績見通しへの失望も指摘しており、雇用統計だけを下落の原因とはしない。「雇用統計ショック」はユーザー指定の呼称。",
+      "sources": [
+        {
+          "label": "BLS：2026/6/5公表の米雇用統計（当初発表値）",
+          "url": "https://www.bls.gov/news.release/archives/empsit_06052026.htm"
+        },
+        {
+          "label": "Charles Schwab：6/5引け後の市場解説",
+          "url": "https://www.schwab.com/learn/story/market-volatility"
+        }
+      ]
+    },
+    {
       "id": "avgo-selloff-2026",
       "date": "2026-06-05",
       "title": "Broadcom決算への失望が半導体株に波及との報道",
