@@ -6,7 +6,7 @@ const ymd=t=>new Date(t).toISOString().slice(0,10);
 const dayMs=86400000;
 const number=n=>n==null?'未取得':n.toLocaleString('ja-JP',{maximumFractionDigits:2});
 const pct=n=>n==null?'未確定・未取得':`${n>0?'+':''}${n.toFixed(2)}%`;
-let prices,analysis,registry,research,focus=null,selectedEvent=null;
+let prices,analysis,registry,research,focus=null,selectedEvent=null,overviewEndYear=null;
 const column=()=>$('metric').value==='high'?2:1;
 const category=e=>e.requested?'指定':({industry:'企業・技術',macro:'政策・マクロ',market:'市場の節目'}[e.kind]||'事象');
 const color=e=>e.requested?'#ffd184':({industry:'#68d7ec',macro:'#bdabff',market:'#a6b9d0'}[e.kind]||'#a6b9d0');
@@ -42,9 +42,11 @@ function makeChart(start,end,{overview=false}={}){
   const path=rows.map((r,i)=>`${i?'L':'M'}${x(r[0]).toFixed(2)},${y(r[col]).toFixed(2)}`).join(' ');
   const records=displayedRecords().filter(r=>r.date>=start && r.date<=end);
   const endpoints=groupSoxRecords(analysis.records[$('metric').value]).filter(r=>r.date>=start&&r.date<=end);
+  const runs=groupSoxRecords(analysis.records[$('metric').value]).filter(r=>r.role!=='終点'&&r.run_start<=end&&r.run_end>=start);
   const drops=analysis.drops.filter(r=>r.date>=start&&r.date<=end);
   const dates=[...new Set([rows[0][0],...Array.from({length:5},(_,i)=>ymd(from+(to-from)*(i+1)/6)),rows.at(-1)[0]])];
-  return `<svg class="${overview?'overview':'chart'}" viewBox="0 0 ${W} ${H}" role="img" aria-label="SOX ${start}から${end}、${$('metric').value==='close'?'終値':'日中高値'}。赤点は選択した表示条件に合う最高値更新。">
+  return `<svg class="${overview?'overview':'chart'}" viewBox="0 0 ${W} ${H}" role="img" aria-label="SOX ${start}から${end}、${$('metric').value==='close'?'終値':'日中高値'}。緑の帯は連続高値更新期間。赤線は終値が1日5％以上下落した日。">
+    ${$('showRecords').checked?runs.map(r=>{const a=x(r.run_start<start?start:r.run_start),b=x(r.run_end>end?end:r.run_end);return `<rect class="run-band" x="${a}" y="${top}" width="${Math.max(1,b-a)}" height="${baseHeight}"><title>連続高値更新 ${r.run_start}〜${r.run_end} / ${r.run_count}回</title></rect>`;}).join(''):''}
     ${Array.from({length:5},(_,i)=>{const value=log?Math.exp(yMin+(yMax-yMin)*i/4):yMin+(yMax-yMin)*i/4;return `<line class="tick" x1="${left}" x2="${W-right}" y1="${y(value)}" y2="${y(value)}"/><text x="${left-10}" y="${y(value)+5}" text-anchor="end">${number(value)}</text>`;}).join('')}
     ${dates.map((d,i)=>`<line class="tick" x1="${x(d)}" x2="${x(d)}" y1="${top}" y2="${bottom}"/><text x="${x(d)}" y="${bottom+28}" text-anchor="${i===0?'start':i===dates.length-1?'end':'middle'}">${overview?d.slice(0,7):d}</text>`).join('')}
     ${$('showRecords').checked?endpoints.map(r=>`<a href="#pointDetail" data-record="${r.date}">${r.role!=='終点'?`<line class="start-line" x1="${x(r.date)}" x2="${x(r.date)}" y1="${top}" y2="${bottom}"><title>${r.date} ${r.role==='単独'?'単独（始点＝終点）':'始点'}</title></line>`:''}${r.role!=='始点'?`<line class="end-line" x1="${x(r.date)+(r.role==='単独'?1:0)}" x2="${x(r.date)+(r.role==='単独'?1:0)}" y1="${top}" y2="${bottom}"><title>${r.date} 終点</title></line>`:''}</a>`).join(''):''}
@@ -58,6 +60,24 @@ function makeChart(start,end,{overview=false}={}){
     ${ev.filter(e=>!positioned.some(p=>p.e.id===e.id)).map(e=>{const row=rows.find(r=>r[0]===e.plot_date),px=x(e.plot_date),py=y(row[col]);return `<a href="#evt-${e.id}" data-event="${e.id}" aria-label="${esc(e.title)}"><path d="M${px},${py-5} l5,5 l-5,5 l-5,-5Z" fill="${color(e)}"><title>${esc(e.date+' '+e.title)}</title></path><circle cx="${px}" cy="${py}" r="9" fill="transparent"/></a>`;}).join('')}
     <text x="${W-right}" y="${H-10}" text-anchor="end">米国市場の取引日 / ${log?'対数':'通常'}軸</text></svg>`;
 }
+function renderOverview(){
+  const latest=Number(prices.end.slice(0,4)),first=Number(prices.start.slice(0,4));
+  const oldest=latest-Math.floor((latest-first)/5)*5,all=$('overviewScope').value==='all';
+  if(overviewEndYear==null)overviewEndYear=latest;
+  const start=all?prices.start:[`${overviewEndYear-4}-01-01`,prices.start].sort().at(-1);
+  const end=all?prices.end:[`${overviewEndYear}-12-31`,prices.end].sort()[0];
+  $('overview').innerHTML=makeChart(start,end,{overview:true});
+  $('overviewPeriod').textContent=all?'全期間':`${start.slice(0,4)}〜${end.slice(0,4)}年`;
+  $('overviewPrev').disabled=all||overviewEndYear<=oldest;
+  $('overviewNext').disabled=all||overviewEndYear>=latest;
+}
+function moveOverview(step){
+  if($('overviewScope').value==='all')return;
+  const latest=Number(prices.end.slice(0,4)),first=Number(prices.start.slice(0,4));
+  const oldest=latest-Math.floor((latest-first)/5)*5;
+  overviewEndYear=Math.max(oldest,Math.min(latest,overviewEndYear+step*5));
+  renderOverview();
+}
 function renderCharts(){
   const years=Number($('chunkYears').value),selected=$('chunk').value;
   let ranges=[];
@@ -66,9 +86,9 @@ function renderCharts(){
     for(let year=Number(prices.start.slice(0,4));year<=Number(prices.end.slice(0,4));year+=years)ranges.push([`${year}-01-01`,`${year+years-1}-12-31`,`${year}〜${Math.min(year+years-1,Number(prices.end.slice(0,4)))}年`]);
     ranges.reverse();
   }else{const year=Number(selected);ranges=[[`${year}-01-01`,`${year+years-1}-12-31`,`${year}〜${Math.min(year+years-1,Number(prices.end.slice(0,4)))}年`]];}
-  $('charts').innerHTML=ranges.map(([a,b,title])=>{const start=a<prices.start?prices.start:a,end=b>prices.end?prices.end:b;return `<section class="chartsection"><h2>${esc(title)}</h2><p class="caption">${start}〜${end} / ${$('metric').value==='close'?'終値':'日中高値'}基準。◆を押すと名前と出典を表示、赤点を押すと直前の事象へ移動します。</p><div class="scroll">${makeChart(start,end)}</div></section>`;}).join('');
-  $('overview').innerHTML=makeChart(prices.start,prices.end,{overview:true});
-  $('stats').innerHTML=`<span>日足 <b>${number(prices.rows.length)}</b> 日</span><span>最高値更新 <b>${analysis.records[$('metric').value].length}</b> 回</span><span>表示対象の赤点 <b>${displayedRecords().length}</b> 個</span><span>1日5％以上下落 <b>${analysis.drops.length}</b> 日</span><span>登録事象 <b>${analysis.events.length}</b> 件</span><span>前回更新から30日以上 <b>${analysis.breakouts[$('metric').value].length}</b> 回</span>`;
+  $('charts').innerHTML=ranges.map(([a,b,title])=>{const start=a<prices.start?prices.start:a,end=b>prices.end?prices.end:b;return `<section class="chartsection"><h2>${esc(title)}</h2><p class="caption">${start}〜${end} / ${$('metric').value==='close'?'終値':'日中高値'}基準。◆を押すと名前と出典を表示、高値の点を押すと直前の事象へ移動します。</p><div class="scroll">${makeChart(start,end)}</div></section>`;}).join('');
+  renderOverview();
+  $('stats').innerHTML=`<span>日足 <b>${number(prices.rows.length)}</b> 日</span><span>最高値更新 <b>${analysis.records[$('metric').value].length}</b> 回</span><span>表示対象の高値の点 <b>${displayedRecords().length}</b> 個</span><span>1日5％以上下落 <b>${analysis.drops.length}</b> 日</span><span>登録事象 <b>${analysis.events.length}</b> 件</span><span>前回更新から30日以上 <b>${analysis.breakouts[$('metric').value].length}</b> 回</span>`;
   renderRecords();renderEvents();renderResearch();renderDrops();
 }
 function hypothesisHTML(day){
@@ -117,10 +137,16 @@ $('chunk').onchange=()=>{focus=null;$('jump').value='';renderCharts();};
 $('jump').onchange=()=>{if($('jump').value)focusEvent($('jump').value);};
 $('reset').onclick=()=>{focus=null;$('jump').value='';renderCharts();};
 $('lookback').onchange=renderRecords;
+$('overviewPrev').onclick=()=>moveOverview(-1);
+$('overviewNext').onclick=()=>moveOverview(1);
+$('overviewScope').onchange=renderOverview;
+$('overviewNav').onkeydown=e=>{if(e.target.tagName==='SELECT')return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();moveOverview(e.key==='ArrowLeft'?-1:1);}};
+for(const control of document.querySelectorAll('select,button,input'))control.disabled=true;
 Promise.all(['prices','analysis','events','research'].map(async name=>{const response=await fetch(`./data_sox/${name}.json`,{cache:'no-cache'});if(!response.ok)throw Error(`${name}を読み込めません`);return response.json();})).then(([p,a,r,re])=>{
   prices=p;analysis=a;registry=r;research=re;
   $('asof').textContent=`収録：${prices.start}〜${prices.end}（米国取引日） / 年表の調査日：${registry.researched_at}`;
   $('pendingItems').innerHTML=registry.pending.map(e=>`<h3>${esc(e.title)}</h3><p>${esc(e.note)}</p>`).join('');
   for(const e of analysis.events)$('jump').add(new Option(`${e.date} ${e.title}`,e.id));
+  for(const control of document.querySelectorAll('select,button,input'))control.disabled=false;
   fillChunks();renderCharts();
 }).catch(e=>{$('asof').textContent='データの読込に失敗しました。';$('message').textContent=e.message;});
