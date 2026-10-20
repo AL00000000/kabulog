@@ -328,6 +328,12 @@ footer a { color: var(--accent); }
       </div>
     </div>
     <div class="tabgroup">
+      <span class="tabgroup-label">歴史的出来事</span>
+      <div class="tabgroup-items">
+        <button class="tab" data-tab="soxhistory">SOX指数と半導体史</button>
+      </div>
+    </div>
+    <div class="tabgroup">
       <span class="tabgroup-label">仮説検証</span>
       <div class="tabgroup-items">
         <button class="tab" data-tab="kensho">高配当上位50の25年</button>
@@ -1010,6 +1016,11 @@ footer a { color: var(--accent); }
   <div id="view-topix" hidden>
     <div class="embed-note">2026年10月のTOPIX初回定期入替で<b>新規採用される銘柄・除外される銘柄の推計</b>と、その日足チャート一覧。<b>足切りの当落線上は両側とも掲載</b> — <a href="./topix.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
     <iframe class="embed" title="TOPIX入替確定(推定)" data-src="./topix.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-soxhistory" hidden>
+    <div class="embed-note">SOX指数と半導体史 — <a href="./sox-history.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="SOX指数と半導体史" data-src="./sox-history.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-congestion" hidden>
@@ -4402,7 +4413,7 @@ const VIEW_ID = {
   wk: "view-wk", fx: "view-fx",
   selran: "view-selran", baibai: "view-baibai", search: "view-search",
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun",
-  kenshotob: "view-kenshotob", congestion: "view-congestion",
+  kenshotob: "view-kenshotob", congestion: "view-congestion", soxhistory: "view-soxhistory",
 };
 function switchTab(name) {
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));

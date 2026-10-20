@@ -1,0 +1,747 @@
+{
+  "researched_at": "2026-10-20",
+  "scope": "半導体・計算需要・設備投資・政策・市場危機の主要事象を選定した初期年表。全ニュースの網羅や因果関係の証明ではない。",
+  "pending": [
+    {
+      "title": "マイクロン『6月23日頃、好決算でも下落』の同定",
+      "note": "指定内容は保持。2026年6月23日の急落は決算前、6月24日の決算後は翌25日にMU・SOXとも上昇。好決算後下落の確認例は2024年6月26日発表・27日反応で、別年の候補として掲載。指定の出来事と同一とは断定していない。"
+    }
+  ],
+  "events": [
+    {
+      "id": "fed-1994",
+      "date": "1994-05-17",
+      "title": "FRBの利上げ",
+      "short": "FRB利上げ",
+      "kind": "macro",
+      "evidence": "公式確認",
+      "note": "FRBが公定歩合の引上げ等を発表。SOX高値更新の原因と断定しない。",
+      "sources": [
+        {
+          "label": "FRB 1994/5/17",
+          "url": "https://www.federalreserve.gov/fomc/19940517default.htm"
+        }
+      ]
+    },
+    {
+      "id": "pentium75",
+      "date": "1994-10-10",
+      "title": "Intel Pentium 75MHz登場",
+      "short": "Pentium 75MHz",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Intelの製品年表に掲載された投入日。",
+      "sources": [
+        {
+          "label": "Intel製品年表",
+          "url": "https://www.intel.com/pressroom/kits/quickrefyr.htm"
+        }
+      ]
+    },
+    {
+      "id": "windows95",
+      "date": "1995-08-24",
+      "title": "Windows 95発売",
+      "short": "Windows 95",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "PC需要を考える歴史上の節目として掲載。指数上昇の寄与は推計していない。",
+      "sources": [
+        {
+          "label": "Microsoft公式沿革",
+          "url": "https://news.microsoft.com/about/"
+        }
+      ]
+    },
+    {
+      "id": "amd-k6",
+      "date": "1997-04-02",
+      "title": "AMD-K6発表",
+      "short": "AMD-K6",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "AMDのSEC提出資料で発売日を確認。",
+      "sources": [
+        {
+          "label": "AMD提出資料",
+          "url": "https://ir.amd.com/financial-information/sec-filings/content/0000929624-97-000885/EX-99.txt"
+        }
+      ]
+    },
+    {
+      "id": "asia1997",
+      "date": "1997-07-02",
+      "title": "タイ・バーツ変動相場制へ",
+      "short": "アジア通貨危機",
+      "kind": "macro",
+      "evidence": "公式確認",
+      "note": "アジア通貨危機の起点として知られる制度変更。IMFが当日の対応を公表。",
+      "sources": [
+        {
+          "label": "IMF 1997/7/2",
+          "url": "https://www.imf.org/en/news/articles/2015/09/29/18/03/nb9712"
+        }
+      ]
+    },
+    {
+      "id": "intel-earnings1999",
+      "date": "1999-01-12",
+      "title": "Intelの1998年第4四半期決算",
+      "short": "Intel決算",
+      "kind": "industry",
+      "evidence": "当日の報道で確認",
+      "note": "1999年初めの半導体企業決算。直前の事象として登録するが、新高値の原因とは断定しない。",
+      "sources": [
+        {
+          "label": "CNN当日報道",
+          "url": "https://money.cnn.com/1999/01/12/technology/intel/"
+        }
+      ]
+    },
+    {
+      "id": "pentium550",
+      "date": "1999-05-17",
+      "title": "Intel Pentium III 550MHz投入",
+      "short": "Pentium III 550MHz",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Intel公式年表の製品投入日。製品更新の一例であり、特段大きな相場材料だったとの評価はしていない。",
+      "sources": [
+        {
+          "label": "Intel製品年表",
+          "url": "https://www.intel.com/pressroom/kits/quickrefyr.htm"
+        }
+      ]
+    },
+    {
+      "id": "pentium600",
+      "date": "1999-08-02",
+      "title": "Intel Pentium III 600MHz投入",
+      "short": "Pentium III 600MHz",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Intel公式年表の製品投入日。相場への影響の大きさは未判定。",
+      "sources": [
+        {
+          "label": "Intel製品年表",
+          "url": "https://www.intel.com/pressroom/kits/quickrefyr.htm"
+        }
+      ]
+    },
+    {
+      "id": "geforce256",
+      "date": "1999-08-31",
+      "title": "GeForce 256発表",
+      "short": "GeForce 256",
+      "kind": "industry",
+      "evidence": "関連企業の公式確認",
+      "note": "Creativeが同日のGeForce 256搭載製品計画を発表。GPUの歴史的節目として掲載。",
+      "sources": [
+        {
+          "label": "Creative公式発表",
+          "url": "https://sg.creative.com/corporate/pressroom?id=6254"
+        }
+      ]
+    },
+    {
+      "id": "pentiumiii",
+      "date": "1999-10-25",
+      "title": "Intel 0.18μm Pentium III群発表",
+      "short": "Pentium III刷新",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Intelが新製造プロセスの15製品を発表。",
+      "sources": [
+        {
+          "label": "Intel公式発表",
+          "url": "https://www.intel.com/pressroom/archive/releases/1999/dp102599.htm"
+        }
+      ]
+    },
+    {
+      "id": "dotcom-peak",
+      "date": "2000-03-10",
+      "title": "ITバブル期のSOX高値",
+      "short": "ITバブル期高値",
+      "kind": "market",
+      "evidence": "価格データから算出",
+      "note": "出来事ではなく取得価格系列上の節目。外生要因として新高値を説明する事象には使わない。",
+      "sources": [
+        {
+          "label": "Yahoo Finance SOX日足",
+          "url": "https://finance.yahoo.com/quote/%5ESOX/history/"
+        }
+      ]
+    },
+    {
+      "id": "iphone",
+      "date": "2007-01-09",
+      "title": "初代iPhone発表",
+      "short": "iPhone発表",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Appleが初代iPhoneを発表。スマートフォン需要の歴史的節目。",
+      "sources": [
+        {
+          "label": "Apple公式発表",
+          "url": "https://www.apple.com/jp/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/"
+        }
+      ]
+    },
+    {
+      "id": "lehman",
+      "date": "2008-09-15",
+      "title": "リーマン・ブラザーズ破綻",
+      "short": "リーマン破綻",
+      "kind": "macro",
+      "evidence": "FRBの回顧資料で確認",
+      "note": "金融危機の市場環境を示す事象。",
+      "sources": [
+        {
+          "label": "FRB 2008年銀行業の回顧",
+          "url": "https://www.federalreserve.gov/pubs/bulletin/2009/articles/bankprofit/"
+        }
+      ]
+    },
+    {
+      "id": "elpida",
+      "date": "2013-07-31",
+      "title": "Micronがエルピーダ買収完了",
+      "short": "エルピーダ買収",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "メモリ業界再編の節目。Micronの買収資料で完了日を確認。",
+      "sources": [
+        {
+          "label": "Micron買収資料",
+          "url": "https://investors.micron.com/static-files/27bbf83e-48d1-435f-8cc0-ac330e888ced"
+        }
+      ]
+    },
+    {
+      "id": "broadcom-qcom",
+      "date": "2017-11-06",
+      "title": "BroadcomがQualcomm買収提案",
+      "short": "Qualcomm買収提案",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "買収提案の発表。取引成立の意味ではない。",
+      "sources": [
+        {
+          "label": "Broadcom公式発表",
+          "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-proposes-acquire-qualcomm-7000-share-cash-and-stock-0"
+        }
+      ]
+    },
+    {
+      "id": "spectre",
+      "date": "2018-01-03",
+      "title": "CPU投機実行の脆弱性公表",
+      "short": "Spectre等公表",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "GoogleがCPUの投機実行に関する問題を公表。",
+      "sources": [
+        {
+          "label": "Google Security Blog",
+          "url": "https://security.googleblog.com/2018/01/todays-cpu-vulnerability-what-you-need.html"
+        }
+      ]
+    },
+    {
+      "id": "samsung-ssd",
+      "date": "2018-02-20",
+      "title": "Samsung 30.72TB SSD量産発表",
+      "short": "30.72TB SSD",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "NAND・企業向けストレージ技術の節目。",
+      "sources": [
+        {
+          "label": "Samsung公式発表",
+          "url": "https://news.samsung.com/global/samsung-electronics-begins-mass-production-of-industrys-largest-capacity-ssd-30-72tb-for-next-generation-enterprise-systems"
+        }
+      ]
+    },
+    {
+      "id": "mellanox",
+      "date": "2019-03-11",
+      "title": "NVIDIAがMellanox買収合意",
+      "short": "Mellanox買収合意",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "高速ネットワークとGPU計算の統合に関する買収合意。",
+      "sources": [
+        {
+          "label": "NVIDIA公式発表",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-to-acquire-mellanox-for-6-9-billion"
+        }
+      ]
+    },
+    {
+      "id": "g20-osaka",
+      "date": "2019-06-29",
+      "title": "大阪G20・米中会談とHuawei言及",
+      "short": "G20米中会談",
+      "kind": "macro",
+      "evidence": "公式確認",
+      "note": "米大統領が会談後会見でHuawei向けの販売等に言及。規制が全面撤回されたという意味ではない。",
+      "sources": [
+        {
+          "label": "米政府 会見記録",
+          "url": "https://trumpwhitehouse.archives.gov/briefings-statements/remarks-president-trump-press-conference-osaka-japan/"
+        }
+      ]
+    },
+    {
+      "id": "phase1",
+      "date": "2019-10-11",
+      "title": "米中第1段階合意へ進展の発表",
+      "short": "米中第1段階合意へ",
+      "kind": "macro",
+      "evidence": "政府回顧資料で確認",
+      "note": "USTRの2019年報告で確認した協議進展の発表日。実際の署名は2020年1月で、この日の署名ではない。",
+      "sources": [
+        {
+          "label": "USTR 2019年報告",
+          "url": "https://ustr.gov/sites/default/files/2019_Report_on_China%E2%80%99s_WTO_Compliance.pdf"
+        }
+      ]
+    },
+    {
+      "id": "covid",
+      "date": "2020-03-11",
+      "title": "WHOがパンデミックと評価",
+      "short": "COVID-19",
+      "kind": "macro",
+      "evidence": "公式確認",
+      "note": "世界的な需要・供給変化の背景となった事象。個別の日次騰落との因果は断定しない。",
+      "sources": [
+        {
+          "label": "WHO 2020/3/11",
+          "url": "https://www.who.int/news-room/speeches/item/who-director-general-s-opening-remarks-at-the-media-briefing-on-covid-19---11-march-2020"
+        }
+      ]
+    },
+    {
+      "id": "tsmc-arizona",
+      "date": "2020-05-15",
+      "title": "TSMCが米アリゾナ工場計画",
+      "short": "TSMC米工場計画",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "当初の米国工場計画の発表日。後年の投資拡大とは分ける。",
+      "sources": [
+        {
+          "label": "TSMC公式発表",
+          "url": "https://pr.tsmc.com/english/news/2033"
+        }
+      ]
+    },
+    {
+      "id": "nvidia-arm",
+      "date": "2020-09-13",
+      "title": "NVIDIAがArm買収計画を発表",
+      "short": "Arm買収計画",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "計画発表の事象。実際の買収成立を意味しない。",
+      "sources": [
+        {
+          "label": "NVIDIA公式発表",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-to-acquire-arm-for-40-billion-creating-worlds-premier-computing-company-for-the-age-of-ai"
+        }
+      ]
+    },
+    {
+      "id": "intel-idm2",
+      "date": "2021-03-23",
+      "title": "Intel IDM 2.0戦略と米工場投資",
+      "short": "Intel IDM 2.0",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Intelが新たなファウンドリー事業とアリゾナ工場投資を発表。",
+      "sources": [
+        {
+          "label": "Intel公式説明",
+          "url": "https://community.intel.com/t5/Blogs/Intel/Policy-Intel/Intel-s-Commitment-to-U-S-Innovation-and-Supply-Chain-Security/post/1333254"
+        }
+      ]
+    },
+    {
+      "id": "supply-review",
+      "date": "2021-06-08",
+      "title": "米国100日供給網レビュー公表",
+      "short": "米供給網レビュー",
+      "kind": "macro",
+      "evidence": "政府回顧資料で確認",
+      "note": "半導体等の供給網を扱う政策上の節目。",
+      "sources": [
+        {
+          "label": "米政府供給網レポート",
+          "url": "https://bidenwhitehouse.archives.gov/wp-content/uploads/2023/06/Supply-Chain-Report-Card.pdf"
+        }
+      ]
+    },
+    {
+      "id": "intel-roadmap2021",
+      "date": "2021-07-26",
+      "title": "Intel製造プロセス・パッケージ計画",
+      "short": "Intel製造技術計画",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Intelが製造技術の加速計画を発表した日。",
+      "sources": [
+        {
+          "label": "Intel公式2021年アーカイブ",
+          "url": "https://newsroom.intel.com/new-technologies/intel-newsroom-archive-2021"
+        }
+      ]
+    },
+    {
+      "id": "samsung-roadmap",
+      "date": "2021-10-07",
+      "title": "Samsung 3nm・2nmロードマップ",
+      "short": "Samsung 2nm計画",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "Samsung Foundry ForumでGAA製造技術の計画を公表。",
+      "sources": [
+        {
+          "label": "Samsung公式発表",
+          "url": "https://news.samsung.com/global/samsung-foundry-innovations-power-the-future-of-big-data-ai-ml-and-smart-connected-devices"
+        }
+      ]
+    },
+    {
+      "id": "chips-act",
+      "date": "2022-08-09",
+      "title": "米CHIPS・科学法成立",
+      "short": "CHIPS法成立",
+      "kind": "macro",
+      "evidence": "公式確認",
+      "note": "米国議会の法案履歴で成立日を確認。",
+      "sources": [
+        {
+          "label": "米国議会 法案履歴",
+          "url": "https://www.congress.gov/bill/117th-congress/house-bill/4346/summary/74"
+        }
+      ]
+    },
+    {
+      "id": "bis-controls",
+      "date": "2022-10-07",
+      "title": "米国の対中先端半導体輸出規制",
+      "short": "対中輸出規制",
+      "kind": "macro",
+      "evidence": "公式確認",
+      "note": "BISの発表日。規制各項目の発効日は異なる。",
+      "sources": [
+        {
+          "label": "BIS公式発表",
+          "url": "https://www.bis.gov/press-release/commerce-implements-new-export-controls-advanced-computing-semiconductor-manufacturing-items-peoples"
+        }
+      ]
+    },
+    {
+      "id": "chatgpt",
+      "date": "2022-11-30",
+      "title": "ChatGPT公開",
+      "short": "ChatGPT公開",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "生成AIの利用拡大を考える技術史上の節目。",
+      "sources": [
+        {
+          "label": "OpenAI公開記事",
+          "url": "https://openai.com/index/chatgpt/"
+        }
+      ]
+    },
+    {
+      "id": "nvda-ai-outlook",
+      "date": "2023-05-24",
+      "market_date": "2023-05-25",
+      "title": "NVIDIAのAI需要見通し",
+      "short": "NVIDIA AI見通し",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "四半期決算で次四半期の売上見通しを公表。引け後発表のため翌営業日にプロット。",
+      "sources": [
+        {
+          "label": "NVIDIA決算発表",
+          "url": "https://investor.nvidia.com/news/press-release-details/2023/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2024/default.aspx"
+        }
+      ]
+    },
+    {
+      "id": "mi300",
+      "date": "2023-12-06",
+      "title": "AMD MI300シリーズ投入",
+      "short": "AMD MI300",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "データセンターAIアクセラレーター製品投入の発表。",
+      "sources": [
+        {
+          "label": "AMD公式発表",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1173/amd-delivers-leadership-portfolio-of-data-center-ai-solutions-with-amd-instinct-mi300-series"
+        }
+      ]
+    },
+    {
+      "id": "fed2023",
+      "date": "2023-12-13",
+      "title": "2023年12月FOMC",
+      "short": "12月FOMC",
+      "kind": "macro",
+      "evidence": "公式確認",
+      "note": "高値再更新直前の金融政策イベント。指数上昇の単独原因とは断定しない。",
+      "sources": [
+        {
+          "label": "FRB声明・見通し・会見",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomcpresconf20231213.htm"
+        }
+      ]
+    },
+    {
+      "id": "nvda-split2024",
+      "date": "2024-05-22",
+      "market_date": "2024-05-23",
+      "title": "NVIDIA決算・10対1分割発表",
+      "short": "NVIDIA決算・分割",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "決算と株式分割計画の発表。分割実施日とは異なる。引け後発表。",
+      "sources": [
+        {
+          "label": "NVIDIA決算発表",
+          "url": "https://investor.nvidia.com/news/press-release-details/2024/NVIDIA-Announces-Financial-Results-for-First-Quarter-Fiscal-2025/"
+        }
+      ]
+    },
+    {
+      "id": "mu2024-candidate",
+      "date": "2024-06-26",
+      "market_date": "2024-06-27",
+      "title": "MU好決算後の下落（2024年の候補）",
+      "short": "MU好決算後下落※",
+      "kind": "industry",
+      "requested": true,
+      "evidence": "公式決算＋下落報道",
+      "note": "公式には従来ガイダンスを上回る売上。翌日の下落はReuters報道で確認。指定された『6月23日頃』と同じ出来事かは未同定。2026年と取り違えない。",
+      "sources": [
+        {
+          "label": "Micron 2024年決算",
+          "url": "https://investors.micron.com/news/press-release/2024/Micron-Technology-Inc--Reports-Results-for-the-Third-Quarter-of-Fiscal-2024-06-26-2024/default.aspx"
+        },
+        {
+          "label": "Reuters 2024/6/27",
+          "url": "https://www.investing.com/news/stock-market-news/micron-falls-as-ai-revenue-surge-falls-short-of-lofty-expectations-3498957"
+        }
+      ]
+    },
+    {
+      "id": "deepseek2025",
+      "date": "2025-01-27",
+      "title": "DeepSeekショック（2025年）",
+      "short": "DeepSeekショック",
+      "kind": "market",
+      "evidence": "当日の報道で確認",
+      "note": "DeepSeekへの注目とAI関連株の急落が報じられた日。2026年10月の指定イベントとは別の事象。",
+      "sources": [
+        {
+          "label": "AP 2025/1/27",
+          "url": "https://apnews.com/article/5d20431d9fc3ac27d054709cf4d2d1a0"
+        },
+        {
+          "label": "DeepSeek R1公開日（1/20）",
+          "url": "https://api-docs.deepseek.com/news/news250120"
+        }
+      ]
+    },
+    {
+      "id": "nvda2025q2",
+      "date": "2025-08-27",
+      "market_date": "2025-08-28",
+      "title": "NVIDIA 2026年度第2四半期決算",
+      "short": "NVIDIA決算",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "会社の会計年度名は2026年度、発表暦年は2025年。",
+      "sources": [
+        {
+          "label": "NVIDIA公式決算",
+          "url": "https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Announces-Financial-Results-for-Second-Quarter-Fiscal-2026/default.aspx"
+        }
+      ]
+    },
+    {
+      "id": "gemini3",
+      "date": "2025-11-18",
+      "title": "Google Gemini 3公開",
+      "short": "Gemini 3公開",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "AIモデル競争・計算需要を考える技術イベント。",
+      "sources": [
+        {
+          "label": "Google公式発表",
+          "url": "https://blog.google/intl/en-africa/company-news/outreach-and-initiatives/a-new-era-of-intelligence-with-gemini-3/"
+        }
+      ]
+    },
+    {
+      "id": "rubin2026",
+      "date": "2026-03-16",
+      "title": "GTC 2026・Vera Rubin発表",
+      "short": "GTC・Vera Rubin",
+      "kind": "industry",
+      "evidence": "公式確認",
+      "note": "NVIDIAがVera Rubinプラットフォームの生産状況等を公表。",
+      "sources": [
+        {
+          "label": "NVIDIA公式発表",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-vera-rubin-platform"
+        }
+      ]
+    },
+    {
+      "id": "alphabet-equity",
+      "date": "2026-06-01",
+      "title": "Alphabet（Google）大型増資発表",
+      "short": "Google大型増資",
+      "kind": "industry",
+      "requested": true,
+      "evidence": "公式確認",
+      "note": "総額800億ドル規模の資本調達案を発表。発表日・実行日・株価反応を区別する。『増資で上昇』の因果は断定しない。",
+      "sources": [
+        {
+          "label": "Alphabet公式増資資料",
+          "url": "https://s206.q4cdn.com/479360582/files/doc_news/2026/Jun/01/attachments/2026-June-Alphabet-Equity-Capital-Raise-Press-Release-PDF.pdf"
+        }
+      ],
+      "related_reaction": {
+        "symbol": "GOOGL",
+        "date": "2026-06-01",
+        "close": 376.37,
+        "change_pct": -1.0438,
+        "source_url": "https://finance.yahoo.com/quote/GOOGL/history/",
+        "checked_at": "2026-10-20"
+      }
+    },
+    {
+      "id": "mu2026-before",
+      "date": "2026-06-23",
+      "title": "MU・半導体株の決算前急落",
+      "short": "MU決算前急落",
+      "kind": "market",
+      "requested": true,
+      "evidence": "当日の報道で確認",
+      "note": "この日はMicronの決算発表前。『好決算なのに下落』とは別の事実として掲載。",
+      "sources": [
+        {
+          "label": "AP 2026/6/23",
+          "url": "https://apnews.com/article/8a525396331d3cf41e9a341026c005e7"
+        }
+      ],
+      "related_reaction": {
+        "symbol": "MU",
+        "date": "2026-06-23",
+        "close": 1051.77,
+        "change_pct": -13.1759,
+        "source_url": "https://finance.yahoo.com/quote/MU/history/",
+        "checked_at": "2026-10-20"
+      }
+    },
+    {
+      "id": "mu2026-results",
+      "date": "2026-06-24",
+      "market_date": "2026-06-25",
+      "title": "MU好決算と翌営業日の反応",
+      "short": "MU 2026年決算",
+      "kind": "industry",
+      "requested": true,
+      "evidence": "公式決算＋翌日の報道",
+      "note": "Micronが記録的業績を発表。翌25日はMU上昇、SOXも上昇。指定の『好決算でも下落』の同定は未完であり、事実を置き換えていない。",
+      "sources": [
+        {
+          "label": "Micron公式決算",
+          "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx"
+        },
+        {
+          "label": "AP 翌営業日の市場",
+          "url": "https://apnews.com/article/18741e4dabafb7a44b41231159f10599"
+        }
+      ],
+      "related_reaction": {
+        "symbol": "MU",
+        "date": "2026-06-25",
+        "close": 1213.5601,
+        "change_pct": 15.7414,
+        "source_url": "https://finance.yahoo.com/quote/MU/history/",
+        "checked_at": "2026-10-20"
+      }
+    },
+    {
+      "id": "hynix-capex",
+      "date": "2026-06-29",
+      "title": "SK hynixの大型設備投資計画",
+      "short": "SK hynix大型投資",
+      "kind": "industry",
+      "requested": true,
+      "evidence": "公式確認・指定案件の候補",
+      "note": "中長期で総額1,100兆ウォンの投資戦略を公式発表。単年投資額ではなく段階的計画。複数の大型発表があるため、指定ニュースの有力候補として掲載。",
+      "sources": [
+        {
+          "label": "SK hynix公式投資戦略",
+          "url": "https://news.skhynix.com/en/fact-05/"
+        },
+        {
+          "label": "翌日の地域投資説明",
+          "url": "https://news.skhynix.com/en/fact-06/"
+        }
+      ]
+    },
+    {
+      "id": "coreweave-shock",
+      "date": "2026-10-14",
+      "title": "CoreWeaveショック",
+      "short": "CoreWeaveショック",
+      "kind": "market",
+      "requested": true,
+      "evidence": "呼称は指定・事象は報道確認",
+      "note": "CoreWeaveの株・社債売りの報道。SOXの同日騰落は価格データから別表示。",
+      "sources": [
+        {
+          "label": "Axios 翌日の報道",
+          "url": "https://www.axios.com/2026/10/15/ai-coreweave-bonds-stocks"
+        }
+      ],
+      "related_reaction": {
+        "symbol": "CRWV",
+        "date": "2026-10-14",
+        "close": 65.78,
+        "change_pct": -15.4607,
+        "source_url": "https://finance.yahoo.com/quote/CRWV/history/",
+        "checked_at": "2026-10-20"
+      }
+    },
+    {
+      "id": "deepseek2026",
+      "date": "2026-10-17",
+      "title": "DeepSeekショック（ショックにならなかった）",
+      "short": "DeepSeek（ショックなし）",
+      "kind": "industry",
+      "requested": true,
+      "evidence": "発表は公式確認・括弧内は指定の評価",
+      "note": "V4.1-Flash-1017への更新と検索API公開。括弧内はユーザー指定の呼称。翌営業日の騰落は表示するが、評価は1営業日だけで確定せず、発表の因果効果とも断定しない。",
+      "sources": [
+        {
+          "label": "DeepSeek公式 10/17更新履歴",
+          "url": "https://api-docs.deepseek.com/updates/#date-2026-10-17"
+        }
+      ]
+    }
+  ]
+}
