@@ -15,17 +15,30 @@
     {
       "id": "fed-1994",
       "date": "1994-05-17",
-      "title": "FRBの利上げ",
-      "short": "FRB利上げ",
+      "title": "FRB利上げ：FF金利3.75％→4.25％",
+      "short": "FRB利上げ 3.75→4.25％",
       "kind": "macro",
       "evidence": "公式確認",
-      "note": "FRBが公定歩合の引上げ等を発表。SOX高値更新の原因と断定しない。",
+      "note": "FF金利誘導目標：3.75％→4.25％（＋0.50ポイント）。公定歩合：3.00％→3.50％（＋0.50ポイント）。 FRBが公定歩合の引上げ等を発表。SOX高値更新の原因と断定しない。",
       "sources": [
         {
           "label": "FRB 1994/5/17",
           "url": "https://www.federalreserve.gov/fomc/19940517default.htm"
+        },
+        {
+          "label": "当時のFOMC議事要旨：直前水準と引上げ幅",
+          "url": "https://www.federalreserve.gov/fomc/MINUTES/1994/19940517min.htm"
         }
-      ]
+      ],
+      "policy_rate": {
+        "instrument": "FF金利誘導目標",
+        "before_pct": [
+          3.75
+        ],
+        "after_pct": [
+          4.25
+        ]
+      }
     },
     {
       "id": "pentium75",
@@ -45,32 +58,54 @@
     {
       "id": "fed-1995-feb",
       "date": "1995-02-01",
-      "title": "FRBの利上げ（1995年2月）",
-      "short": "FRBの利上げ（1995年2月）",
+      "title": "FRB利上げ：FF金利5.50％→6.00％",
+      "short": "FRB利上げ 5.50→6.00％",
       "kind": "macro",
       "evidence": "公式確認",
-      "note": "発表日と内容を公式資料で確認した、時期の近い候補。値動きの原因や寄与率を実証したものではない。",
+      "note": "FF金利誘導目標：5.50％→6.00％（＋0.50ポイント）。公定歩合：4.75％→5.25％（＋0.50ポイント）。 発表日と内容を公式資料で確認した、時期の近い候補。値動きの原因や寄与率を実証したものではない。",
       "sources": [
         {
           "label": "発表元・公的機関の資料",
           "url": "https://www.federalreserve.gov/fomc/19950201default.htm"
+        },
+        {
+          "label": "当時のFOMC議事要旨",
+          "url": "https://www.federalreserve.gov/fomc/MINUTES/1995/19950201min.htm"
         }
-      ]
+      ],
+      "policy_rate": {
+        "instrument": "FF金利誘導目標",
+        "before_pct": [
+          5.5
+        ],
+        "after_pct": [
+          6.0
+        ]
+      }
     },
     {
       "id": "fed-1995-jul",
       "date": "1995-07-06",
-      "title": "FRBの利下げ（1995年7月）",
-      "short": "FRBの利下げ（1995年7月）",
+      "title": "FRB利下げ：FF金利6.00％→5.75％",
+      "short": "FRB利下げ 6.00→5.75％",
       "kind": "macro",
       "evidence": "公式確認",
-      "note": "発表日と内容を公式資料で確認した、時期の近い候補。値動きの原因や寄与率を実証したものではない。",
+      "note": "FF金利誘導目標：6.00％→5.75％（−0.25ポイント）。 発表日と内容を公式資料で確認した、時期の近い候補。値動きの原因や寄与率を実証したものではない。",
       "sources": [
         {
           "label": "発表元・公的機関の資料",
           "url": "https://www.federalreserve.gov/fomc/19950706default.htm"
         }
-      ]
+      ],
+      "policy_rate": {
+        "instrument": "FF金利誘導目標",
+        "before_pct": [
+          6.0
+        ],
+        "after_pct": [
+          5.75
+        ]
+      }
     },
     {
       "id": "windows95",
@@ -362,13 +397,29 @@
     },
     {
       "id": "elpida",
-      "date": "2013-07-31",
-      "title": "Micronがエルピーダ買収完了",
-      "short": "エルピーダ買収",
+      "date": "2012-01-03",
+      "title": "Micron・エルピーダ統合の初期観測",
+      "short": "Micron・エルピーダ統合観測",
       "kind": "industry",
-      "evidence": "公式確認",
-      "note": "メモリ業界再編の節目。Micronの買収資料で完了日を確認。",
+      "evidence": "当時の業界分析（合意前の観測）",
+      "note": "今回確認できた初期資料は2012年1月3日のTrendForce分析で、Micronとエルピーダの統合可能性に言及している。買収交渉や合意が確定したとの発表ではない。1月24日に読売新聞を元にReutersが3社統合交渉を報道。Micronの公式な交渉確認は5月10日、契約発表は7月2日、完了は2013年7月31日。全媒体を網羅した初報の日付を確定したものではない。",
       "sources": [
+        {
+          "label": "2012/1/3 TrendForce：統合可能性の初期言及",
+          "url": "https://www.trendforce.com/presscenter/news/20120103-7439.html"
+        },
+        {
+          "label": "2012/1/24 Reuters：交渉報道（配信先）",
+          "url": "https://businesstech.co.za/news/hardware/4139/elpida-in-talks-to-merge-with-micron-nanya-report/"
+        },
+        {
+          "label": "2012/5/10 Micron：交渉を公式確認",
+          "url": "https://investors.micron.com/node/24691/pdf"
+        },
+        {
+          "label": "2012/7/2 契約の公式発表",
+          "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312512000079/exh99-1pr.htm"
+        },
         {
           "label": "Micron買収資料",
           "url": "https://investors.micron.com/static-files/27bbf83e-48d1-435f-8cc0-ac330e888ced"
@@ -609,18 +660,33 @@
     {
       "id": "fed-emergency-2020",
       "date": "2020-03-15",
-      "title": "FRBの緊急利下げ・資産購入拡大",
-      "short": "FRBの緊急利下げ・資産購入拡大",
+      "title": "FRB緊急利下げ：1.00〜1.25％→0.00〜0.25％",
+      "short": "FRB緊急利下げ 0〜0.25％",
       "kind": "macro",
       "evidence": "公式確認",
-      "note": "新型コロナ下の金融緩和措置。緩和そのものが急落を引き起こしたとは断定しない。",
+      "note": "FF金利誘導目標レンジ：1.00〜1.25％→0.00〜0.25％（上下限とも−1.00ポイント）。 新型コロナ下の金融緩和措置。緩和そのものが急落を引き起こしたとは断定しない。",
       "sources": [
         {
           "label": "発表元・公的機関の資料",
           "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200315a.htm"
+        },
+        {
+          "label": "直前の3月3日決定：1.00〜1.25％",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200303a.htm"
         }
       ],
-      "market_date": "2020-03-16"
+      "market_date": "2020-03-16",
+      "policy_rate": {
+        "instrument": "FF金利誘導目標レンジ",
+        "before_pct": [
+          1.0,
+          1.25
+        ],
+        "after_pct": [
+          0.0,
+          0.25
+        ]
+      }
     },
     {
       "id": "tsmc-arizona",
@@ -794,17 +860,32 @@
     {
       "id": "fed-2021jun",
       "date": "2021-06-16",
-      "title": "2021年6月FOMC声明・経済見通し",
-      "short": "2021年6月FOMC声明・経済見通し",
+      "title": "2021年6月FOMC：0.00〜0.25％で据え置き",
+      "short": "FOMC 0〜0.25％据え置き",
       "kind": "macro",
       "evidence": "公式確認",
-      "note": "発表日と内容を公式資料で確認した、時期の近い候補。値動きの原因や寄与率を実証したものではない。",
+      "note": "FF金利誘導目標レンジ：0.00〜0.25％→0.00〜0.25％（据え置き）。 発表日と内容を公式資料で確認した、時期の近い候補。値動きの原因や寄与率を実証したものではない。",
       "sources": [
         {
           "label": "発表元・公的機関の資料",
           "url": "https://www.federalreserve.gov/monetarypolicy/fomcpresconf20210616.htm"
+        },
+        {
+          "label": "2021年6月16日FOMC声明",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20210616a.htm"
         }
-      ]
+      ],
+      "policy_rate": {
+        "instrument": "FF金利誘導目標レンジ",
+        "before_pct": [
+          0.0,
+          0.25
+        ],
+        "after_pct": [
+          0.0,
+          0.25
+        ]
+      }
     },
     {
       "id": "mu-2021q3",
@@ -1041,17 +1122,32 @@
     {
       "id": "fed2023",
       "date": "2023-12-13",
-      "title": "2023年12月FOMC",
-      "short": "12月FOMC",
+      "title": "2023年12月FOMC：5.25〜5.50％で据え置き",
+      "short": "FOMC 5.25〜5.50％据え置き",
       "kind": "macro",
       "evidence": "公式確認",
-      "note": "高値再更新直前の金融政策イベント。指数上昇の単独原因とは断定しない。",
+      "note": "FF金利誘導目標レンジ：5.25〜5.50％→5.25〜5.50％（据え置き）。 高値再更新直前の金融政策イベント。指数上昇の単独原因とは断定しない。",
       "sources": [
         {
           "label": "FRB声明・見通し・会見",
           "url": "https://www.federalreserve.gov/monetarypolicy/fomcpresconf20231213.htm"
+        },
+        {
+          "label": "2023年12月13日FOMC声明",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20231213a.htm"
         }
-      ]
+      ],
+      "policy_rate": {
+        "instrument": "FF金利誘導目標レンジ",
+        "before_pct": [
+          5.25,
+          5.5
+        ],
+        "after_pct": [
+          5.25,
+          5.5
+        ]
+      }
     },
     {
       "id": "tsmc-2024jan",

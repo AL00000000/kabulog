@@ -60,22 +60,26 @@ function makeChart(start,end,{overview=false}={}){
     ${ev.filter(e=>!positioned.some(p=>p.e.id===e.id)).map(e=>{const row=rows.find(r=>r[0]===e.plot_date),px=x(e.plot_date),py=y(row[col]);return `<a href="#evt-${e.id}" data-event="${e.id}" aria-label="${esc(e.title)}"><path d="M${px},${py-5} l5,5 l-5,5 l-5,-5Z" fill="${color(e)}"><title>${esc(e.date+' '+e.title)}</title></path><circle cx="${px}" cy="${py}" r="9" fill="transparent"/></a>`;}).join('')}
     <text x="${W-right}" y="${H-10}" text-anchor="end">米国市場の取引日 / ${log?'対数':'通常'}軸</text></svg>`;
 }
+const overviewStep=()=>$('overviewScope').value==='one'?1:5;
 function renderOverview(){
   const latest=Number(prices.end.slice(0,4)),first=Number(prices.start.slice(0,4));
-  const oldest=latest-Math.floor((latest-first)/5)*5,all=$('overviewScope').value==='all';
+  const span=overviewStep(),oldest=latest-Math.floor((latest-first)/span)*span,all=$('overviewScope').value==='all';
   if(overviewEndYear==null)overviewEndYear=latest;
-  const start=all?prices.start:[`${overviewEndYear-4}-01-01`,prices.start].sort().at(-1);
+  overviewEndYear=latest-Math.floor((latest-overviewEndYear)/span)*span;
+  const start=all?prices.start:[`${overviewEndYear-span+1}-01-01`,prices.start].sort().at(-1);
   const end=all?prices.end:[`${overviewEndYear}-12-31`,prices.end].sort()[0];
   $('overview').innerHTML=makeChart(start,end,{overview:true});
-  $('overviewPeriod').textContent=all?'全期間':`${start.slice(0,4)}〜${end.slice(0,4)}年`;
+  $('overviewPeriod').textContent=all?'全期間':span===1?`${end.slice(0,4)}年`:`${start.slice(0,4)}〜${end.slice(0,4)}年`;
+  $('overviewPrev').textContent=`← ${span}年前`;$('overviewNext').textContent=`${span}年後 →`;
+  $('overviewPrev').setAttribute('aria-label',`全体像を${span}年前へ`);$('overviewNext').setAttribute('aria-label',`全体像を${span}年後へ`);
   $('overviewPrev').disabled=all||overviewEndYear<=oldest;
   $('overviewNext').disabled=all||overviewEndYear>=latest;
 }
 function moveOverview(step){
   if($('overviewScope').value==='all')return;
   const latest=Number(prices.end.slice(0,4)),first=Number(prices.start.slice(0,4));
-  const oldest=latest-Math.floor((latest-first)/5)*5;
-  overviewEndYear=Math.max(oldest,Math.min(latest,overviewEndYear+step*5));
+  const span=overviewStep(),oldest=latest-Math.floor((latest-first)/span)*span;
+  overviewEndYear=Math.max(oldest,Math.min(latest,overviewEndYear+step*span));
   renderOverview();
 }
 function renderCharts(){

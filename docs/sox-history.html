@@ -6,9 +6,9 @@
 <a class="brand" href="./index.html">株ログ</a><p class="caption">歴史的出来事 / SOX指数と半導体史</p><h1>SOX指数と半導体史</h1><p id="asof" class="muted">日足と出来事を読み込み中…</p>
 <div class="notice"><strong>緑の線と薄緑の帯＝最高値の連続更新期間。</strong>前回の更新から7暦日未満なら同じまとまりとし、途中の点を省きます。7暦日以上あけば別のまとまりです。単独の更新は1点表示。末尾の終点は収録最終日時点で、今後延びることがあります。終値基準が既定で、日中高値にも切り替えられます。各期間に分けても最高値の判定は全履歴を通じて行います。高値の点を押すと、その直前の出来事を確認できます。出来事が近いことと、値動きの原因であることは別です。</div>
 <div class="notice warn"><strong>収録範囲の限界：</strong>指数の基準日は1993年12月1日ですが、取得できた日足は1994年5月4日からです。欠けた初期データを作らず、厳密な全史の「史上最高値」とは区別します。年表は主要事象の初期調査であり、ニュースを網羅していません。</div>
-<section><h2>長期の全体像</h2><div class="toolbar" id="overviewNav"><button id="overviewPrev" type="button" aria-label="全体像を5年前へ">← 5年前</button><strong id="overviewPeriod" aria-live="polite"></strong><button id="overviewNext" type="button" aria-label="全体像を5年後へ">5年後 →</button><label>表示 <select id="overviewScope"><option value="five">5年ずつ</option><option value="all">全期間</option></select></label></div><p class="caption">左右ボタンですぐに5年ずつ移動。矢印キーでも切り替えられます。全体像は常に対数軸で、同じ縦幅が同じ騰落率を表します。</p><div class="stats" id="stats"></div><div class="scroll" id="overview"></div></section>
+<section><h2>長期の全体像</h2><div class="toolbar" id="overviewNav"><button id="overviewPrev" type="button" aria-label="全体像を5年前へ">← 5年前</button><strong id="overviewPeriod" aria-live="polite"></strong><button id="overviewNext" type="button" aria-label="全体像を5年後へ">5年後 →</button><label>表示 <select id="overviewScope"><option value="five">5年ずつ</option><option value="one">1年ずつ</option><option value="all">全期間</option></select></label></div><p class="caption">左右ボタンで選択した幅（1年・5年）ずつ移動。矢印キーでも切り替えられます。全体像は常に対数軸で、同じ縦幅が同じ騰落率を表します。</p><div class="stats" id="stats"></div><div class="scroll" id="overview"></div></section>
 <section><h2>大きなチャートで見る</h2><div class="toolbar">
-<label>区切り <select id="chunkYears"><option value="5">5年ごと</option><option value="3">3年ごと</option></select></label>
+<label>区切り <select id="chunkYears"><option value="5">5年ごと</option><option value="3">3年ごと</option><option value="1">1年ごと</option></select></label>
 <label>期間 <select id="chunk"></select></label>
 <label>最高値の基準 <select id="metric"><option value="close">終値</option><option value="high">日中高値</option></select></label>
 <label>縦軸 <select id="scale"><option value="linear">通常</option><option value="log">対数</option></select></label>
@@ -32,4 +32,4 @@
 <section><h2>データと調査方法</h2><p>SOXの価格指数で、配当込みリターンではありません。Yahoo Financeの日足を期間分割して取得し、月足への自動間引きを避けています。最高値は各日の値がその前までの最大値を厳密に超えた場合。初日は比較基準がないため高値更新の点を付けません。未取得日は補間して価格を作らず、確定前の当日値も除外します。</p>
 <p>ニュースは企業・政府等の発表を優先し、市場の反応は価格系列と当日の報道で別に確認しています。「指定の評価」「報道」「価格からの計算」を区別して記載。後から出来事を選ぶ選択バイアスや、同時期の他の要因は残ります。</p>
 <p><a href="https://finance.yahoo.com/quote/%5ESOX/history/" target="_blank" rel="noopener">日足の取得元</a> · <a href="https://beta.indexes.nasdaq.com/Index/Overview/SOX" target="_blank" rel="noopener">Nasdaq公式の指数説明</a> · <a href="./data_sox/events.json" target="_blank" rel="noopener">出典付き年表JSON</a> · <a href="./data_sox/prices.json" target="_blank" rel="noopener">収録日足JSON</a></p></section>
-</main><script src="./sox-records.js?v=20261020-2"></script><script src="./sox-history.js?v=20261020-5"></script></body></html>
+</main><script src="./sox-records.js?v=20261020-2"></script><script src="./sox-history.js?v=20261020-6"></script></body></html>
