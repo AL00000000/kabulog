@@ -1,0 +1,37 @@
+{
+ "date": "2026-10-22",
+ "as_of": "2026-10-22 20:30",
+ "counts": {
+  "all": 127,
+  "hit": 1,
+  "weak": 0
+ },
+ "items": [
+  {
+   "id": "140120261022554686",
+   "time": "15:30",
+   "code": "3111",
+   "name": "オーミケンシ",
+   "title": "特別損失の計上に関するお知らせ",
+   "url": "https://www.release.tdnet.info/inbs/140120261022554686.pdf",
+   "market": "東",
+   "cats": [
+    "損失計上"
+   ],
+   "pdf": {
+    "amounts": [
+     {
+      "k": "特別損失",
+      "v": "28百万円"
+     }
+    ],
+    "scale": [],
+    "impact": null,
+    "excerpt": null,
+    "chars": 444
+   },
+   "conf": "中",
+   "repeat": 1
+  }
+ ]
+}
