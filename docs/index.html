@@ -344,6 +344,12 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="kenshotob">TOBされる会社は安いのか</button>
       </div>
     </div>
+    <div class="tabgroup">
+      <span class="tabgroup-label">個人的メモ</span>
+      <div class="tabgroup-items">
+        <button class="tab" data-tab="bottomup" title="個人的メモ・手動更新">注目ボトムアップアプローチ</button>
+      </div>
+    </div>
   </nav>
 
   <div id="view-ranking">
@@ -1057,6 +1063,11 @@ footer a { color: var(--accent); }
   <div id="view-tsetop5" hidden>
     <div class="embed-note">東証全市場の個別株を横断した売買代金上位5銘柄の推移。<b>月次158か月・日次255営業日</b>の保存版（2026-10-21掲載、自動更新なし）。武田薬品・東京電力・アイフルの当時の背景を、事実・報道・解釈に分けて補足。月次は立会外を含み、日次は立会内実額 — <a href="./tse-top5/tse_top5_report.html" target="_blank" rel="noopener">別タブで開く ↗</a> ／ <a href="./tse-top5/tse_top5_complete.zip" download>一式ZIP</a></div>
     <iframe class="embed" title="東証売買代金TOP5の推移 — 保存版レポート" data-src="./tse-top5/tse_top5_report.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-bottomup" hidden>
+    <div class="embed-note">個人的メモ — 個別企業から注目銘柄を整理する手動更新のリスト。本人のメモと事実・仮説を区別して記録。<a href="./personal-bottom-up.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="注目ボトムアップアプローチ" data-src="./personal-bottom-up.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-kenshotob" hidden>
@@ -4421,6 +4432,7 @@ const VIEW_ID = {
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun",
   tsetop5: "view-tsetop5",
   kenshotob: "view-kenshotob", congestion: "view-congestion", soxhistory: "view-soxhistory",
+  bottomup: "view-bottomup",
 };
 function switchTab(name) {
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
@@ -4450,6 +4462,7 @@ function switchTab(name) {
   clearBadge(name);   // 開いたら既読にしてNEWを消す
 }
 document.querySelectorAll(".tab").forEach(b => { b.onclick = () => switchTab(b.dataset.tab); });
+if (location.hash === "#bottomup") switchTab("bottomup");
 
 /* ===== タブ別の最終更新日を取得して NEW バッジを出す =====
    各サイトは同一オリジン(al00000000.github.io)なので直接fetchできる。
