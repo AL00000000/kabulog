@@ -27,7 +27,7 @@ BASE = Path(__file__).parent
 DATA = BASE / "docs" / "data_jigyou"
 STATE = BASE / "state_jigyou.json"
 WEBHOOK_KEY = "jigyou_seiri"      # 実体は automation/webhooks.json(git管理外)
-SITE = "https://al00000000.github.io/kabutan-ranking/#jigyou"
+SITE = "https://al00000000.github.io/kabulog/#jigyou"
 ORANGE = 0xd08b3a
 MAX_FIELDS = 20                   # Discordの埋め込みは25個まで
 

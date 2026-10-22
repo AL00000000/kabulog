@@ -1,8 +1,8 @@
 /* 取得失敗日を日付プルダウンに赤く差し込む共通ウィジェット。
  *
  * 使い方（各サイトの index.html の </body> 直前に1行）:
- *   <script src="/kabutan-ranking/fetchstatus.js" defer></script>
- *   <script src="/kabutan-ranking/fetchstatus.js" data-offset="1" defer></script>   ← PTSのように
+ *   <script src="/kabulog/fetchstatus.js" defer></script>
+ *   <script src="/kabulog/fetchstatus.js" data-offset="1" defer></script>   ← PTSのように
  *                                                                                     保存日=売買日+1 の場合
  * data 属性:
  *   data-select  対象 <select> の id（既定 "dateSel"）

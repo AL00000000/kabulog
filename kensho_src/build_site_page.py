@@ -3,7 +3,7 @@
    サイトは固定ダークテーマなので data-theme="dark" を固定し、配色をサイト側に寄せる。"""
 import io, os
 SRC = 'highdiv.html'
-DST = r'C:\Users\yt\kabutan-ranking\docs\kensho.html'
+DST = r'C:\Users\yt\kabulog\kabutan-ranking\docs\kensho.html'
 
 body = open(SRC, encoding='utf-8').read()
 

@@ -4,7 +4,7 @@
 
 [Kabutan](https://kabutan.jp/warning/trading_value_ranking) の売買代金ランキング上位500銘柄を平日ごとに取得したデータです。
 
-**📊 閲覧用サイト: https://al00000000.github.io/kabutan-ranking/**
+**📊 閲覧用サイト: https://al00000000.github.io/kabulog/**
 (日付切替・列ソート・銘柄検索ができます)
 
 ## データ

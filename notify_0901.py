@@ -23,7 +23,7 @@ BASE = Path(__file__).parent
 DATA = BASE / "docs" / "data_0901" / "data.json"
 STATE = BASE / "state_0901.json"
 WEBHOOK_KEY = "d0901"      # 実体は automation/webhooks.json(git管理外)
-SITE = "https://al00000000.github.io/kabutan-ranking/"
+SITE = "https://al00000000.github.io/kabulog/"
 TOP_N = 10
 RED, BLUE, GRAY = 0xff5b6a, 0x4da3ff, 0x99aab5
 
@@ -45,7 +45,7 @@ def post(payload, dry):
     req = urllib.request.Request(
         get_webhook(WEBHOOK_KEY), data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json",
-                 "User-Agent": "kabutan-ranking-bot/1.0 (+https://al00000000.github.io/kabutan-ranking/)"},
+                 "User-Agent": "kabutan-ranking-bot/1.0 (+https://al00000000.github.io/kabulog/)"},
         method="POST")
     with urllib.request.urlopen(req, timeout=30) as r:
         if r.status >= 300:

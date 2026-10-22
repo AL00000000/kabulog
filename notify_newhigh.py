@@ -24,7 +24,7 @@ BASE = Path(__file__).parent
 DATA = BASE / "docs" / "data_newhigh"
 STATE = BASE / "state_newhigh.json"
 WEBHOOK_KEY = "newhigh_ath"   # 実体は automation/webhooks.json(git管理外)
-SITE = "https://al00000000.github.io/kabutan-ranking/"
+SITE = "https://al00000000.github.io/kabulog/"
 CYAN = 0x39c5cf
 MAX_FIELDS = 20          # Discordの埋め込みは25個まで
 
@@ -114,7 +114,7 @@ def main():
         get_webhook(WEBHOOK_KEY), data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json",
                  "User-Agent": "kabutan-ranking-bot/1.0 "
-                               "(+https://al00000000.github.io/kabutan-ranking/)"},
+                               "(+https://al00000000.github.io/kabulog/)"},
         method="POST")
     with urllib.request.urlopen(req, timeout=20) as r:
         code = r.status
