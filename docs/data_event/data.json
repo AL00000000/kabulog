@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-22",
+ "updated": "2026-10-23",
  "events": [
   {
    "date": "2021-01-28",
@@ -1118,15 +1118,6 @@
    "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
-   "date": "2026-10-22",
-   "time": "05:00頃",
-   "name": "決算 ラムリサーチ",
-   "country": "US",
-   "note": "LRCX・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/LRCX/"
-  },
-  {
    "date": "2026-10-23",
    "time": "08:30",
    "name": "日本CPI(全国)",
@@ -1251,6 +1242,15 @@
    "note": "6920・6月期第１",
    "source": "kessan",
    "url": "https://kabutan.jp/stock/?code=6920"
+  },
+  {
+   "date": "2026-10-30",
+   "time": "決算発表",
+   "name": "決算 東京エレクトロン",
+   "country": "JP",
+   "note": "8035・3月期第２",
+   "source": "kessan",
+   "url": "https://kabutan.jp/stock/?code=8035"
   },
   {
    "date": "2026-11-02",
