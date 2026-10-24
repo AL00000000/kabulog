@@ -30,12 +30,15 @@ const list=document.getElementById('items'), search=document.getElementById('sea
 function element(tag,text,cls){const el=document.createElement(tag);el.textContent=text;if(cls)el.className=cls;return el;}
 function render(){
  const query=search.value.trim().toLocaleLowerCase('ja');
- const visible=items.filter(item=>[item.code,item.name,item.original_note,item.facts,item.hypothesis,item.next_check].join(' ').toLocaleLowerCase('ja').includes(query));
+ const visible=items.filter(item=>[item.code,item.name,item.approach,item.theme,item.original_note,item.bullish,item.bearish,item.facts,item.hypothesis,item.next_check].join(' ').toLocaleLowerCase('ja').includes(query));
  document.getElementById('count').textContent=visible.length+'件 / 登録 '+items.length+'件';
  list.replaceChildren();
  if(!visible.length){const empty=element('section','','empty');empty.append(element('h2',items.length?'一致する銘柄はありません':'注目銘柄はまだ登録されていません'),element('p',items.length?'検索する言葉を変えてください。':'銘柄が決まったら、銘柄名と気になった理由をここに記録していきます。'));list.append(empty);return;}
  for(const item of visible){const card=element('article','');card.append(element('h2',[item.code,item.name].filter(Boolean).join(' ')));
- for(const [key,label] of [['original_note','本人のメモ・原文'],['facts','確認できた事実'],['hypothesis','仮説・AIの整理'],['next_check','次に確認すること']]){card.append(element('h3',label),element('p',item[key]||'未記入','note'));}
+ if(item.approach)card.append(element('p',[item.approach,item.theme].filter(Boolean).join(' / ')));
+ if(item.recorded_at)card.append(element('p','過去メモの記録日：'+item.recorded_at+'（現在の事実確認日ではありません）'));
+ for(const [key,label] of [['original_note','過去メモの記載'],['bullish','強気な理由（本人の見解・予想）'],['bearish','弱気な理由（本人の見解）'],['facts','確認できた事実'],['hypothesis','仮説・AIの整理'],['next_check','次に確認すること']]){if(['original_note','hypothesis'].includes(key)&&!item[key])continue;card.append(element('h3',label),element('p',item[key]||'未記入','note'));}
+ if(item.source_note)card.append(element('p','記録元：'+item.source_note));
  if(item.source_url){try{const url=new URL(item.source_url);if(['https:','http:'].includes(url.protocol)){const link=element('a','出典を開く ↗');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';card.append(link);}}catch{}}
  if(item.checked_at)card.append(element('p','確認日：'+item.checked_at));list.append(card);}
 }
