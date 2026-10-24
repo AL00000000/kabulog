@@ -43,6 +43,26 @@ class ReturnTests(unittest.TestCase):
     def test_chart_rejects_wrong_symbol(self):
         with self.assertRaises(ValueError):watch.parse_chart({'chart':{'result':[{'meta':{'symbol':'OTHER','exchangeTimezoneName':'Asia/Tokyo'}}]}},'285A',date(2026,10,24))
 
+    def test_us_weekly_uses_tuesday_not_wednesday(self):
+        target=date(2026,10,21)
+        rows={date(2026,10,13):{'open':100,'close':50},date(2026,10,20):{'open':125,'close':300},date(2026,10,14):{'open':20,'close':20},target:{'open':10,'close':10}}
+        item={'name':'Qualys','code':'QLYS','market':'US'}
+        payload,count=watch.build_report([item],[(rows,None)],target,'weekly')
+        self.assertEqual(count,1)
+        self.assertIn('+25.00%',payload['embeds'][0]['description'])
+        self.assertIn('2026-10-20',payload['embeds'][0]['description'])
+
+    def test_us_daily_uses_previous_local_date(self):
+        item={'name':'Qualys','code':'QLYS','market':'US'}
+        rows={date(2026,10,22):{'open':1,'close':100},date(2026,10,23):{'open':1,'close':110}}
+        payload,count=watch.build_report([item],[(rows,None)],date(2026,10,24),'daily')
+        self.assertEqual(count,1)
+        self.assertIn('+10.00%',payload['embeds'][0]['description'])
+
+    def test_us_bars_use_exchange_date_across_dst(self):
+        data={'chart':{'result':[{'meta':{'symbol':'QLYS','exchangeTimezoneName':'America/New_York','gmtoffset':-18000},'timestamp':[int(datetime.fromisoformat('2026-10-20T13:30:00+00:00').timestamp())],'indicators':{'quote':[{'open':[100],'close':[110]}]}}]}}
+        self.assertIn(date(2026,10,20),watch.parse_chart(data,'QLYS',date(2026,10,21),'US'))
+
     def test_acknowledged_notification_not_sent_twice(self):
         with tempfile.TemporaryDirectory() as temp, patch.object(watch,'HOME',Path(temp)), patch.object(watch,'credential',return_value=b'https://discord.com/api/webhooks/test'), patch.object(watch,'request',return_value={'id':'test-id'}) as request:
             (Path(temp)/'webhook.dpapi').write_bytes(b'encrypted-placeholder')

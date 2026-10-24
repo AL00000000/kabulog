@@ -113,6 +113,34 @@
       "source_note": "本人がこのチャットで提示したLLMO関連銘柄一覧。関連性の独立検証は未実施。",
       "recorded_at": "2026-10-24",
       "checked_at": ""
+    },
+    {
+      "name": "クオリス（Qualys）",
+      "code": "QLYS",
+      "market": "US",
+      "approach": "トップダウンアプローチ",
+      "theme": "セキュリティ関連銘柄",
+      "bullish": "",
+      "bearish": "",
+      "facts": "公式IRでNASDAQのティッカーQLYSを確認。",
+      "source_url": "https://investor.qualys.com/stock-information",
+      "source_note": "本人がこのチャットでセキュリティ関連銘柄として指定。",
+      "recorded_at": "2026-10-24",
+      "checked_at": "2026-10-24"
+    },
+    {
+      "name": "ソリトンシステムズ",
+      "code": "3040",
+      "market": "JP",
+      "approach": "トップダウンアプローチ",
+      "theme": "セキュリティ関連銘柄",
+      "bullish": "",
+      "bearish": "",
+      "facts": "公式IRで証券コード3040、東証プライム市場を確認。",
+      "source_url": "https://www.soliton.co.jp/ir/stock.html",
+      "source_note": "本人がこのチャットでセキュリティ関連銘柄として指定。",
+      "recorded_at": "2026-10-24",
+      "checked_at": "2026-10-24"
     }
   ]
 }

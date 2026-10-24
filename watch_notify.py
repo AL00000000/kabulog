@@ -66,27 +66,36 @@ def validate_list(data):
         if not isinstance(item.get('name'), str) or not item['name'].strip():
             raise ValueError('Invalid stock name')
         code = item.get('code', '')
-        if code and not re.fullmatch(r'[0-9A-Z]{4}', code):
-            raise ValueError('Invalid Japanese security code')
-        key = code or item['name']
+        market = item.get('market', 'JP')
+        if market not in ('JP', 'US'):
+            raise ValueError('Unsupported market')
+        pattern = r'[0-9A-Z]{4}' if market == 'JP' else r'[A-Z][A-Z0-9.-]{0,9}'
+        if code and not re.fullmatch(pattern, code):
+            raise ValueError('Invalid security code')
+        key = market+':'+(code or item['name'])
         if key in seen:
             raise ValueError('Duplicate stock')
         seen.add(key)
     return items
 
 
-def parse_chart(data, code, target):
+def parse_chart(data, code, target, market='JP'):
     result = data.get('chart', {}).get('result')
     if not result:
         raise ValueError('No price series')
     result = result[0]
     meta = result.get('meta', {})
-    if meta.get('symbol') != code + '.T' or meta.get('exchangeTimezoneName') != 'Asia/Tokyo':
+    symbol = code+'.T' if market == 'JP' else code
+    zone = 'Asia/Tokyo' if market == 'JP' else 'America/New_York'
+    if meta.get('symbol') != symbol or meta.get('exchangeTimezoneName') != zone:
         raise ValueError('Wrong stock or exchange')
+    # Daily US bars are at the local opening time; either DST offset retains
+    # the same exchange calendar date, including across a DST transition.
+    market_zone = JST if market == 'JP' else timezone(timedelta(seconds=int(meta['gmtoffset'])))
     quotes = result['indicators']['quote'][0]
     rows = {}
     for i, timestamp in enumerate(result.get('timestamp', [])):
-        day = datetime.fromtimestamp(timestamp, JST).date()
+        day = datetime.fromtimestamp(timestamp, market_zone).date()
         if day > target:
             continue
         opening, closing = quotes['open'][i], quotes['close'][i]
@@ -102,8 +111,10 @@ def fetch_rows(item, target):
     if item.get('listed_from') and target < date.fromisoformat(item['listed_from']):
         return {}, f"上場前（{item['listed_from']}予定）"
     try:
-        data = request(f'https://query1.finance.yahoo.com/v8/finance/chart/{code}.T?range=3mo&interval=1d')
-        return parse_chart(data, code, target), None
+        market = item.get('market', 'JP')
+        symbol = code+'.T' if market == 'JP' else code
+        data = request(f'https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=3mo&interval=1d')
+        return parse_chart(data, code, target, market), None
     except Exception as exc:
         return {}, f'価格取得失敗（{type(exc).__name__}）'
 
@@ -116,7 +127,8 @@ def change(rows, target, mode):
         previous_day = target - timedelta(days=7)
         previous = rows.get(previous_day)
         if not previous:
-            return None, '前週水曜日の始値なし（休場・上場前・未取得等）'
+            weekday = '月火水木金土日'[target.weekday()]
+            return None, f'前週{weekday}曜日の始値なし（休場・上場前・未取得等）'
         return (current['open'] / previous['open'] - 1) * 100, None
     earlier = sorted(day for day in rows if day < target)
     if not earlier:
@@ -131,19 +143,22 @@ def change(rows, target, mode):
 def build_report(items, results, target, mode):
     lines, values = [], []
     for item, (rows, error) in zip(items, results):
-        value, reason = (None, error) if error else change(rows, target, mode)
+        price_day = target-timedelta(days=1) if item.get('market') == 'US' else target
+        value, reason = (None, error) if error else change(rows, price_day, mode)
         # Plain labels plus allowed_mentions prevent mention injection.
         name = item['name'].replace('\n', ' ')[:90]
         label = f"{name}（{item['code']}）" if item.get('code') else name
+        if item.get('market') == 'US':
+            label += f'［米国現地日 {price_day.isoformat()}・USD建て］'
         lines.append(f'{label}：{value:+.2f}%' if value is not None else f'{label}：算出不可 — {reason}')
         if value is not None:
             values.append(value)
     if mode == 'weekly':
         title = f'株ログ 注目銘柄｜1週間騰落率 {target.isoformat()}'
-        footer = f'{(target-timedelta(days=7)).isoformat()} 水曜始値 → {target.isoformat()} 水曜始値。休場時は別日に置換しません。'
+        footer = '日本株：前週水曜→今週水曜の始値。米国株：前週火曜→今週火曜の始値。休場時は別日に置換せず、配当・為替調整なし。'
     else:
         title = f'株ログ 注目銘柄｜1日騰落率 {target.isoformat()}'
-        footer = '前営業日終値 → 当日終値。配当再投資を含まない価格騰落率。'
+        footer = '前営業日終値 → 対象日終値。米国株は通知日前日の米国現地日。配当再投資・為替換算なし。'
     # Discord embed description limit is 4096. Split large future lists safely.
     pages, page = [], ''
     for line in lines:
@@ -224,7 +239,9 @@ def main():
             log('SKIP another execution is running')
             return
         if args.mode == 'test':
-            send({'content': '株ログ「注目銘柄」の通知設定テストです。\n毎週水曜12:00：前週水曜始値→今週水曜始値の1週間騰落率\n毎営業日17:10：前営業日終値→当日終値の1日騰落率\n公開中の注目銘柄リスト全件を毎回読み込みます。上場前・価格不足は算出不可と表示します。', 'allowed_mentions': {'parse': []}}, 'setup-test-v1')
+            items=validate_list(request(LIST_URL+'?v='+str(int(datetime.now(JST).timestamp()))))
+            content=f'株ログ「注目銘柄」の通知設定確認：現在{len(items)}銘柄（日米対応）。\n毎週水曜12:00（日本時間）：日本株は前週水曜始値→今週水曜始値、米国株は前週火曜始値→今週火曜始値。\n毎日17:10：日本株は当日の終値前日比、米国株は前日の米国現地日終値の前日比（ドル建て、為替換算なし）。\n全件に新価格がない日は通知を省略。リスト変更は自動反映、上場前・価格不足は算出不可。'
+            send({'content':content,'allowed_mentions':{'parse':[]}},'setup-test-jpus-v2')
             return
         if args.as_of and not args.dry_run:
             raise ValueError('--as-of is available only with --dry-run')
@@ -232,8 +249,6 @@ def main():
         target = args.as_of or now.date()
         if args.mode == 'weekly' and target.weekday() != 2:
             log('SKIP not Wednesday'); return
-        if args.mode == 'daily' and target.weekday() >= 5:
-            log('SKIP weekend'); return
         if not args.dry_run:
             minimum = (12, 0) if args.mode == 'weekly' else (17, 10)
             if (now.hour, now.minute) < minimum:
@@ -248,7 +263,7 @@ def main():
             results = list(pool.map(lambda item: fetch_rows(item, target), items))
         payload, valid = build_report(items, results, target, args.mode)
         # Old quotes on a holiday are not today's performance. Do not backfill.
-        has_today = any(target in rows for rows, error in results)
+        has_today = any((target-timedelta(days=1) if item.get('market') == 'US' else target) in rows for item,(rows,error) in zip(items,results))
         has_history = any(rows for rows, error in results)
         if args.mode == 'daily' and not has_today and has_history and not args.dry_run:
             log('SKIP no current-day prices (holiday or stale provider)'); return
