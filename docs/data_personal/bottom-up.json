@@ -141,6 +141,21 @@
       "source_note": "本人がこのチャットでセキュリティ関連銘柄として指定。",
       "recorded_at": "2026-10-24",
       "checked_at": "2026-10-24"
+    },
+    {
+      "name": "マイポックス",
+      "code": "5381",
+      "market": "JP",
+      "approach": "トップダウンアプローチ",
+      "theme": "光フェルール",
+      "original_note": "トップダウン\n光フェルール\nマイポックス",
+      "bullish": "",
+      "bearish": "",
+      "facts": "公式IRで証券コード5381、東証スタンダード市場を確認。",
+      "source_url": "https://www.mipox.co.jp/ir/stock-information/",
+      "source_note": "本人がこのチャットで「光フェルール」の注目銘柄として指定。テーマとの関連性の独立検証は未実施。",
+      "recorded_at": "2026-10-24",
+      "checked_at": "2026-10-24"
     }
   ]
 }
