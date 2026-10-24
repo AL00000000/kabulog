@@ -45,6 +45,6 @@ function render(){
  if(item.checked_at)card.append(element('p','確認日：'+item.checked_at));list.append(card);}}
 }
 search.addEventListener('input',render);
-fetch('./data_personal/bottom-up.json').then(response=>{if(!response.ok)throw Error('read');return response.json();}).then(data=>{if(!Array.isArray(data.items))throw Error('format');items=data.items;render();}).catch(()=>{document.getElementById('count').textContent='取得できませんでした';const message=document.getElementById('message');message.hidden=false;message.textContent='メモを読み込めませんでした。ページを再読み込みしてください。';});
+fetch('./data_personal/bottom-up.json?v='+Date.now(),{cache:'no-store'}).then(response=>{if(!response.ok)throw Error('read');return response.json();}).then(data=>{if(!Array.isArray(data.items))throw Error('format');items=data.items;render();}).catch(()=>{document.getElementById('count').textContent='取得できませんでした';const message=document.getElementById('message');message.hidden=false;message.textContent='メモを読み込めませんでした。ページを再読み込みしてください。';});
 </script>
 </html>
