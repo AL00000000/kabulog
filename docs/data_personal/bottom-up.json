@@ -3,17 +3,19 @@
   "items": [
     {
       "name": "トグルHD",
-      "code": "",
+      "code": "652A",
       "approach": "ボトムアップアプローチ",
       "theme": "",
       "bullish": "ストックオプションの行使条件が強気。",
       "bearish": "金利上昇。",
-      "facts": "",
+      "facts": "JPXの2026年9月28日付資料で、証券コード652A、2026年10月30日上場予定と確認。",
       "next_check": "ストックオプションの具体的な条件・数値は未確認。参考動画はリンクのみの登録で、内容の解析・要約は未実施。",
       "source_url": "https://youtu.be/asHDG2ad-aU?si=GtSGLrjvipe5uniM",
       "source_note": "DOT用指示書（統合版・正本）／ボトムアップアプローチ：トグルHD",
       "recorded_at": "2026-10-22",
-      "checked_at": ""
+      "checked_at": "2026-10-24",
+      "listed_from": "2026-10-30",
+      "listing_source_url": "https://www.jpx.co.jp/listing/stocks/new/t13vrt000002621i-att/10toggleholdings-Outline.pdf"
     },
     {
       "name": "キオクシアHD",

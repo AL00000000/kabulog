@@ -42,6 +42,7 @@ function render(){
  for(const [key,label] of [['original_note','過去メモの記載'],['bullish','強気な理由（本人の見解・予想）'],['bearish','弱気な理由（本人の見解）'],['facts','確認できた事実'],['hypothesis','仮説・AIの整理'],['next_check','次に確認すること']]){if(['original_note','hypothesis'].includes(key)&&!item[key])continue;card.append(element('h3',label),element('p',item[key]||'未記入','note'));}
  if(item.source_note)card.append(element('p','記録元：'+item.source_note));
  if(item.source_url){try{const url=new URL(item.source_url);if(['https:','http:'].includes(url.protocol)){const link=element('a','出典を開く ↗');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';card.append(link);}}catch{}}
+ if(item.listing_source_url){try{const url=new URL(item.listing_source_url);if(url.protocol==='https:'){const link=element('a','上場情報の出典 ↗');link.href=url.href;link.target='_blank';link.rel='noopener noreferrer';card.append(element('p',''),link);}}catch{}}
  if(item.checked_at)card.append(element('p','確認日：'+item.checked_at));list.append(card);}}
 }
 search.addEventListener('input',render);
