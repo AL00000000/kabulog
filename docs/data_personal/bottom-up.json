@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-24",
+  "updated": "2026-10-27",
   "items": [
     {
       "name": "トグルHD",
@@ -156,6 +156,21 @@
       "source_note": "本人がこのチャットで「光フェルール」の注目銘柄として指定。テーマとの関連性の独立検証は未実施。",
       "recorded_at": "2026-10-24",
       "checked_at": "2026-10-24"
+    },
+    {
+      "name": "岡谷鋼機",
+      "code": "7485",
+      "market": "JP",
+      "approach": "その他",
+      "theme": "",
+      "original_note": "岡谷鋼機（7485）　\nトップダウンでもボトムアップでもなく、\nその他枠作って入れといて",
+      "bullish": "",
+      "bearish": "",
+      "facts": "公式の株式情報で、岡谷鋼機株式会社の証券コード7485、名古屋証券取引所プレミア市場への上場を確認。",
+      "source_url": "https://www.okaya.co.jp/ir/dividend_info/info/index.html",
+      "source_note": "本人がこのチャットで「その他」への追加を指定。テーマ・投資理由は未指定。",
+      "recorded_at": "2026-10-27",
+      "checked_at": "2026-10-27"
     }
   ]
 }
