@@ -171,6 +171,21 @@
       "source_note": "本人がこのチャットで「その他」への追加を指定。テーマ・投資理由は未指定。",
       "recorded_at": "2026-10-27",
       "checked_at": "2026-10-27"
+    },
+    {
+      "name": "GMOインターネットグループ",
+      "code": "9449",
+      "market": "JP",
+      "approach": "ボトムアップアプローチ",
+      "theme": "",
+      "original_note": "9449 ボトムアップ　フジパターン期待",
+      "bullish": "フジパターン期待",
+      "bearish": "",
+      "facts": "公式IRの株式基本情報で、GMOインターネットグループ株式会社の株式コード9449、東証プライム市場への上場を確認。",
+      "source_url": "https://ir.group.gmo/stock/equity-holders/",
+      "source_note": "本人がこのチャットで指定。「フジパターン期待」は本人の見解・期待として原文のまま記録。",
+      "recorded_at": "2026-10-27",
+      "checked_at": "2026-10-27"
     }
   ]
 }
