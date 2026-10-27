@@ -1298,15 +1298,6 @@
    "url": "https://finance.yahoo.com/quote/QCOM/"
   },
   {
-   "date": "2026-11-05",
-   "time": "決算発表",
-   "name": "決算 太陽誘電",
-   "country": "JP",
-   "note": "6976・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=6976"
-  },
-  {
    "date": "2026-11-06",
    "time": "22:30",
    "name": "米雇用統計",
