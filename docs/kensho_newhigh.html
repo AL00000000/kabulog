@@ -185,7 +185,8 @@ pre.code{background:var(--surface-2);border:1px solid var(--line);border-radius:
     <h3>D. 実装（このリポジトリで再計算する手順）</h3>
 <pre class="code">py rebuild_newhigh_history.py --fetch      # 全銘柄の日足2年分（約20分）
 py kensho_newhigh/simulate.py              # 売買シミュレーション → docs/data_kensho_newhigh/result.json
-py kensho_newhigh/forward_returns.py       # §03 の表 → docs/data_kensho_newhigh/forward.json</pre>
+py kensho_newhigh/forward_returns.py       # §03 の表 → docs/data_kensho_newhigh/forward.json
+py kensho_newhigh/april_to_0623.py         # §04 の表 → docs/data_kensho_newhigh/april.json</pre>
     <p class="small">日別の新高値リストは <span class="kv">docs/data_newhigh/YYYY-MM-DD.json</span>（新高値タブと同じもの）。長期の検証はこのリストではなく日足から毎日判定し直している（実記録は2026-07-30開始のため）。判定ロジックは <span class="kv">fetch_newhigh.py</span> と同一で、実記録のある51日で再現率99.5%を確認済み。</p>
   </div>
 </section>
@@ -214,11 +215,20 @@ py kensho_newhigh/forward_returns.py       # §03 の表 → docs/data_kensho_ne
   <p class="lead">売買ルールが悪いのか、新高値という選び方が悪いのかを分けるために、<strong>くじ引きの対照群</strong>を置きました。同じ日・同じ銘柄数を、その日の売買代金10億円以上の銘柄から無作為に選び、まったく同じルールで売買したものです。</p>
   <div class="scroll"><table id="fwd"></table></div>
   <p><span class="badge m">実測</span>新高値を付けた銘柄は、翌日・5日後・20日後の<strong>どの時点でも母集団全体より成績が悪い</strong>（中央値・上昇した割合とも）。
+  40日後・60日後（約2〜3か月）になると<strong>上場来新高値は母集団に追いつき、中央値ではわずかに上回る</strong>（60日後 +2.69% 対 +2.43%）。52週新高値は60日後でも下回ったまま（+1.81%）。
   <span class="badge i">推論</span>このルールは「新高値の日の引けで買い、その後に下がった銘柄から売る」ので、買った直後に押し戻されやすい新高値銘柄では、<strong>高値で買って小さく負けて売る</strong>を毎日繰り返すことになります。売却時の騰落率の中央値がマイナス、勝率が3割台なのはこの裏付けです。くじ引きの銘柄は買った直後に下がる癖が無いので、同じルールでも資産が増えています。</p>
 </section>
 
 <section>
-  <h2><span class="n">04</span>この結果を割り引くべき点</h2>
+  <h2><span class="n">04</span>参考: 2026年4月の新高値を6/23まで持っていたら</h2>
+  <p class="lead">相場が強かった時期（日経平均は4/1〜6/23で約+30%）の1例です。4月の各営業日に新高値を付けた銘柄を、その日の引けで買い、6/23の引けまで持った場合です。</p>
+  <div class="scroll"><table id="apr"></table></div>
+  <p><span class="badge m">実測</span>この期間に限れば、新高値銘柄は<strong>同じ日の母集団全体より明確に良く</strong>、上場来新高値は中央値でもTOPIXを上回りました。
+  <span class="badge i">注意</span>ただしこれは1つの期間・1回の観測で、強い上げ相場の中です。§03の約4.1年の平均では2〜3か月持っても差はほぼ無く、悪い相場では新高値の方がはっきり不利でした（新高値タブの検証）。この1例を一般化しないでください。</p>
+</section>
+
+<section>
+  <h2><span class="n">05</span>この結果を割り引くべき点</h2>
   <div class="caveats">
     <div class="cv"><h4>長期の母集団には生存バイアスがある</h4><p>2022〜2026年の検証に使った日足は、いま上場している銘柄（＋2026年6月時点の一覧）が中心です。途中で上場廃止になった銘柄の多くが入っていません。新高値側にも対照群側にも同じように効くので比較は成り立ちますが、絶対値は実際より良く出ている可能性があります。</p></div>
     <div class="cv"><h4>くじ引きの結果は大きくばらつく</h4><p>成績の悪いものから売るルールでは、たまたま大きく上がった銘柄に資産が集中していきます。そのため20回の抽選でも結果の幅が広く（表の「範囲」）、中央値で比べています。それでも本番は20回のほぼすべてを下回りました。</p></div>
@@ -239,7 +249,7 @@ py kensho_newhigh/forward_returns.py       # §03 の表 → docs/data_kensho_ne
 const pct = (x, d = 1) => x == null ? "-" : (x >= 0 ? "+" : "") + (x * 100).toFixed(d) + "%";
 const man = x => (x / 1e4).toLocaleString("ja-JP", { maximumFractionDigits: 0 }) + "万円";
 const cls = x => x == null ? "" : x >= 0 ? "pos" : "neg";
-let R, F;
+let R, F, A;
 
 function draw() {
   const P = R[document.getElementById("selP").value];
@@ -314,13 +324,26 @@ function cards() {
     `<div class="card" style="--c:${c[0]}"><div class="lbl">${c[1]}</div><div class="big">${c[2]}</div><div class="foot">${c[3]}</div></div>`).join("");
 }
 
+function apr() {
+  const lab = { w52: "52週新高値の銘柄", ath: "上場来新高値の銘柄", uni: "母集団全体（売買代金10億円以上）" };
+  let h = "<thead><tr><th>4月の新高値 → 6/23 引け</th><th>件数</th><th>中央値</th><th>平均</th><th>上がっていた割合</th><th>銘柄ベース 中央値（n）</th></tr></thead><tbody>";
+  for (const k of ["w52", "ath", "uni"]) {
+    const e = A[k].events, s = A[k].stocks;
+    h += `<tr${k === "uni" ? ' class="hl"' : ""}><td>${lab[k]}</td><td class="n">${e.n.toLocaleString()}</td>`
+      + `<td class="n ${cls(e.med)}">${pct(e.med)}</td><td class="n ${cls(e.mean)}">${pct(e.mean)}</td><td class="n">${(e.win * 100).toFixed(1)}%</td>`
+      + `<td class="n ${cls(s.med)}">${pct(s.med)}（${s.n}）</td></tr>`;
+  }
+  h += `<tr><td>TOPIX（1306）</td><td class="n">-</td><td class="n" colspan="2">4/1から ${pct(A.topix["2026-04-01"])}・4月平均から ${pct(A.topix_avg)}</td><td class="n">-</td><td class="n">-</td></tr>`;
+  document.getElementById("apr").innerHTML = h + "</tbody>";
+}
+
 function fwd() {
   const lab = { w52: "52週新高値の銘柄", ath: "上場来新高値の銘柄", uni: "母集団全体（売買代金10億円以上）" };
-  let h = "<thead><tr><th>その日の引けで買ったら</th><th>件数</th><th>翌日 中央値</th><th>5日後 中央値</th><th>20日後 中央値</th><th>20日後 平均</th><th>5日後に上がっていた割合</th></tr></thead><tbody>";
+  let h = "<thead><tr><th>その日の引けで買ったら</th><th>件数</th><th>翌日 中央値</th><th>5日後 中央値</th><th>20日後 中央値</th><th>40日後 中央値</th><th>60日後 中央値</th><th>60日後 平均</th><th>上がっていた割合 5日後→60日後</th></tr></thead><tbody>";
   for (const k of ["w52", "ath", "uni"]) {
     h += `<tr${k === "uni" ? ' class="hl"' : ""}><td>${lab[k]}</td><td class="n">${F[k + "_5"].n.toLocaleString()}</td>`
-      + [F[k + "_1"].med, F[k + "_5"].med, F[k + "_20"].med, F[k + "_20"].mean].map(v => `<td class="n ${cls(v)}">${pct(v, 2)}</td>`).join("")
-      + `<td class="n">${(F[k + "_5"].win * 100).toFixed(1)}%</td></tr>`;
+      + [F[k + "_1"].med, F[k + "_5"].med, F[k + "_20"].med, F[k + "_40"].med, F[k + "_60"].med, F[k + "_60"].mean].map(v => `<td class="n ${cls(v)}">${pct(v, 2)}</td>`).join("")
+      + `<td class="n">${(F[k + "_5"].win * 100).toFixed(1)}% → ${(F[k + "_60"].win * 100).toFixed(1)}%</td></tr>`;
   }
   document.getElementById("fwd").innerHTML = h + "</tbody>";
 }
@@ -328,8 +351,9 @@ function fwd() {
 (async () => {
   R = await (await fetch("data_kensho_newhigh/result.json", { cache: "no-cache" })).json();
   F = await (await fetch("data_kensho_newhigh/forward.json", { cache: "no-cache" })).json();
+  A = await (await fetch("data_kensho_newhigh/april.json", { cache: "no-cache" })).json();
   document.getElementById("gen").textContent = "計算日時 " + R.generated.slice(0, 16).replace("T", " ");
-  cards(); fwd(); draw();
+  cards(); fwd(); apr(); draw();
   document.getElementById("selP").onchange = draw;
   document.getElementById("selK").onchange = draw;
 })();
