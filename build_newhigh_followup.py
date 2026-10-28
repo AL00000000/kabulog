@@ -109,6 +109,8 @@ def main():
     records = []
     for p in files:
         d = load(p) or {}
+        if d.get("reconstructed"):
+            continue        # 後日再現した日は「実記録」の集計に混ぜない
         for s in d.get("stocks", []):
             records.append({"date": p.stem, "code": s["code"], "name": s["name"],
                             "close": s.get("close"), "high": s.get("high")})

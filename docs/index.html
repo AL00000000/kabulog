@@ -2619,6 +2619,10 @@ async function nhLoad(ymd) {
     "<b>" + nhData.date + "</b> の52週新高値 <b>" + nhData.stocks.length + "</b> 銘柄" +
     " / 母集団: 売買代金10億円以上の東証銘柄 <b>" + (c.universe ?? "-") + "</b> 銘柄" +
     " / データ時点: " + (nhData.as_of || "-") +
+    (nhData.reconstructed ? ' / <span class="err">この日は記録が無く、日足から後日再現した値です'
+      + '(母集団は終値×出来高10億円以上・順位も再現値。実記録のある日との一致率 '
+      + (nhData.match && nhData.match.real ? (nhData.match.both / nhData.match.real * 100).toFixed(0) + "%" : "-")
+      + ")</span>" : "") +
     (c.stale ? ' / <span class="err">日足が未反映で判定できなかった銘柄 ' + c.stale + "件</span>" : "") +
     (c.failed ? ' / <span class="err">取得失敗 ' + c.failed + "件</span>" : "");
   nhRenderTable();
@@ -2630,7 +2634,9 @@ async function nhInit() {
     const idx = await res.json();
     const dates = idx.dates || [];
     const sel = document.getElementById("nhDateSel");
-    sel.innerHTML = dates.map(d => '<option value="' + d + '">' + d + "</option>").join("");
+    const rec = new Set(idx.reconstructed || []);
+    sel.innerHTML = dates.map(d => '<option value="' + d + '">' + d
+      + (rec.has(d) ? "（再現）" : "") + "</option>").join("");
     sel.onchange = () => nhLoad(sel.value);
     document.getElementById("nhScopeSel").onchange = nhRenderTable;
     document.getElementById("nhCloseOnly").onchange = nhRenderTable;

@@ -457,7 +457,10 @@ def main():
         (p.stem for p in DOCS.glob("????-??-??.json")
          if re.fullmatch(r"\d{4}-\d{2}-\d{2}", p.stem)),
         reverse=True)
-    save_json(DOCS / "index.json", {"dates": dates, "updated": dates[0] if dates else None})
+    # rebuild_newhigh_history.py で後日再現した日は、タブの日付選択で印を付ける
+    rec = [d for d in dates if (load_json(DOCS / f"{d}.json") or {}).get("reconstructed")]
+    save_json(DOCS / "index.json", {"dates": dates, "updated": dates[0] if dates else None,
+                                    "reconstructed": rec})
 
     print(f"52週新高値(高値ベース) {len(stocks)}銘柄 / うち直近{FRESH_DAYS}営業日以内に"
           f"新高値なし {len(fresh)}銘柄 / 終値も更新 {payload['counts']['close_break']}銘柄"
