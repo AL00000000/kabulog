@@ -164,6 +164,10 @@ pre.code{background:var(--surface-2);border:1px solid var(--line);border-radius:
     <div class="step"><h4>2026年4月の新高値を6/23まで持っていたら、明確に勝っていた（ただし1例）</h4>
       <p><span class="badge m">実測</span>中央値で52週 +5.1%・上場来 +9.1%、母集団 +0.1%、TOPIX +7.0%。
       ただし日経平均が約+30%上がった強い相場の1回の観測で、4.1年の平均とは食い違う。一般化はできない。</p></div>
+    <div class="step"><h4>地合いフィルター（日経25日線で買いを止める＋個別25日線割れで売る）を付けると、4月以降は勝ったが長めの期間では負けた（§05）</h4>
+      <p><span class="badge m">実測</span>4/1〜今日: 52週新高値 +16.4%（フィルターなし -6.9%・TOPIX +7.9%・くじ引き＋同じフィルター -3.2%）。
+      2023年12月〜（約2.9年）: -2.4%（フィルターなし -28.9%・くじ引き＋同じフィルター +32.0%・TOPIX +68.7%）。</p>
+      <p><span class="badge i">推論</span>フィルターは損を減らすが、「新高値で選ぶ」不利を消すほどではない。4月以降の勝ちは4〜6月の相場に依存している可能性が高い。</p></div>
     <div class="step"><h4>まだ検証していないこと</h4>
       <p>売却ルールの変更（買った日が古い順に売る／買ってN日は売らない／最後に新高値を付けた日が古い順／高値からの下落率が大きい順／損切りライン）。
       上の「2〜3か月持てば差が消える」結果からは、<strong>買ってしばらく売らない系のルール</strong>で改善する余地がありそうだが、くじ引きやTOPIXに勝てるかは計算していない。</p></div>
@@ -209,7 +213,9 @@ pre.code{background:var(--surface-2);border:1px solid var(--line);border-radius:
 <pre class="code">py rebuild_newhigh_history.py --fetch      # 全銘柄の日足2年分（約20分）
 py kensho_newhigh/simulate.py              # 売買シミュレーション → docs/data_kensho_newhigh/result.json
 py kensho_newhigh/forward_returns.py       # §03 の表 → docs/data_kensho_newhigh/forward.json
-py kensho_newhigh/april_to_0623.py         # §04 の表 → docs/data_kensho_newhigh/april.json</pre>
+py kensho_newhigh/april_to_0623.py         # §04 の表 → docs/data_kensho_newhigh/april.json
+py kensho_newhigh/fetch_am.py              # §05 用: 午前引値（60分足）を全銘柄取得（約30分）
+py kensho_newhigh/regime.py                # §05 地合いフィルター版 → docs/data_kensho_newhigh/regime.json</pre>
     <p class="small">日別の新高値リストは <span class="kv">docs/data_newhigh/YYYY-MM-DD.json</span>（新高値タブと同じもの）。長期の検証はこのリストではなく日足から毎日判定し直している（実記録は2026-07-30開始のため）。判定ロジックは <span class="kv">fetch_newhigh.py</span> と同一で、実記録のある51日で再現率99.5%を確認済み。</p>
   </div>
 </section>
@@ -251,7 +257,53 @@ py kensho_newhigh/april_to_0623.py         # §04 の表 → docs/data_kensho_ne
 </section>
 
 <section>
-  <h2><span class="n">05</span>この結果を割り引くべき点</h2>
+  <h2><span class="n">05</span>地合いフィルターを付けたら — 日経平均の25日線＋個別株の25日線</h2>
+  <p class="lead">「新高値買いには効く地合いと効かない地合いがある」という仮説から、§01のルールに次の2つを足しました（本人の指定）。それ以外のルールは§01と同じです。</p>
+  <div class="manual">
+    <ol>
+      <li><strong>A. 新規の買いは、日経平均が25日線より上の日だけ。</strong>判定は<strong>午前引値（11:30）</strong>。下なら、その日は新高値が出ても買わない（予算を作るための売りもしない）。</li>
+      <li><strong>B. 保有株は、その銘柄の午前引値が25日線を下回ったら、その日の大引けで全株売る。</strong>日経平均の位置に関係なく毎日判定する。</li>
+      <li>25日線 ＝ 前営業日までの終値24本＋当日の午前引値 の平均（ザラ場中にチャートで見える25日線と同じ）。午前に約定が無い銘柄（売買停止・気配のまま等）はその日は判定しない。</li>
+      <li>処理の順番は「Bの売り → 予算計算 → 予算を作る売り（成績が悪い順）→ 引けで買う」。同じ日にBで売った銘柄が新高値で買い対象になっても、手数料を無視しているので差し引きと同じになる。</li>
+    </ol>
+    <p class="small">午前引値はYahoo Financeの60分足（11:00〜11:30の足の終値）から取っています。60分足は約2〜3年しか遡れないため、§02の約4.1年とは期間が違います。</p>
+  </div>
+  <div class="steps">
+    <div class="step"><h4>4月〜今日（本人指定の期間）: 52週新高値ではフィルターを付けると勝った</h4>
+      <p><span class="badge m">実測</span>2026-04-01〜10-28（141営業日）。52週新高値は <strong>A+B +16.4%</strong>（フィルターなし -6.9%、TOPIX +7.9%、くじ引き＋A+B 中央値 -3.2%）。くじ引き20回の<strong>すべてを上回った</strong>。最大下落率も -36.7% → -24.7% に縮んだ。
+      上場来新高値は A+B -1.0%（フィルターなし -12.6%、くじ引き中央値 -2.7%、20回中13回が本番以下）で、改善はしたがTOPIXには負けた。</p>
+      <p><span class="badge m">実測</span>AだけでもBだけでも改善し（52週: Aだけ +7.6%・Bだけ +3.9%）、両方で一番良かった。日経平均が25日線の下にいて買わなかったのは50営業日（7/13〜8/7の19日間など）。</p></div>
+    <div class="step"><h4>ただし利益は4〜6月に出たもので、6/22以降は減り続けている</h4>
+      <p><span class="badge m">実測</span>52週のA+Bは6/22に +45.1%（1,451万円）でピーク、そこから今日までに約2割減って +16.4%。フィルターなしも同じ6/22がピーク（+41.4%）。差がついたのは主に7月以降の下げを浅くできたぶん。</p></div>
+    <div class="step"><h4>2023年12月〜（下げ相場を含む約2.9年）では、くじ引きにもTOPIXにも負けた</h4>
+      <p><span class="badge m">実測</span>2024年8月の急落・2025年4月の関税ショックを含む706営業日。フィルターなし -28.9% → <strong>A+B -2.4%</strong>（上場来は -40.1% → -2.7%）と大きく改善したが、くじ引き＋A+B の中央値は +32.0%（上場来 +26.9%）で<strong>20回すべてに負け</strong>、TOPIX（+68.7%）には大差で負けた。</p>
+      <p><span class="badge m">実測</span>この期間は<strong>Aだけの方が良かった</strong>（52週 +14.2%・上場来 +18.7%）。Bを足すと悪化した。Bの売りは勝率2割強・騰落率の中央値 -4%前後。</p></div>
+    <div class="step"><h4>読み方</h4>
+      <p><span class="badge i">推論</span>日経平均の25日線で買いを止める（A）は、どちらの期間でもフィルターなしより良く、「弱い地合いでは新高値を買わない」という仮説とは矛盾しない。
+      ただし<strong>同じフィルターをくじ引きの銘柄に付けた場合に勝てたのは4月以降だけ</strong>で、約2.9年では負けた。4月以降の勝ちは「4〜6月が新高値に有利な相場だった」ことに依存している可能性が高く、141営業日・1期間の観測で一般化はできない。</p>
+      <p><span class="badge i">推論</span>個別25日線割れで売る（B）は、4月以降は効いたが約2.9年では逆効果。25日線を割った後に戻す銘柄を安値で手放している可能性がある（売った銘柄のその後は未計算）。</p></div>
+  </div>
+  <div class="ctl">
+    <label>期間 <select id="selRP"><option value="apr">2026-04-01〜（本人指定）</option><option value="ref">2023-12〜（参考・下げ相場を含む）</option></select></label>
+    <label>新高値の種類 <select id="selRK"><option value="w52">52週新高値</option><option value="ath">上場来新高値</option></select></label>
+  </div>
+  <figure>
+    <div class="legend">
+      <span><i style="background:var(--neg)"></i>A+B（フィルターあり）</span>
+      <span><i style="background:var(--ink-3)"></i>フィルターなし（§01のまま）</span>
+      <span><i style="background:var(--slate)"></i>くじ引き＋A+B（20回の中央値・帯は25〜75%）</span>
+      <span><i style="background:var(--brass)"></i>TOPIX（1306）</span>
+      <span><i style="background:var(--neg);opacity:.12"></i>日経平均が25日線より下（Aで買わない日）</span>
+    </div>
+    <svg id="rchart" viewBox="0 0 720 320" role="img" aria-label="地合いフィルター版の資産の推移"></svg>
+    <figcaption id="rcap"></figcaption>
+  </figure>
+  <div class="scroll"><table id="rtbl"></table></div>
+  <p class="small" id="rnote"></p>
+</section>
+
+<section>
+  <h2><span class="n">06</span>この結果を割り引くべき点</h2>
   <div class="caveats">
     <div class="cv"><h4>長期の母集団には生存バイアスがある</h4><p>2022〜2026年の検証に使った日足は、いま上場している銘柄（＋2026年6月時点の一覧）が中心です。途中で上場廃止になった銘柄の多くが入っていません。新高値側にも対照群側にも同じように効くので比較は成り立ちますが、絶対値は実際より良く出ている可能性があります。</p></div>
     <div class="cv"><h4>くじ引きの結果は大きくばらつく</h4><p>成績の悪いものから売るルールでは、たまたま大きく上がった銘柄に資産が集中していきます。そのため20回の抽選でも結果の幅が広く（表の「範囲」）、中央値で比べています。それでも本番は20回のほぼすべてを下回りました。</p></div>
@@ -262,8 +314,8 @@ py kensho_newhigh/april_to_0623.py         # §04 の表 → docs/data_kensho_ne
 </section>
 
 <footer>
-  データ: 株価 Yahoo Finance（日足・月足）／ 銘柄一覧 JPX東証上場銘柄一覧（2026年6月版・最新版）／ 新高値の日別リスト 株ログ「新高値」タブ<br>
-  スクリプト: kabutan-ranking/kensho_newhigh/simulate.py ・ forward_returns.py ／ <span id="gen"></span>
+  データ: 株価 Yahoo Finance（日足・月足・60分足）／ 銘柄一覧 JPX東証上場銘柄一覧（2026年6月版・最新版）／ 新高値の日別リスト 株ログ「新高値」タブ<br>
+  スクリプト: kabutan-ranking/kensho_newhigh/simulate.py ・ forward_returns.py ・ regime.py ／ <span id="gen"></span>
 </footer>
 
 </div>
@@ -272,7 +324,7 @@ py kensho_newhigh/april_to_0623.py         # §04 の表 → docs/data_kensho_ne
 const pct = (x, d = 1) => x == null ? "-" : (x >= 0 ? "+" : "") + (x * 100).toFixed(d) + "%";
 const man = x => (x / 1e4).toLocaleString("ja-JP", { maximumFractionDigits: 0 }) + "万円";
 const cls = x => x == null ? "" : x >= 0 ? "pos" : "neg";
-let R, F, A;
+let R, F, A, G;
 
 function draw() {
   const P = R[document.getElementById("selP").value];
@@ -371,12 +423,77 @@ function fwd() {
   document.getElementById("fwd").innerHTML = h + "</tbody>";
 }
 
+function rdraw() {
+  const P = G.periods[document.getElementById("selRP").value];
+  const k = document.getElementById("selRK").value;
+  const run = P.runs[k + "_both"], base = P.runs[k + "_none"];
+  const c = run.curve, c0 = base.curve, cc = run.ctrl_curve, b = P.bench;
+  const W = 720, H = 320, L = 58, Rm = 10, T = 12, B = 30;
+  const all = c.map(x => x[1]).concat(c0.map(x => x[1]), cc.map(x => x[3]), cc.map(x => x[2]), b.map(x => x[1]));
+  let lo = Math.min(...all), hi = Math.max(...all);
+  const pad = (hi - lo) * .06; lo -= pad; hi += pad;
+  const n = c.length;
+  const X = i => L + (W - L - Rm) * i / (n - 1);
+  const Y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+  const line = (arr, j) => arr.map((x, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(x[j]).toFixed(1)).join("");
+  let s = "";
+  const w = (W - L - Rm) / (n - 1);
+  P.on.forEach((v, i) => { if (!v) s += `<rect x="${(X(i) - w / 2).toFixed(1)}" y="${T}" width="${(w + .3).toFixed(1)}" height="${H - T - B}" fill="var(--neg)" opacity=".08"/>`; });
+  const step = Math.pow(10, Math.floor(Math.log10((hi - lo) / 4)));
+  const st = [1, 2, 5, 10].map(m => m * step).find(v => (hi - lo) / v <= 6);
+  for (let v = Math.ceil(lo / st) * st; v <= hi; v += st) {
+    s += `<line x1="${L}" x2="${W - Rm}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line-soft)"/>`;
+    s += `<text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="var(--ink-3)" font-family="IBM Plex Mono,monospace">${(v / 1e4).toFixed(0)}万</text>`;
+  }
+  s += `<line x1="${L}" x2="${W - Rm}" y1="${Y(R.capital)}" y2="${Y(R.capital)}" stroke="var(--ink-3)" stroke-dasharray="3 3"/>`;
+  const longP = P.days > 300;
+  let lastY = "";
+  c.forEach((x, i) => {
+    const ym = longP ? x[0].slice(0, 4) : x[0].slice(0, 7);
+    if (ym !== lastY && (!longP || x[0].slice(5, 7) === "01" || i === 0)) {
+      lastY = ym;
+      s += `<text x="${X(i)}" y="${H - 10}" font-size="11" fill="var(--ink-3)" font-family="IBM Plex Mono,monospace">${longP ? ym : x[0].slice(5, 7) + "月"}</text>`;
+    }
+  });
+  const band = cc.map((x, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(x[3]).toFixed(1)).join("")
+    + cc.slice().reverse().map((x, i) => "L" + X(n - 1 - i).toFixed(1) + " " + Y(x[2]).toFixed(1)).join("") + "Z";
+  s += `<path d="${band}" fill="var(--slate)" opacity=".16"/>`;
+  s += `<path d="${line(b, 1)}" fill="none" stroke="var(--brass)" stroke-width="1.6"/>`;
+  s += `<path d="${line(cc, 1)}" fill="none" stroke="var(--slate)" stroke-width="1.6"/>`;
+  s += `<path d="${line(c0, 1)}" fill="none" stroke="var(--ink-3)" stroke-width="1.4" stroke-dasharray="4 3"/>`;
+  s += `<path d="${line(c, 1)}" fill="none" stroke="var(--neg)" stroke-width="2.2"/>`;
+  document.getElementById("rchart").innerHTML = s;
+  document.getElementById("rcap").textContent =
+    `${P.start}〜${P.end}（${P.days}営業日）。日経平均が午前引値で25日線より上だった日 ${P.on_days} / ${P.days}営業日。初期資産1,000万円。破線（横）は初期資産。`;
+
+  const lab = { none: "フィルターなし（§01のまま）", idx: "Aだけ（日経25日線で買いを止める）", stop: "Bだけ（個別25日線割れで売る）", both: "A+B（本人ルール）" };
+  let h = "<thead><tr><th></th><th>資産の増減</th><th>最大下落率</th><th>平均保有銘柄数</th><th>平均現金比率</th><th>25日線割れの売り<br>回数・勝率・中央値</th><th>新高値が出たのに<br>買わなかった日</th></tr></thead><tbody>";
+  for (const v of ["none", "idx", "stop", "both"]) {
+    const r = P.runs[k + "_" + v], m = r.metrics, f = r.info;
+    h += `<tr${v === "both" ? ' class="hl"' : ""}><td>${lab[v]}</td><td class="n"><b class="${cls(m.total)}">${pct(m.total)}</b></td><td class="n">${pct(m.mdd)}</td>`
+      + `<td class="n">${m.avg_hold.toFixed(1)}</td><td class="n">${(m.avg_cash * 100).toFixed(0)}%</td>`
+      + `<td class="n">${f.stop_n ? f.stop_n.toLocaleString() + "回・" + (f.stop_win * 100).toFixed(0) + "%・" + pct(f.stop_med, 1) : "-"}</td>`
+      + `<td class="n">${v === "idx" || v === "both" ? f.skip_days + "日" : "-"}</td></tr>`;
+  }
+  const each = run.ctrl.each.slice().sort((a, b) => a - b);
+  const m = run.metrics;
+  h += `<tr><td>くじ引き＋A+B（20回）</td><td class="n">中央値 <span class="${cls(run.ctrl.median)}">${pct(run.ctrl.median)}</span><br><span class="small">範囲 ${pct(each[0])}〜${pct(each[each.length - 1])}</span></td><td class="n">${pct(run.ctrl.mdd)}<span class="small">（平均）</span></td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td></tr>`;
+  h += `<tr><td>TOPIX（1306）</td><td class="n"><span class="${cls(m.bench_total)}">${pct(m.bench_total)}</span></td><td class="n">${pct(m.bench_mdd)}</td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td></tr>`;
+  document.getElementById("rtbl").innerHTML = h + "</tbody>";
+  document.getElementById("rnote").innerHTML =
+    `A+Bで、くじ引き20回のうち本番以下だった回数 <b>${each.filter(v => v <= m.total).length} / ${each.length}</b>。`
+    + `「25日線割れの売り」の勝率・中央値は平均取得単価からの騰落率。保有中に午前引値が取れず判定できなかった延べ日数 ${run.info.no_am.toLocaleString()}（上場廃止銘柄など）。`;
+}
+
 (async () => {
+  G = await (await fetch("data_kensho_newhigh/regime.json", { cache: "no-cache" })).json();
   R = await (await fetch("data_kensho_newhigh/result.json", { cache: "no-cache" })).json();
   F = await (await fetch("data_kensho_newhigh/forward.json", { cache: "no-cache" })).json();
   A = await (await fetch("data_kensho_newhigh/april.json", { cache: "no-cache" })).json();
   document.getElementById("gen").textContent = "計算日時 " + R.generated.slice(0, 16).replace("T", " ");
-  cards(); fwd(); apr(); draw();
+  cards(); fwd(); apr(); draw(); rdraw();
+  document.getElementById("selRP").onchange = rdraw;
+  document.getElementById("selRK").onchange = rdraw;
   document.getElementById("selP").onchange = draw;
   document.getElementById("selK").onchange = draw;
 })();
