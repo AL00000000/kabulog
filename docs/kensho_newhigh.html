@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>新高値を毎日買い続けたら</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F6F6F2; --surface:#FFFFFF; --surface-2:#EFEFE9; --line:#DBDBD2; --line-soft:#E8E8E1;
+  --ink:#1B2026; --ink-2:#4E5560; --ink-3:#7C838D;
+  --brass:#9C6B18; --brass-soft:#C9952F; --teal:#2F6A5C; --slate:#4E718D; --nikkei:#9A5340;
+  --pos:#2C6E4E; --neg:#A8443A; --band:#F2EDE0;
+  --shadow:0 1px 2px rgba(27,32,38,.05),0 6px 18px -10px rgba(27,32,38,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12161A; --surface:#191E24; --surface-2:#20262D; --line:#2E353D; --line-soft:#252C33;
+    --ink:#E9E7E1; --ink-2:#A8AEB6; --ink-3:#79808A;
+    --brass:#DCA946; --brass-soft:#B9852C; --teal:#64AE9A; --slate:#86A9C6; --nikkei:#D28B70;
+    --pos:#5FB489; --neg:#D97B6D; --band:#242019;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12161A; --surface:#191E24; --surface-2:#20262D; --line:#2E353D; --line-soft:#252C33;
+  --ink:#E9E7E1; --ink-2:#A8AEB6; --ink-3:#79808A;
+  --brass:#DCA946; --brass-soft:#B9852C; --teal:#64AE9A; --slate:#86A9C6; --nikkei:#D28B70;
+  --pos:#5FB489; --neg:#D97B6D; --band:#242019;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.85; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 96px}
+h1,h2,h3{font-family:"Shippori Mincho B1",'Yu Mincho',serif;font-weight:700;text-wrap:balance;line-height:1.4;margin:0}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* header */
+header.top{border-bottom:1px solid var(--line);padding:56px 0 30px;margin-bottom:40px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);font-weight:700;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+h1{font-size:clamp(28px,5.2vw,42px);letter-spacing:.01em}
+.sub{color:var(--ink-2);font-size:15px;margin-top:16px;max-width:62ch}
+
+/* answer cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:34px 0 8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 20px 18px;box-shadow:var(--shadow);border-top:3px solid var(--c,var(--slate))}
+.card .lbl{font-size:12px;color:var(--ink-2);line-height:1.55;min-height:3.1em}
+.card .big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:31px;font-weight:600;color:var(--c,var(--ink));letter-spacing:-.02em;margin-top:10px}
+.card .foot{font-size:11.5px;color:var(--ink-3);margin-top:4px;font-family:"IBM Plex Mono",monospace}
+
+section{margin-top:56px}
+h2{font-size:22px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:8px;display:flex;align-items:baseline;gap:12px}
+h2 .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--brass);font-weight:600;letter-spacing:.08em}
+h3{font-size:16px;margin:30px 0 10px}
+p{margin:14px 0}
+.lead{color:var(--ink-2)}
+.small{font-size:13px;color:var(--ink-3);line-height:1.7}
+
+/* tables */
+.scroll{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:9px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line-soft)}
+th{background:var(--surface-2);font-weight:700;font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);border-bottom:1px solid var(--line)}
+td:first-child,th:first-child{text-align:left;white-space:normal;min-width:190px}
+tbody tr:last-child td{border-bottom:none}
+tr.hl td{background:var(--band)}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:baseline}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+/* charts */
+figure{margin:22px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 18px 14px;box-shadow:var(--shadow)}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:12px;line-height:1.65}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:12.5px;margin-bottom:14px}
+.legend span{display:flex;align-items:center;gap:7px;color:var(--ink-2)}
+.legend i{width:14px;height:3px;border-radius:2px;display:block}
+
+/* caveat */
+.caveats{margin-top:22px;display:grid;gap:2px}
+.cv{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:0 3px 3px 0;padding:16px 20px}
+.cv h4{margin:0 0 6px;font-size:14.5px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.cv p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);margin-right:8px;vertical-align:1px}
+.badge.m{color:var(--teal);border-color:var(--teal)}
+.badge.i{color:var(--brass);border-color:var(--brass)}
+
+ul{padding-left:1.15em;margin:12px 0}
+li{margin:7px 0;color:var(--ink-2);font-size:14px}
+li strong{color:var(--ink)}
+a{color:var(--brass);text-underline-offset:3px}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.8}
+@media (max-width:620px){ td:first-child,th:first-child{min-width:140px} .wrap{padding:0 16px 70px} }
+
+/* process steps */
+.steps{counter-reset:st;display:grid;gap:2px;margin-top:20px}
+.step{background:var(--surface);border:1px solid var(--line);padding:18px 22px 18px 62px;position:relative;border-radius:3px}
+.step::before{counter-increment:st;content:counter(st);position:absolute;left:20px;top:18px;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--brass);border:1px solid var(--brass);border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.step h4{margin:0 0 6px;font-size:15px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.step p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+.step p+p{margin-top:8px}
+.kv{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--surface-2);padding:1px 6px;border-radius:2px;border:1px solid var(--line)}
+.note{background:var(--band);border:1px solid var(--line);border-radius:3px;padding:14px 18px;font-size:13.5px;color:var(--ink-2);line-height:1.75;margin:18px 0}
+.note strong{color:var(--ink)}
+</style>
+
+
+<style>
+/* --- サイト(kabutan-ranking)のダーク配色に合わせる --- */
+:root[data-theme="dark"]{
+  --bg:#0a0f1c; --surface:#101830; --surface-2:#16203c; --line:#1e2a48; --line-soft:#17203a;
+  --ink:#dbe4f5; --ink-2:#9fb0cd; --ink-3:#7787a5;
+  --brass:#ffd166; --brass-soft:#c9952f; --teal:#5fd3b4; --slate:#4da3ff; --nikkei:#ff8f7a;
+  --pos:#4da3ff; --neg:#ff5b6a; --band:#16203c;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px -12px rgba(0,0,0,.75);
+}
+body{font-size:15px}
+.wrap{max-width:100%;padding:0 4px 48px}
+header.top{padding:20px 0 26px}
+</style>
+<style>
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:4px 0 14px;font-size:13px;color:var(--ink-2)}
+.ctl select{background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:5px 8px;font:inherit}
+.manual{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:6px 22px 18px;margin-top:18px}
+.manual h3{margin-top:22px}
+.manual ol,.manual ul{padding-left:1.4em}
+.manual li{font-size:14px}
+pre.code{background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:14px 16px;overflow-x:auto;font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.65;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">2022.09 — 2026.10 ／ 売買代金10億円以上の新高値 ／ 毎日 資産の1/5を入れ替え</div>
+  <h1>新高値を毎日買い続けたら</h1>
+  <p class="sub">「その日に新高値を付けた銘柄を資産の5分の1で毎日均等に買い、資金は成績の悪い銘柄から売って作る」という機械的な運用を、
+  日足から約4.1年ぶん再現しました。比べる相手は<strong>同じルールで、新高値の代わりにくじ引きで選んだ銘柄</strong>（20回）と、TOPIX連動ETF（1306）です。
+  結論から書くと、<strong>新高値で選ぶとくじ引きより明確に悪く、TOPIXにも大きく負けました</strong>。</p>
+  <div class="cards" id="cards"></div>
+</header>
+
+<section>
+  <h2><span class="n">01</span>運用マニュアル（このとおりに実行すれば同じ結果になる）</h2>
+  <p class="lead">本人と相談して決めたルールです。他のAIや人がこのページだけを読んで再現・運用できるよう、判断が分かれうる点はすべて書いています。</p>
+  <div class="manual">
+    <h3>A. 毎営業日の手順（大引け 15:30 に行う）</h3>
+    <ol>
+      <li><strong>新高値銘柄を確定する。</strong>対象は東証プライム・スタンダード・グロースの株式（ETF・REIT等は除く）で、その日の<strong>売買代金が10億円以上</strong>のもの。そのうち<strong>当日高値 ＞ 当日を含まない直近365日の最高値</strong>になった銘柄が「52週新高値」。同値は更新に数えない。さらに上場来の最高値（月足の当月より前＋当月の当日より前の日足）以上なら「上場来新高値」。どちらで運用するかは最初に1つ決めて途中で変えない。</li>
+      <li><strong>新高値が0件なら何もしない。</strong>売りも買いもしない。</li>
+      <li><strong>予算を決める。</strong>予算 ＝（現金 ＋ 保有株をその日の終値で評価した時価）× 1/5。毎日その日の資産で計算し直す（初期資産の1/5に固定しない）。</li>
+      <li><strong>現金が予算以上なら、売らずに現金だけで買う</strong>（始めの数日はこれになる）。現金が足りなければ、不足額のぶんだけ売る。</li>
+      <li><strong>売る銘柄の選び方。</strong>
+        <ul>
+          <li>売れるのは、保有銘柄のうち<strong>その日の新高値リストに入っていない銘柄</strong>だけ。今日の新高値銘柄は売らない（今日買い増す対象なので）。</li>
+          <li><strong>平均取得単価からの騰落率（終値÷平均取得単価−1）が低い順</strong>、つまり<strong>成績が悪い順</strong>に売る。値上がりしている銘柄しか残っていなくても、上昇率の低いものから売る。</li>
+          <li>1銘柄を丸ごと売っても不足額に届かなければ次の銘柄へ。最後の銘柄は<strong>不足額ちょうどだけ一部売却</strong>する。</li>
+          <li>売買停止などでその日の終値が無い銘柄は、その日は売らない（評価は直前の終値）。</li>
+        </ul></li>
+      <li><strong>売っても予算に届かなかった場合</strong>（保有がほぼ今日の新高値銘柄ばかりの日）は、作れた金額だけで買う。借りてまで買わない。</li>
+      <li><strong>買う。</strong>使える金額を新高値銘柄の数で<strong>均等に割り</strong>、全銘柄をその日の<strong>終値（大引け）</strong>で買う。既に持っている銘柄なら買い増し、平均取得単価を加重平均で更新する。
+        <br><span class="small">例：資産1,000万円・新高値20銘柄 → 予算200万円 → 1銘柄10万円ずつ。現金が30万円なら170万円ぶんを成績の悪い順に売って作る。</span></li>
+      <li><strong>予算を作る以外の理由では売らない。</strong>損切り・利益確定・保有期間の上限は無い。上場廃止で値が付かなくなった銘柄は、最後の終値で現金化したものとして扱う。</li>
+    </ol>
+    <h3>B. 前提として無視しているもの</h3>
+    <ul>
+      <li>最小投資単位（100株単位）— 端数株でも買える前提。</li>
+      <li>手数料・税金・スリッページ・ストップ高で買えないこと。</li>
+      <li>本人の実際の資産額 — 初期資産は便宜上1,000万円・全額現金から開始。結果は比率で読む。</li>
+    </ul>
+    <h3>C. 新高値の判定で気をつけること（ここを外すと結果が変わる）</h3>
+    <ul>
+      <li><strong>株探ランキングの株価は15:24時点で終値ではない。</strong>終値・売買代金は引け後の日足（Yahoo Finance）で確定させる。</li>
+      <li>「上場来」は厳密には<strong>Yahooが持つ全期間</strong>（多くは2000年前後から）。月足が取れない銘柄は上場来を判定せず対象外にする（「5年来」を上場来と誤認しないため）。</li>
+      <li>上場から30営業日未満の銘柄は判定しない（比べる過去がほぼ無く、何でも新高値になるため）。</li>
+      <li>Yahooの日足には桁が壊れた値や2日続く異常値が混じる。前後5本の中央値から外れて戻る値は除去してから判定する（<span class="kv">backfill_newhigh.clean_bars</span>）。</li>
+    </ul>
+    <h3>D. 実装（このリポジトリで再計算する手順）</h3>
+<pre class="code">py rebuild_newhigh_history.py --fetch      # 全銘柄の日足2年分（約20分）
+py kensho_newhigh/simulate.py              # 売買シミュレーション → docs/data_kensho_newhigh/result.json
+py kensho_newhigh/forward_returns.py       # §03 の表 → docs/data_kensho_newhigh/forward.json</pre>
+    <p class="small">日別の新高値リストは <span class="kv">docs/data_newhigh/YYYY-MM-DD.json</span>（新高値タブと同じもの）。長期の検証はこのリストではなく日足から毎日判定し直している（実記録は2026-07-30開始のため）。判定ロジックは <span class="kv">fetch_newhigh.py</span> と同一で、実記録のある51日で再現率99.5%を確認済み。</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">02</span>結果 — 資産の推移</h2>
+  <div class="ctl">
+    <label>期間 <select id="selP"><option value="long">2022-09〜（約4.1年・日足から判定）</option><option value="live">2026-06-23〜（新高値タブの日別リスト）</option></select></label>
+    <label>新高値の種類 <select id="selK"><option value="w52">52週新高値</option><option value="ath">上場来新高値</option></select></label>
+  </div>
+  <figure>
+    <div class="legend">
+      <span><i style="background:var(--neg)"></i>新高値で運用（本番）</span>
+      <span><i style="background:var(--slate)"></i>くじ引きで選んだ場合（20回の中央値・帯は25〜75%）</span>
+      <span><i style="background:var(--brass)"></i>TOPIX（1306）を持ち続けた場合</span>
+    </div>
+    <svg id="chart" viewBox="0 0 720 320" role="img" aria-label="資産の推移"></svg>
+    <figcaption id="cap"></figcaption>
+  </figure>
+  <div class="scroll"><table id="tbl"></table></div>
+  <p class="small" id="tblnote"></p>
+</section>
+
+<section>
+  <h2><span class="n">03</span>なぜ負けるのか — 新高値の「その後」</h2>
+  <p class="lead">売買ルールが悪いのか、新高値という選び方が悪いのかを分けるために、<strong>くじ引きの対照群</strong>を置きました。同じ日・同じ銘柄数を、その日の売買代金10億円以上の銘柄から無作為に選び、まったく同じルールで売買したものです。</p>
+  <div class="scroll"><table id="fwd"></table></div>
+  <p><span class="badge m">実測</span>新高値を付けた銘柄は、翌日・5日後・20日後の<strong>どの時点でも母集団全体より成績が悪い</strong>（中央値・上昇した割合とも）。
+  <span class="badge i">推論</span>このルールは「新高値の日の引けで買い、その後に下がった銘柄から売る」ので、買った直後に押し戻されやすい新高値銘柄では、<strong>高値で買って小さく負けて売る</strong>を毎日繰り返すことになります。売却時の騰落率の中央値がマイナス、勝率が3割台なのはこの裏付けです。くじ引きの銘柄は買った直後に下がる癖が無いので、同じルールでも資産が増えています。</p>
+</section>
+
+<section>
+  <h2><span class="n">04</span>この結果を割り引くべき点</h2>
+  <div class="caveats">
+    <div class="cv"><h4>長期の母集団には生存バイアスがある</h4><p>2022〜2026年の検証に使った日足は、いま上場している銘柄（＋2026年6月時点の一覧）が中心です。途中で上場廃止になった銘柄の多くが入っていません。新高値側にも対照群側にも同じように効くので比較は成り立ちますが、絶対値は実際より良く出ている可能性があります。</p></div>
+    <div class="cv"><h4>くじ引きの結果は大きくばらつく</h4><p>成績の悪いものから売るルールでは、たまたま大きく上がった銘柄に資産が集中していきます。そのため20回の抽選でも結果の幅が広く（表の「範囲」）、中央値で比べています。それでも本番は20回のほぼすべてを下回りました。</p></div>
+    <div class="cv"><h4>6/23以降の期間は短く、一部が再現データ</h4><p>約4か月・86営業日しかありません。新高値リストのうち35日は記録が無く、日足から後日再現したものです（実記録との一致率99.5%）。</p></div>
+    <div class="cv"><h4>売買代金は「終値×出来高」で近似</h4><p>株探の売買代金（約定代金の合計）とは少しずれ、10億円の境目の銘柄が入れ替わることがあります。</p></div>
+    <div class="cv"><h4>コストを入れていない</h4><p>毎日資産の2割を入れ替えるので、手数料・スプレッドを入れると本番はさらに悪くなります（対照群も同様）。</p></div>
+  </div>
+</section>
+
+<footer>
+  データ: 株価 Yahoo Finance（日足・月足）／ 銘柄一覧 JPX東証上場銘柄一覧（2026年6月版・最新版）／ 新高値の日別リスト 株ログ「新高値」タブ<br>
+  スクリプト: kabutan-ranking/kensho_newhigh/simulate.py ・ forward_returns.py ／ <span id="gen"></span>
+</footer>
+
+</div>
+<script>
+"use strict";
+const pct = (x, d = 1) => x == null ? "-" : (x >= 0 ? "+" : "") + (x * 100).toFixed(d) + "%";
+const man = x => (x / 1e4).toLocaleString("ja-JP", { maximumFractionDigits: 0 }) + "万円";
+const cls = x => x == null ? "" : x >= 0 ? "pos" : "neg";
+let R, F;
+
+function draw() {
+  const P = R[document.getElementById("selP").value];
+  const k = document.getElementById("selK").value;
+  const run = P.runs[k + "_asc"];
+  const c = run.curve, cc = run.ctrl_curve, b = P.bench;
+  const W = 720, H = 320, L = 58, Rm = 10, T = 12, B = 30;
+  const all = c.map(x => x[1]).concat(cc.map(x => x[3]), cc.map(x => x[2]), b.map(x => x[1]));
+  let lo = Math.min(...all), hi = Math.max(...all);
+  const pad = (hi - lo) * .06; lo -= pad; hi += pad;
+  const n = c.length;
+  const X = i => L + (W - L - Rm) * i / (n - 1);
+  const Y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+  const line = (arr, j) => arr.map((x, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(x[j]).toFixed(1)).join("");
+  let s = "";
+  const step = Math.pow(10, Math.floor(Math.log10((hi - lo) / 4)));
+  const st = [1, 2, 5, 10].map(m => m * step).find(v => (hi - lo) / v <= 6);
+  for (let v = Math.ceil(lo / st) * st; v <= hi; v += st) {
+    s += `<line x1="${L}" x2="${W - Rm}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line-soft)"/>`;
+    s += `<text x="${L - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="var(--ink-3)" font-family="IBM Plex Mono,monospace">${(v / 1e4).toFixed(0)}万</text>`;
+  }
+  s += `<line x1="${L}" x2="${W - Rm}" y1="${Y(R.capital)}" y2="${Y(R.capital)}" stroke="var(--ink-3)" stroke-dasharray="3 3"/>`;
+  let lastY = "";
+  c.forEach((x, i) => {
+    const ym = x[0].slice(0, P === R.long ? 4 : 7);
+    if (ym !== lastY && (P === R.long ? x[0].slice(5, 7) === "01" || i === 0 : true)) {
+      lastY = ym;
+      s += `<text x="${X(i)}" y="${H - 10}" font-size="11" fill="var(--ink-3)" font-family="IBM Plex Mono,monospace">${P === R.long ? ym : x[0].slice(5, 7) + "月"}</text>`;
+    }
+  });
+  const band = cc.map((x, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(x[3]).toFixed(1)).join("")
+    + cc.slice().reverse().map((x, i) => "L" + X(n - 1 - i).toFixed(1) + " " + Y(x[2]).toFixed(1)).join("") + "Z";
+  s += `<path d="${band}" fill="var(--slate)" opacity=".16"/>`;
+  s += `<path d="${line(b, 1)}" fill="none" stroke="var(--brass)" stroke-width="1.6"/>`;
+  s += `<path d="${line(cc, 1)}" fill="none" stroke="var(--slate)" stroke-width="1.6"/>`;
+  s += `<path d="${line(c, 1)}" fill="none" stroke="var(--neg)" stroke-width="2.2"/>`;
+  document.getElementById("chart").innerHTML = s;
+  const m = run.metrics;
+  document.getElementById("cap").textContent =
+    `${P.start}〜${P.end}（${P.days}営業日）。初期資産1,000万円。本番の最終資産 ${man(m.final)}、くじ引きの中央値 ${pct(run.ctrl.median)}、TOPIX ${pct(m.bench_total)}。破線は初期資産。`;
+
+  const each = run.ctrl.each.slice().sort((a, b) => a - b);
+  const below = each.filter(v => v <= m.total).length;
+  const rows = [
+    ["", "新高値で運用（本番）", "くじ引き（20回）", "TOPIX（1306）"],
+    ["資産の増減（期間全体）", `<b class="${cls(m.total)}">${pct(m.total)}</b>`, `中央値 <span class="${cls(run.ctrl.median)}">${pct(run.ctrl.median)}</span><br><span class="small">範囲 ${pct(each[0])}〜${pct(each[each.length - 1])}</span>`, `<span class="${cls(m.bench_total)}">${pct(m.bench_total)}</span>`],
+  ];
+  if (m.cagr != null) rows.push(["年率", pct(m.cagr), pct(run.ctrl.cagr), pct(m.bench_cagr)]);
+  rows.push(["最大下落率（ピークからの）", pct(m.mdd), pct(run.ctrl.mdd) + "<span class='small'>（平均）</span>", pct(m.bench_mdd)]);
+  rows.push(["平均保有銘柄数", m.avg_hold.toFixed(1), run.ctrl.avg_hold.toFixed(1), "-"]);
+  rows.push(["くじ引き20回のうち本番以下だった回数", `<b>${below} / ${each.length}</b>`, "", ""]);
+  rows.push(["売却時の騰落率（中央値）・勝率", `${pct(run.info.realized_med, 2)}・${(run.info.realized_win * 100).toFixed(0)}%`, "", ""]);
+  document.getElementById("tbl").innerHTML = "<thead><tr>" + rows[0].map(h => `<th>${h}</th>`).join("") + "</tr></thead><tbody>"
+    + rows.slice(1).map(r => "<tr>" + r.map((v, i) => `<td class="${i ? "n" : ""}">${v}</td>`).join("") + "</tr>").join("") + "</tbody>";
+  const top = run.info.top.slice(0, 5).map(t => `${R.names[t[0]] || t[0]}（${t[0]}）${man(t[1])}`).join("、");
+  document.getElementById("tblnote").innerHTML =
+    `新高値が出た日 ${P.signal_days} / ${P.days}営業日、1日平均 ${k === "w52" ? P.avg_w52 : P.avg_ath}銘柄。売却 ${run.info.realized_n.toLocaleString()}回。`
+    + (run.info.short_days ? `予算を作りきれなかった日 ${run.info.short_days}日。` : "")
+    + `<br>最終日の保有上位: ${top}`
+    + (P === R.live ? `<br>この期間の新高値リストのうち ${P.reconstructed_days}日は日足から後日再現したもの。` : "");
+}
+
+function cards() {
+  const L = R.long.runs, V = R.live.runs;
+  const cs = [
+    ["var(--neg)", "52週新高値で運用<br>2022-09〜（4.1年）", pct(L.w52_asc.metrics.total), "年率 " + pct(L.w52_asc.metrics.cagr)],
+    ["var(--slate)", "同じルールでくじ引き<br>20回の中央値", pct(L.w52_asc.ctrl.median), "本番以下は20回中 " + L.w52_asc.ctrl.each.filter(v => v <= L.w52_asc.metrics.total).length + "回"],
+    ["var(--brass)", "TOPIX（1306）を<br>持ち続けた場合", pct(L.w52_asc.metrics.bench_total), "年率 " + pct(L.w52_asc.metrics.bench_cagr)],
+    ["var(--neg)", "6/23〜今日<br>52週新高値で運用", pct(V.w52_asc.metrics.total), "くじ引き " + pct(V.w52_asc.ctrl.median) + "・TOPIX " + pct(V.w52_asc.metrics.bench_total)],
+  ];
+  document.getElementById("cards").innerHTML = cs.map(c =>
+    `<div class="card" style="--c:${c[0]}"><div class="lbl">${c[1]}</div><div class="big">${c[2]}</div><div class="foot">${c[3]}</div></div>`).join("");
+}
+
+function fwd() {
+  const lab = { w52: "52週新高値の銘柄", ath: "上場来新高値の銘柄", uni: "母集団全体（売買代金10億円以上）" };
+  let h = "<thead><tr><th>その日の引けで買ったら</th><th>件数</th><th>翌日 中央値</th><th>5日後 中央値</th><th>20日後 中央値</th><th>20日後 平均</th><th>5日後に上がっていた割合</th></tr></thead><tbody>";
+  for (const k of ["w52", "ath", "uni"]) {
+    h += `<tr${k === "uni" ? ' class="hl"' : ""}><td>${lab[k]}</td><td class="n">${F[k + "_5"].n.toLocaleString()}</td>`
+      + [F[k + "_1"].med, F[k + "_5"].med, F[k + "_20"].med, F[k + "_20"].mean].map(v => `<td class="n ${cls(v)}">${pct(v, 2)}</td>`).join("")
+      + `<td class="n">${(F[k + "_5"].win * 100).toFixed(1)}%</td></tr>`;
+  }
+  document.getElementById("fwd").innerHTML = h + "</tbody>";
+}
+
+(async () => {
+  R = await (await fetch("data_kensho_newhigh/result.json", { cache: "no-cache" })).json();
+  F = await (await fetch("data_kensho_newhigh/forward.json", { cache: "no-cache" })).json();
+  document.getElementById("gen").textContent = "計算日時 " + R.generated.slice(0, 16).replace("T", " ");
+  cards(); fwd(); draw();
+  document.getElementById("selP").onchange = draw;
+  document.getElementById("selK").onchange = draw;
+})();
+</script>
+</body>
+</html>

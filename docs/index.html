@@ -342,6 +342,7 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="kensho1up">1UP企業取材の翌日</button>
         <button class="tab" data-tab="kenshokaiun">海運株の予想PER</button>
         <button class="tab" data-tab="kenshotob">TOBされる会社は安いのか</button>
+        <button class="tab" data-tab="kenshonewhigh">新高値を毎日買い続けたら</button>
       </div>
     </div>
     <div class="tabgroup">
@@ -1068,6 +1069,11 @@ footer a { color: var(--accent); }
   <div id="view-bottomup" hidden>
     <div class="embed-note">個人的メモ — 個別企業から注目銘柄を整理する手動更新のリスト。本人のメモと事実・仮説を区別して記録。<a href="./personal-bottom-up.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
     <iframe class="embed" title="注目銘柄" data-src="./personal-bottom-up.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-kenshonewhigh" hidden>
+    <div class="embed-note">「その日の新高値銘柄を資産の5分の1で毎日均等に買い、資金は成績の悪い銘柄から売って作る」運用を<b>2022年9月から約4.1年</b>再現したレポート。同じルールで銘柄をくじ引きで選んだ20回を対照群に置いた。新高値で選ぶとくじ引きにもTOPIXにも負け、仮説は否定。他のAIでも実行できる運用マニュアル付き — <a href="./kensho_newhigh.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="新高値を毎日買い続けたら — 仮説検証レポート" data-src="./kensho_newhigh.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-kenshotob" hidden>
@@ -4437,7 +4443,7 @@ const VIEW_ID = {
   selran: "view-selran", baibai: "view-baibai", search: "view-search",
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun",
   tsetop5: "view-tsetop5",
-  kenshotob: "view-kenshotob", congestion: "view-congestion", soxhistory: "view-soxhistory",
+  kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", congestion: "view-congestion", soxhistory: "view-soxhistory",
   bottomup: "view-bottomup",
 };
 function switchTab(name) {
