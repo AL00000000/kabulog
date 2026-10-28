@@ -164,10 +164,10 @@ pre.code{background:var(--surface-2);border:1px solid var(--line);border-radius:
     <div class="step"><h4>2026年4月の新高値を6/23まで持っていたら、明確に勝っていた（ただし1例）</h4>
       <p><span class="badge m">実測</span>中央値で52週 +5.1%・上場来 +9.1%、母集団 +0.1%、TOPIX +7.0%。
       ただし日経平均が約+30%上がった強い相場の1回の観測で、4.1年の平均とは食い違う。一般化はできない。</p></div>
-    <div class="step"><h4>地合いフィルター（日経25日線で買いを止める＋個別25日線割れで売る）を付けると、4月以降は勝ったが長めの期間では負けた（§05）</h4>
-      <p><span class="badge m">実測</span>4/1〜今日: 52週新高値 +16.4%（フィルターなし -6.9%・TOPIX +7.9%・くじ引き＋同じフィルター -3.2%）。
-      2023年12月〜（約2.9年）: -2.4%（フィルターなし -28.9%・くじ引き＋同じフィルター +32.0%・TOPIX +68.7%）。</p>
-      <p><span class="badge i">推論</span>フィルターは損を減らすが、「新高値で選ぶ」不利を消すほどではない。4月以降の勝ちは4〜6月の相場に依存している可能性が高い。</p></div>
+    <div class="step"><h4>地合いフィルター（日経25日線で買いを止める＋個別25日線割れで売る）は損を減らすが、長い期間ではくじ引きに全敗（§05）</h4>
+      <p><span class="badge m">実測</span>取れる最長の約9年（2017-10〜）: 52週新高値 -62.7%（フィルターなし -93.6%・くじ引き＋同じフィルター +13.6%・TOPIX +144.0%）。
+      午前引値が本物の2023-10-30〜: +5.6%（くじ引き +31.1%・TOPIX +80.2%）。4/1〜今日だけは +18.0%（くじ引き -2.7%・TOPIX +7.9%）で勝った。</p>
+      <p><span class="badge i">推論</span>日経25日線で買いを止めること自体はどの期間でも効くが、「新高値で選ぶ」不利を消すほどではない。4月以降の勝ちは期間の特徴に依存している可能性が高い。</p></div>
     <div class="step"><h4>まだ検証していないこと</h4>
       <p>売却ルールの変更（買った日が古い順に売る／買ってN日は売らない／最後に新高値を付けた日が古い順／高値からの下落率が大きい順／損切りライン）。
       上の「2〜3か月持てば差が消える」結果からは、<strong>買ってしばらく売らない系のルール</strong>で改善する余地がありそうだが、くじ引きやTOPIXに勝てるかは計算していない。</p></div>
@@ -266,25 +266,33 @@ py kensho_newhigh/regime.py                # §05 地合いフィルター版 �
       <li>25日線 ＝ 前営業日までの終値24本＋当日の午前引値 の平均（ザラ場中にチャートで見える25日線と同じ）。午前に約定が無い銘柄（売買停止・気配のまま等）はその日は判定しない。</li>
       <li>処理の順番は「Bの売り → 予算計算 → 予算を作る売り（成績が悪い順）→ 引けで買う」。同じ日にBで売った銘柄が新高値で買い対象になっても、手数料を無視しているので差し引きと同じになる。</li>
     </ol>
-    <p class="small">午前引値はYahoo Financeの60分足（11:00〜11:30の足の終値）から取っています。60分足は約2〜3年しか遡れないため、§02の約4.1年とは期間が違います。</p>
+    <p class="small">午前引値はYahoo Financeの60分足（11:00〜11:30の足の終値）から取っています。60分足は<strong>2023-10-30より前が存在しない</strong>ため、それより前は<strong>当日の始値</strong>で代わりに判定しています（25日線も始値を入れて計算）。
+    60分足のある期間で照らし合わせた「25日線の上か下か」の一致率は、日経平均94.8%・個別株91.6%（前日終値で判定すると約90%なので、始値の方が近い）。
+    日足は10年分のキャッシュ（2016年9月〜）を使い、52週新高値が判定できる2017年10月から計算しています。</p>
   </div>
   <div class="steps">
-    <div class="step"><h4>4月〜今日（本人指定の期間）: 52週新高値ではフィルターを付けると勝った</h4>
-      <p><span class="badge m">実測</span>2026-04-01〜10-28（141営業日）。52週新高値は <strong>A+B +16.4%</strong>（フィルターなし -6.9%、TOPIX +7.9%、くじ引き＋A+B 中央値 -3.2%）。くじ引き20回の<strong>すべてを上回った</strong>。最大下落率も -36.7% → -24.7% に縮んだ。
-      上場来新高値は A+B -1.0%（フィルターなし -12.6%、くじ引き中央値 -2.7%、20回中13回が本番以下）で、改善はしたがTOPIXには負けた。</p>
-      <p><span class="badge m">実測</span>AだけでもBだけでも改善し（52週: Aだけ +7.6%・Bだけ +3.9%）、両方で一番良かった。日経平均が25日線の下にいて買わなかったのは50営業日（7/13〜8/7の19日間など）。</p></div>
-    <div class="step"><h4>ただし利益は4〜6月に出たもので、6/22以降は減り続けている</h4>
-      <p><span class="badge m">実測</span>52週のA+Bは6/22に +45.1%（1,451万円）でピーク、そこから今日までに約2割減って +16.4%。フィルターなしも同じ6/22がピーク（+41.4%）。差がついたのは主に7月以降の下げを浅くできたぶん。</p></div>
-    <div class="step"><h4>2023年12月〜（下げ相場を含む約2.9年）では、くじ引きにもTOPIXにも負けた</h4>
-      <p><span class="badge m">実測</span>2024年8月の急落・2025年4月の関税ショックを含む706営業日。フィルターなし -28.9% → <strong>A+B -2.4%</strong>（上場来は -40.1% → -2.7%）と大きく改善したが、くじ引き＋A+B の中央値は +32.0%（上場来 +26.9%）で<strong>20回すべてに負け</strong>、TOPIX（+68.7%）には大差で負けた。</p>
-      <p><span class="badge m">実測</span>この期間は<strong>Aだけの方が良かった</strong>（52週 +14.2%・上場来 +18.7%）。Bを足すと悪化した。Bの売りは勝率2割強・騰落率の中央値 -4%前後。</p></div>
+    <div class="step"><h4>取れる最長の約9年（2017年10月〜）では、フィルターを付けても大きく負けた</h4>
+      <p><span class="badge m">実測</span>2,229営業日。52週新高値は <strong>A+B -62.7%</strong>（年率 -10.3%）、フィルターなし -93.6%。くじ引き＋A+B は中央値 +13.6% で<strong>20回すべてに負け</strong>、TOPIX は +144.0%（年率 +10.3%）。
+      上場来新高値も A+B -42.3%（なし -88.1%・くじ引き中央値 +23.4%・20回すべてに負け）。</p>
+      <p><span class="badge m">実測</span>Aだけでも 52週 -62.2%・上場来 -52.4% で、どの組み合わせでもくじ引きの中央値に届かない。日経平均が25日線の下（Aで買わない日）だったのは2,229日中860日。</p></div>
+    <div class="step"><h4>大きく負けたのは「勝ち銘柄への集中」が原因</h4>
+      <p><span class="badge m">実測</span>成績の悪い順に売るので、上がった銘柄だけが残り、1銘柄が資産の4〜5割を占める時期がある。その銘柄の急落で資産が1日に-8〜-10%減った日が何度もある（2019年1月・2023年3月・2025年1月など。データの壊れではなく実際の急落）。
+      2018〜2022年は新高値が少ない年が多く、保有が数銘柄まで減っていた。</p></div>
+    <div class="step"><h4>午前引値が本物の期間（2023-10-30〜・約2.9年）: Aは効くが、くじ引きには負ける</h4>
+      <p><span class="badge m">実測</span>52週: なし -21.8% → <strong>Aだけ +23.0%</strong> → A+B +5.6%。くじ引き＋A+B 中央値 +31.1%（20回すべてに負け）、TOPIX +80.2%。
+      上場来: なし -24.9% → Aだけ +21.4% → A+B +18.1%（くじ引き中央値 +35.9%、20回中4回だけ本番以下）。</p></div>
+    <div class="step"><h4>4月〜今日（最初に指定された期間）だけは勝った</h4>
+      <p><span class="badge m">実測</span>141営業日。52週 <strong>A+B +18.0%</strong>（なし -6.2%・くじ引き＋A+B 中央値 -2.7%で20回すべてを上回る・TOPIX +7.9%）。上場来は A+B -1.1%（くじ引き中央値 -2.0%、20回中10回が本番以下でほぼ互角）。
+      ただし利益は4〜6月に出たもので、6/22のピークから約2割減っている。</p></div>
     <div class="step"><h4>読み方</h4>
-      <p><span class="badge i">推論</span>日経平均の25日線で買いを止める（A）は、どちらの期間でもフィルターなしより良く、「弱い地合いでは新高値を買わない」という仮説とは矛盾しない。
-      ただし<strong>同じフィルターをくじ引きの銘柄に付けた場合に勝てたのは4月以降だけ</strong>で、約2.9年では負けた。4月以降の勝ちは「4〜6月が新高値に有利な相場だった」ことに依存している可能性が高く、141営業日・1期間の観測で一般化はできない。</p>
-      <p><span class="badge i">推論</span>個別25日線割れで売る（B）は、4月以降は効いたが約2.9年では逆効果。25日線を割った後に戻す銘柄を安値で手放している可能性がある（売った銘柄のその後は未計算）。</p></div>
+      <p><span class="badge m">実測</span>A（日経25日線で買いを止める）は<strong>3つの期間すべてで、フィルターなしより大幅に良かった</strong>（約9年で -93.6% → -62.2%）。「弱い地合いでは新高値を買わない」こと自体は効いている。</p>
+      <p><span class="badge i">推論</span>それでも長い期間ではくじ引き＋同じフィルターに全敗しており、<strong>地合いを選んでも「新高値で選ぶ」不利は消えない</strong>。4月以降の勝ちは期間の特徴に依存している可能性が高い。
+      B（個別25日線割れで売る）は4月以降は効いたが、2023年10月〜と約9年ではAだけより悪い。割った後に戻す銘柄を安値で手放している可能性がある（売った銘柄のその後は未計算）。</p>
+      <p><span class="badge i">注意</span>2023年10月より前は午前引値の代わりに始値で判定している。本物の午前引値がある期間で比べると、始値で判定した方が結果が良く出た（52週 +5.6% → +21.9%、上場来 +18.1% → +32.0%）。<strong>約9年の結果はむしろ実際より良く出ている可能性がある</strong>。
+      また長い期間ほど、途中で上場廃止になった銘柄が抜けている（生存バイアス）。</p></div>
   </div>
   <div class="ctl">
-    <label>期間 <select id="selRP"><option value="apr">2026-04-01〜（本人指定）</option><option value="ref">2023-12〜（参考・下げ相場を含む）</option></select></label>
+    <label>期間 <select id="selRP"><option value="max">2017-10〜（取れる最長・約9年）</option><option value="am">2023-10-30〜（全日 本物の午前引値）</option><option value="apr">2026-04-01〜（最初に指定された期間）</option></select></label>
     <label>新高値の種類 <select id="selRK"><option value="w52">52週新高値</option><option value="ath">上場来新高値</option></select></label>
   </div>
   <figure>
@@ -467,18 +475,22 @@ function rdraw() {
     `${P.start}〜${P.end}（${P.days}営業日）。日経平均が午前引値で25日線より上だった日 ${P.on_days} / ${P.days}営業日。初期資産1,000万円。破線（横）は初期資産。`;
 
   const lab = { none: "フィルターなし（§01のまま）", idx: "Aだけ（日経25日線で買いを止める）", stop: "Bだけ（個別25日線割れで売る）", both: "A+B（本人ルール）" };
-  let h = "<thead><tr><th></th><th>資産の増減</th><th>最大下落率</th><th>平均保有銘柄数</th><th>平均現金比率</th><th>25日線割れの売り<br>回数・勝率・中央値</th><th>新高値が出たのに<br>買わなかった日</th></tr></thead><tbody>";
+  const yr = P.days > 300;            // 1年未満の年率換算は誤解を招くので出さない
+  let h = "<thead><tr><th></th><th>資産の増減" + (yr ? "<br>（年率）" : "") + "</th><th>最大下落率</th><th>平均保有銘柄数</th><th>平均現金比率</th><th>25日線割れの売り<br>回数・勝率・中央値</th><th>新高値が出たのに<br>買わなかった日</th></tr></thead><tbody>";
   for (const v of ["none", "idx", "stop", "both"]) {
     const r = P.runs[k + "_" + v], m = r.metrics, f = r.info;
-    h += `<tr${v === "both" ? ' class="hl"' : ""}><td>${lab[v]}</td><td class="n"><b class="${cls(m.total)}">${pct(m.total)}</b></td><td class="n">${pct(m.mdd)}</td>`
+    h += `<tr${v === "both" ? ' class="hl"' : ""}><td>${lab[v]}</td><td class="n"><b class="${cls(m.total)}">${pct(m.total)}</b>${yr ? `<br><span class="small">（${pct(m.cagr)}）</span>` : ""}</td><td class="n">${pct(m.mdd)}</td>`
       + `<td class="n">${m.avg_hold.toFixed(1)}</td><td class="n">${(m.avg_cash * 100).toFixed(0)}%</td>`
       + `<td class="n">${f.stop_n ? f.stop_n.toLocaleString() + "回・" + (f.stop_win * 100).toFixed(0) + "%・" + pct(f.stop_med, 1) : "-"}</td>`
       + `<td class="n">${v === "idx" || v === "both" ? f.skip_days + "日" : "-"}</td></tr>`;
   }
+  const bo = P.runs[k + "_both_open"];
+  if (bo) h += `<tr><td>A+B（午前引値の代わりに始値で判定）<br><span class="small">2017〜2023年10月の代用がどれだけずれるかの確認用</span></td><td class="n"><span class="${cls(bo.metrics.total)}">${pct(bo.metrics.total)}</span>${yr ? `<br><span class="small">（${pct(bo.metrics.cagr)}）</span>` : ""}</td><td class="n">${pct(bo.metrics.mdd)}</td><td class="n">${bo.metrics.avg_hold.toFixed(1)}</td><td class="n">${(bo.metrics.avg_cash * 100).toFixed(0)}%</td>`
+    + `<td class="n">${bo.info.stop_n.toLocaleString()}回・${(bo.info.stop_win * 100).toFixed(0)}%・${pct(bo.info.stop_med, 1)}</td><td class="n">${bo.info.skip_days}日</td></tr>`;
   const each = run.ctrl.each.slice().sort((a, b) => a - b);
   const m = run.metrics;
-  h += `<tr><td>くじ引き＋A+B（20回）</td><td class="n">中央値 <span class="${cls(run.ctrl.median)}">${pct(run.ctrl.median)}</span><br><span class="small">範囲 ${pct(each[0])}〜${pct(each[each.length - 1])}</span></td><td class="n">${pct(run.ctrl.mdd)}<span class="small">（平均）</span></td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td></tr>`;
-  h += `<tr><td>TOPIX（1306）</td><td class="n"><span class="${cls(m.bench_total)}">${pct(m.bench_total)}</span></td><td class="n">${pct(m.bench_mdd)}</td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td></tr>`;
+  h += `<tr><td>くじ引き＋A+B（20回）</td><td class="n">中央値 <span class="${cls(run.ctrl.median)}">${pct(run.ctrl.median)}</span>${yr && run.ctrl.cagr != null ? `<span class="small">（${pct(run.ctrl.cagr)}）</span>` : ""}<br><span class="small">範囲 ${pct(each[0])}〜${pct(each[each.length - 1])}</span></td><td class="n">${pct(run.ctrl.mdd)}<span class="small">（平均）</span></td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td></tr>`;
+  h += `<tr><td>TOPIX（1306）</td><td class="n"><span class="${cls(m.bench_total)}">${pct(m.bench_total)}</span>${yr ? `<br><span class="small">（${pct(m.bench_cagr)}）</span>` : ""}</td><td class="n">${pct(m.bench_mdd)}</td><td class="n">-</td><td class="n">-</td><td class="n">-</td><td class="n">-</td></tr>`;
   document.getElementById("rtbl").innerHTML = h + "</tbody>";
   document.getElementById("rnote").innerHTML =
     `A+Bで、くじ引き20回のうち本番以下だった回数 <b>${each.filter(v => v <= m.total).length} / ${each.length}</b>。`
