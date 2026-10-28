@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28",
+ "updated": "2026-10-29",
  "events": [
   {
    "date": "2021-01-28",
@@ -1125,24 +1125,6 @@
    "note": "9月分",
    "source": "jp_cpi",
    "url": "https://www.stat.go.jp/data/cpi/index.html"
-  },
-  {
-   "date": "2026-10-28",
-   "time": "決算発表",
-   "name": "決算 アドバンテスト",
-   "country": "JP",
-   "note": "6857・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=6857"
-  },
-  {
-   "date": "2026-10-28",
-   "time": "決算発表",
-   "name": "決算 サムスン電子",
-   "country": "KR",
-   "note": "005930.KS・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/005930.KS/"
   },
   {
    "date": "2026-10-29",
