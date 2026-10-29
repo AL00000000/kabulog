@@ -124,6 +124,9 @@ tbody td {
 }
 tbody td.tl { text-align: left; }
 tbody tr:hover { background: #16223f66; }
+tbody tr.topix-new { background: rgba(255, 214, 10, 0.17); }
+tbody tr.topix-new:hover { background: rgba(255, 214, 10, 0.26); }
+.topix-new-mark { display: inline-block; padding: 0 6px; border-radius: 3px; background: rgba(255, 214, 10, 0.22); }
 td.up { color: var(--up); }
 td.down { color: var(--down); }
 td.flat { color: var(--muted); }
@@ -400,7 +403,8 @@ footer a { color: var(--accent); }
     <div class="banner" id="iaBanner">読み込み中…</div>
     <div class="cards" id="iaCards"></div>
     <div class="hintRow">
-      <div class="hint">大引け後(15:50頃)に、売買代金上位200銘柄について <b>15:24時点の株価から15:30(引け)までの変化率</b> を記録・集計しています。上のカードは上位10/50/75/100/200銘柄それぞれの平均・中央値と、上昇/下落/変わらずの内訳、その順位に入るボーダーの売買代金です。平均・中央値は上昇・下落・変わらずを全て含めた単純平均です。表は列見出しクリックで並び替えできます。</div>
+      <div class="hint">大引け後(15:50頃)に、売買代金上位200銘柄について <b>15:24時点の株価から15:30(引け)までの変化率</b> を記録・集計しています。上のカードは上位10/50/75/100/200銘柄それぞれの平均・中央値と、上昇/下落/変わらずの内訳、その順位に入るボーダーの売買代金です。平均・中央値は上昇・下落・変わらずを全て含めた単純平均です。表は列見出しクリックで並び替えできます。<br>
+        <span class="topix-new-mark">黄色の行</span> = 2026年10月のTOPIX定期入替で<b>新規追加される35銘柄</b>(JPX総研 2026/10/7公表、10/30反映)。</div>
     </div>
     <div class="tablecard">
       <table id="iaTbl">
@@ -1502,6 +1506,13 @@ const IA_COLS = [
   { key: "pct",        label: "変化率",   num: s => s.pct ?? -Infinity, color: true, fmt: fmtPct },
 ];
 let iaData = null, iaDates = [], iaSortKey = "rank", iaSortAsc = true, iaInited = false;
+// TOPIX定期入替(2026/10/30反映)の新規追加35銘柄。出典: JPX総研 2026/10/7公表 topix_j.pdf
+const TOPIX_NEW_2026 = new Set([
+  "1723", "1965", "2160", "2702", "2782", "2805", "4107", "4478", "4588", "4816",
+  "4966", "5161", "6227", "6366", "6613", "6736", "6777", "6834", "6890", "6960",
+  "7287", "7564", "7716", "7806", "7906", "8117", "8508", "9436", "141A", "186A",
+  "215A", "290A", "485A", "581A", "593A",
+]);
 
 function iaRenderCards() {
   if (!iaData) return;
@@ -1564,6 +1575,7 @@ function iaRenderTable() {
   const frag = document.createDocumentFragment();
   for (const s of rows) {
     const tr = document.createElement("tr");
+    if (TOPIX_NEW_2026.has(String(s.code))) tr.className = "topix-new";
     for (const c of IA_COLS) {
       const v = s[c.key];
       const td = document.createElement("td");
@@ -1584,7 +1596,9 @@ function iaRenderTable() {
     frag.appendChild(tr);
   }
   tb.appendChild(frag);
-  document.getElementById("iaStat").innerHTML = "全 <b>" + rows.length + "</b> 銘柄";
+  const nNew = rows.filter(s => TOPIX_NEW_2026.has(String(s.code))).length;
+  document.getElementById("iaStat").innerHTML = "全 <b>" + rows.length + "</b> 銘柄 / " +
+    '<span class="topix-new-mark">TOPIX新規追加 <b>' + nNew + "</b></span>";
 }
 
 async function iaLoad(d) {
