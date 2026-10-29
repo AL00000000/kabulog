@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29",
+ "updated": "2026-10-30",
  "events": [
   {
    "date": "2021-01-28",
@@ -1136,15 +1136,6 @@
    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
   },
   {
-   "date": "2026-10-29",
-   "time": "05:00頃",
-   "name": "決算 KLA",
-   "country": "US",
-   "note": "KLAC・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/KLAC/"
-  },
-  {
    "date": "2026-10-30",
    "time": "05:00頃",
    "name": "決算 インテル",
@@ -1440,6 +1431,15 @@
    "note": null,
    "source": "jp_empsit",
    "url": "https://www.stat.go.jp/data/roudou/pdf/kohyo26.pdf"
+  },
+  {
+   "date": "2026-12-03",
+   "time": "上場日",
+   "name": "IPO Ｍ＆Ａロイヤルアドバイザリー（株）",
+   "country": "JP",
+   "note": "669A・上場承認 2026/10/29",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
    "date": "2026-12-04",
