@@ -2,7 +2,7 @@
   "schema_version": 1,
   "companies": {
     "sbi": {
-      "checked_at": "2026-10-29T00:00:01+09:00",
+      "checked_at": "2026-10-29T12:00:01+09:00",
       "status": "ok",
       "error": null,
       "content": {
@@ -68,13 +68,13 @@
           "cache_control": null
         }
       ],
-      "last_success_at": "2026-10-29T00:00:01+09:00",
+      "last_success_at": "2026-10-29T12:00:01+09:00",
       "content_observed_since": "2026-10-20T21:00:11+09:00",
       "name": "SBI証券",
       "source_url": "https://www.sbisec.co.jp/ETGate/?_ControlID=WPLETmgR001Control&_DataStoreID=DSWPLETmgR001Control&burl=search_home&cat1=home&cat2=support&dir=support%2F&file=home_support.html&getFlg=on"
     },
     "rakuten": {
-      "checked_at": "2026-10-29T00:00:01+09:00",
+      "checked_at": "2026-10-29T12:00:01+09:00",
       "status": "ok",
       "error": null,
       "name": "楽天証券",
@@ -189,12 +189,12 @@
           "cache_control": "max-age=86400"
         }
       ],
-      "last_success_at": "2026-10-29T00:00:01+09:00",
+      "last_success_at": "2026-10-29T12:00:01+09:00",
       "content_observed_since": "2026-10-23T12:32:12+09:00",
       "last_change_detected_at": "2026-10-23T12:32:12+09:00"
     },
     "monex": {
-      "checked_at": "2026-10-29T00:00:01+09:00",
+      "checked_at": "2026-10-29T12:00:01+09:00",
       "status": "error",
       "error": "HTTPError: HTTP Error 403: Forbidden",
       "name": "マネックス証券",
@@ -913,7 +913,43 @@
           "error": "HTTPError: HTTP Error 403: Forbidden"
         }
       }
+    },
+    {
+      "at": "2026-10-29T12:00:01+09:00",
+      "companies": {
+        "sbi": {
+          "at": "2026-10-29T12:00:01+09:00",
+          "status": "unchanged",
+          "fingerprint": "0200c33570a4d06b6bb2bc7e0190247cabd4181b3aa8e062b94ec297ffef11ce",
+          "resources": [
+            {
+              "url": "https://www.sbisec.co.jp/ETGate/?_ControlID=WPLETmgR001Control&_DataStoreID=DSWPLETmgR001Control&burl=search_home&cat1=home&cat2=support&dir=support%2F&file=home_support.html&getFlg=on",
+              "last_modified": null,
+              "etag": null,
+              "cache_control": null
+            }
+          ]
+        },
+        "rakuten": {
+          "at": "2026-10-29T12:00:01+09:00",
+          "status": "unchanged",
+          "fingerprint": "ebbe194437a46708960f01b8e6c7d1ff9eb7b8c29dd90d02a364e34275c2d017",
+          "resources": [
+            {
+              "url": "https://www.rakuten-sec.co.jp/web/support/json/cs-congestion.json",
+              "last_modified": "Thu, 22 Oct 2026 23:53:24 GMT",
+              "etag": "W/\"fb1e166c-39b-65e7691b6adcf\"",
+              "cache_control": "max-age=86400"
+            }
+          ]
+        },
+        "monex": {
+          "at": "2026-10-29T12:00:01+09:00",
+          "status": "error",
+          "error": "HTTPError: HTTP Error 403: Forbidden"
+        }
+      }
     }
   ],
-  "updated": "2026-10-29T00:00:01+09:00"
+  "updated": "2026-10-29T12:00:01+09:00"
 }
