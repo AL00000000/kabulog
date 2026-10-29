@@ -1145,15 +1145,6 @@
    "url": "https://finance.yahoo.com/quote/KLAC/"
   },
   {
-   "date": "2026-10-29",
-   "time": "決算発表",
-   "name": "決算 イビデン",
-   "country": "JP",
-   "note": "4062・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=4062"
-  },
-  {
    "date": "2026-10-30",
    "time": "05:00頃",
    "name": "決算 インテル",
