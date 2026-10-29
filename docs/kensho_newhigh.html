@@ -168,6 +168,9 @@ pre.code{background:var(--surface-2);border:1px solid var(--line);border-radius:
       <p><span class="badge m">実測</span>取れる最長の約9年（2017-10〜）: 52週新高値 -62.7%（フィルターなし -93.6%・くじ引き＋同じフィルター +13.6%・TOPIX +144.0%）。
       午前引値が本物の2023-10-30〜: +5.6%（くじ引き +31.1%・TOPIX +80.2%）。4/1〜今日だけは +18.0%（くじ引き -2.7%・TOPIX +7.9%）で勝った。</p>
       <p><span class="badge i">推論</span>日経25日線で買いを止めること自体はどの期間でも効くが、「新高値で選ぶ」不利を消すほどではない。4月以降の勝ちは期間の特徴に依存している可能性が高い。</p></div>
+    <div class="step"><h4>資金の制約なしに買って売らずに持っても、1か月〜1年のどれでも中央値はマイナス（§06）</h4>
+      <p><span class="badge m">実測</span>2017-10〜の約9年、52週新高値を引けで買って持った騰落率の中央値は 1か月 -0.5%・3か月 -0.5%・6か月 -0.5%・1年 -3.6%（平均は +0.0%・+1.6%・+3.9%・+4.1%）。
+      上場来新高値も 1年 中央値 -5.4%・平均 +2.8%。母集団全体（1年 中央値 +1.9%・平均 +9.2%）にもTOPIXにも負け、長く持つほど差が広がる。</p></div>
     <div class="step"><h4>まだ検証していないこと</h4>
       <p>売却ルールの変更（買った日が古い順に売る／買ってN日は売らない／最後に新高値を付けた日が古い順／高値からの下落率が大きい順／損切りライン）。
       上の「2〜3か月持てば差が消える」結果からは、<strong>買ってしばらく売らない系のルール</strong>で改善する余地がありそうだが、くじ引きやTOPIXに勝てるかは計算していない。</p></div>
@@ -215,7 +218,8 @@ py kensho_newhigh/simulate.py              # 売買シミュレーション → 
 py kensho_newhigh/forward_returns.py       # §03 の表 → docs/data_kensho_newhigh/forward.json
 py kensho_newhigh/april_to_0623.py         # §04 の表 → docs/data_kensho_newhigh/april.json
 py kensho_newhigh/fetch_am.py              # §05 用: 午前引値（60分足）を全銘柄取得（約30分）
-py kensho_newhigh/regime.py                # §05 地合いフィルター版 → docs/data_kensho_newhigh/regime.json</pre>
+py kensho_newhigh/regime.py                # §05 地合いフィルター版 → docs/data_kensho_newhigh/regime.json
+py kensho_newhigh/hold_returns.py          # §06 買って1か月〜1年持った騰落率 → docs/data_kensho_newhigh/hold.json</pre>
     <p class="small">日別の新高値リストは <span class="kv">docs/data_newhigh/YYYY-MM-DD.json</span>（新高値タブと同じもの）。長期の検証はこのリストではなく日足から毎日判定し直している（実記録は2026-07-30開始のため）。判定ロジックは <span class="kv">fetch_newhigh.py</span> と同一で、実記録のある51日で再現率99.5%を確認済み。</p>
   </div>
 </section>
@@ -311,7 +315,18 @@ py kensho_newhigh/regime.py                # §05 地合いフィルター版 �
 </section>
 
 <section>
-  <h2><span class="n">06</span>この結果を割り引くべき点</h2>
+  <h2><span class="n">06</span>資金の制約なしで、買って売らずに1か月〜1年持ったら</h2>
+  <p class="lead">§01の資金配分・売却ルールをいったん外し、<strong>新高値を付けた銘柄をその日の引けで1件ずつ買い、売らずに持ち続けた</strong>場合の騰落率です。1か月＝21営業日、3か月＝63、6か月＝126、1年＝252営業日後の終値で測りました。期間は52週新高値が判定できる2017-10〜で、売買代金10億円以上。同じ銘柄が何度も新高値を付ければ、そのたびに1件と数えます。比べる相手は、同じ日の母集団（売買代金10億円以上の全銘柄）と、同じ日に買ったTOPIX（1306）です。</p>
+  <div class="scroll"><table id="hold"></table></div>
+  <p class="small">「TOPIX差（中央値）」は、1件ごとに同じ日・同じ期間のTOPIXの騰落率を引いた値の中央値。保有期間が終わっていない直近の新高値は除外しています。</p>
+  <p><span class="badge m">実測</span>どの保有期間でも、新高値銘柄の<strong>中央値は0%かマイナス</strong>（上場来の3か月がちょうど±0%、ほかはマイナス。1年後は52週 -3.6%・上場来 -5.4%）で、上がっていた割合は5割未満でした。平均はプラスですが、母集団全体（1年後 平均 +9.2%・中央値 +1.9%）にもTOPIX（同じ日に買って1年 平均 +10〜12%）にも届きません。<strong>長く持つほどTOPIXとの差は広がり</strong>、1年ではTOPIX差の中央値が -12%前後です。</p>
+  <p><span class="badge i">推論</span>平均がプラスで中央値がマイナスなのは、ごく一部の大きく上がった銘柄が平均を押し上げ、半分以上は下がっているためです。§03で「60日後には差がほぼ消える」と書いたのは2022-09〜の約4.1年の話で、2017年からの約9年で見ると3か月でも母集団に負けています。年による差は大きく、2025年は新高値の方が良い年でしたが、2018・2021年は大きく負けています（下の年別の表）。</p>
+  <div class="scroll"><table id="holdy"></table></div>
+  <p class="small">年別は、買った日の年で分けた中央値（括弧内は平均）。1年保有は2025年10月までに買った分だけです。</p>
+</section>
+
+<section>
+  <h2><span class="n">07</span>この結果を割り引くべき点</h2>
   <div class="caveats">
     <div class="cv"><h4>長期の母集団には生存バイアスがある</h4><p>2022〜2026年の検証に使った日足は、いま上場している銘柄（＋2026年6月時点の一覧）が中心です。途中で上場廃止になった銘柄の多くが入っていません。新高値側にも対照群側にも同じように効くので比較は成り立ちますが、絶対値は実際より良く出ている可能性があります。</p></div>
     <div class="cv"><h4>くじ引きの結果は大きくばらつく</h4><p>成績の悪いものから売るルールでは、たまたま大きく上がった銘柄に資産が集中していきます。そのため20回の抽選でも結果の幅が広く（表の「範囲」）、中央値で比べています。それでも本番は20回のほぼすべてを下回りました。</p></div>
@@ -323,7 +338,7 @@ py kensho_newhigh/regime.py                # §05 地合いフィルター版 �
 
 <footer>
   データ: 株価 Yahoo Finance（日足・月足・60分足）／ 銘柄一覧 JPX東証上場銘柄一覧（2026年6月版・最新版）／ 新高値の日別リスト 株ログ「新高値」タブ<br>
-  スクリプト: kabutan-ranking/kensho_newhigh/simulate.py ・ forward_returns.py ・ regime.py ／ <span id="gen"></span>
+  スクリプト: kabutan-ranking/kensho_newhigh/simulate.py ・ forward_returns.py ・ regime.py ・ hold_returns.py ／ <span id="gen"></span>
 </footer>
 
 </div>
@@ -332,7 +347,7 @@ py kensho_newhigh/regime.py                # §05 地合いフィルター版 �
 const pct = (x, d = 1) => x == null ? "-" : (x >= 0 ? "+" : "") + (x * 100).toFixed(d) + "%";
 const man = x => (x / 1e4).toLocaleString("ja-JP", { maximumFractionDigits: 0 }) + "万円";
 const cls = x => x == null ? "" : x >= 0 ? "pos" : "neg";
-let R, F, A, G;
+let R, F, A, G, H;
 
 function draw() {
   const P = R[document.getElementById("selP").value];
@@ -431,6 +446,27 @@ function fwd() {
   document.getElementById("fwd").innerHTML = h + "</tbody>";
 }
 
+function hold() {
+  const lab = { w52: "52週新高値の銘柄", ath: "上場来新高値の銘柄", uni: "母集団全体（売買代金10億円以上）" };
+  const hn = { "1m": "1か月", "3m": "3か月", "6m": "6か月", "12m": "1年" };
+  let h = "<thead><tr><th>その日の引けで買って</th><th>持った期間</th><th>件数</th><th>平均</th><th>中央値</th><th>上がっていた割合</th><th>下位10%〜上位10%</th><th>TOPIX 平均</th><th>TOPIX差（中央値）</th></tr></thead><tbody>";
+  for (const k of ["w52", "ath", "uni"]) for (const p of H.holds) {
+    const x = H.all[k + "_" + p];
+    h += `<tr${k === "uni" ? ' class="hl"' : ""}><td>${p === "1m" ? lab[k] : ""}</td><td>${hn[p]}</td><td class="n">${x.n.toLocaleString()}</td>`
+      + [x.mean, x.med].map(v => `<td class="n ${cls(v)}">${pct(v, 1)}</td>`).join("")
+      + `<td class="n">${(x.win * 100).toFixed(1)}%</td><td class="n">${pct(x.p10, 0)}〜${pct(x.p90, 0)}</td>`
+      + `<td class="n ${cls(x.topix_mean)}">${pct(x.topix_mean, 1)}</td><td class="n ${cls(x.ex_med)}">${pct(x.ex_med, 1)}</td></tr>`;
+  }
+  document.getElementById("hold").innerHTML = h + "</tbody>";
+  const ys = Object.keys(H.year["uni_3m"]);
+  let g = "<thead><tr><th>買った年</th>" + ys.map(y => `<th>${y}</th>`).join("") + "</tr></thead><tbody>";
+  for (const p of ["3m", "12m"]) for (const k of ["w52", "ath", "uni"]) {
+    g += `<tr${k === "uni" ? ' class="hl"' : ""}><td>${lab[k].replace("の銘柄", "")}・${hn[p]}</td>`
+      + ys.map(y => { const x = H.year[k + "_" + p][y]; return x ? `<td class="n ${cls(x.med)}">${pct(x.med, 1)}<br><span class="small">(${pct(x.mean, 1)})</span></td>` : "<td>-</td>"; }).join("") + "</tr>";
+  }
+  document.getElementById("holdy").innerHTML = g + "</tbody>";
+}
+
 function rdraw() {
   const P = G.periods[document.getElementById("selRP").value];
   const k = document.getElementById("selRK").value;
@@ -502,8 +538,9 @@ function rdraw() {
   R = await (await fetch("data_kensho_newhigh/result.json", { cache: "no-cache" })).json();
   F = await (await fetch("data_kensho_newhigh/forward.json", { cache: "no-cache" })).json();
   A = await (await fetch("data_kensho_newhigh/april.json", { cache: "no-cache" })).json();
+  H = await (await fetch("data_kensho_newhigh/hold.json", { cache: "no-cache" })).json();
   document.getElementById("gen").textContent = "計算日時 " + R.generated.slice(0, 16).replace("T", " ");
-  cards(); fwd(); apr(); draw(); rdraw();
+  cards(); fwd(); apr(); hold(); draw(); rdraw();
   document.getElementById("selRP").onchange = rdraw;
   document.getElementById("selRK").onchange = rdraw;
   document.getElementById("selP").onchange = draw;
