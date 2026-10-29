@@ -1,0 +1,773 @@
+{
+ "date": "2026-10-29",
+ "topix_runup_pct": -4.59,
+ "implied_passive_median": 9.13,
+ "tests": [
+  {
+   "key": "demand_days",
+   "label": "推定指数買い ÷ 普段の売買代金(浮動株時価総額 ÷ 20日売買代金中央値)",
+   "pct": {
+    "n": 35,
+    "spearman": -0.305,
+    "pearson": -0.2,
+    "p": 0.0736
+   },
+   "excess": {
+    "n": 35,
+    "spearman": -0.213,
+    "pearson": -0.101,
+    "p": 0.2235
+   }
+  },
+  {
+   "key": "close_mult",
+   "label": "引け約定代金 ÷ 普段の売買代金",
+   "pct": {
+    "n": 35,
+    "spearman": -0.352,
+    "pearson": -0.361,
+    "p": 0.0374
+   },
+   "excess": {
+    "n": 35,
+    "spearman": -0.245,
+    "pearson": -0.255,
+    "p": 0.1611
+   }
+  },
+  {
+   "key": "runup",
+   "label": "公表前日→10/28 の対TOPIX騰落率(先回り)",
+   "pct": {
+    "n": 35,
+    "spearman": 0.084,
+    "pearson": 0.178,
+    "p": 0.6266
+   },
+   "excess": {
+    "n": 35,
+    "spearman": 0.036,
+    "pearson": 0.149,
+    "p": 0.8366
+   }
+  },
+  {
+   "key": "chg1524",
+   "label": "15:24時点の前日比",
+   "pct": {
+    "n": 35,
+    "spearman": 0.15,
+    "pearson": 0.087,
+    "p": 0.3872
+   },
+   "excess": {
+    "n": 35,
+    "spearman": 0.236,
+    "pearson": 0.145,
+    "p": 0.1735
+   }
+  },
+  {
+   "key": "float_oku",
+   "label": "推定浮動株時価総額(サイズ)",
+   "pct": {
+    "n": 35,
+    "spearman": -0.152,
+    "pearson": -0.287,
+    "p": 0.3868
+   },
+   "excess": {
+    "n": 35,
+    "spearman": -0.256,
+    "pearson": -0.312,
+    "p": 0.1391
+   }
+  },
+  {
+   "key": "adv",
+   "label": "普段の売買代金(20日中央値)",
+   "pct": {
+    "n": 35,
+    "spearman": 0.149,
+    "pearson": 0.174,
+    "p": 0.3967
+   },
+   "excess": {
+    "n": 35,
+    "spearman": 0.03,
+    "pearson": 0.116,
+    "p": 0.8679
+   }
+  },
+  {
+   "key": "growth",
+   "label": "グロース市場ダミー",
+   "pct": {
+    "n": 35,
+    "spearman": 0.691,
+    "pearson": 0.69,
+    "p": 0.0
+   },
+   "excess": {
+    "n": 35,
+    "spearman": 0.501,
+    "pearson": 0.53,
+    "p": 0.0024
+   }
+  },
+  {
+   "key": "vol",
+   "label": "ボラティリティ(20日)",
+   "pct": {
+    "n": 35,
+    "spearman": 0.451,
+    "pearson": 0.463,
+    "p": 0.0068
+   },
+   "excess": {
+    "n": 35,
+    "spearman": 0.416,
+    "pearson": 0.441,
+    "p": 0.0129
+   }
+  }
+ ],
+ "terciles": [
+  {
+   "label": "小",
+   "n": 11,
+   "range": [
+    1.1,
+    30.9
+   ],
+   "mean": 1.921,
+   "excess_mean": 1.207,
+   "median": 1.099,
+   "growth": 6
+  },
+  {
+   "label": "中",
+   "n": 13,
+   "range": [
+    31.3,
+    81.7
+   ],
+   "mean": 1.56,
+   "excess_mean": 0.927,
+   "median": 0.662,
+   "growth": 6
+  },
+  {
+   "label": "大",
+   "n": 11,
+   "range": [
+    84.9,
+    232.0
+   ],
+   "mean": 0.265,
+   "excess_mean": 0.08,
+   "median": 0.256,
+   "growth": 0
+  }
+ ],
+ "within_market": {
+  "スタンダード": {
+   "n": 23,
+   "bench_close_move": 0.185,
+   "pct_mean": 0.302,
+   "excess_mean": 0.117,
+   "demand_days": {
+    "spearman": 0.206,
+    "p": 0.3468
+   },
+   "close_mult": {
+    "spearman": 0.272,
+    "p": 0.211
+   },
+   "vol": {
+    "spearman": 0.156,
+    "p": 0.4829
+   }
+  },
+  "グロース": {
+   "n": 12,
+   "bench_close_move": 1.155,
+   "pct_mean": 3.115,
+   "excess_mean": 1.96,
+   "demand_days": {
+    "spearman": -0.175,
+    "p": 0.5877
+   },
+   "close_mult": {
+    "spearman": -0.462,
+    "p": 0.1348
+   },
+   "vol": {
+    "spearman": 0.503,
+    "p": 0.102
+   }
+  }
+ },
+ "rows": [
+  {
+   "code": "1723",
+   "name": "日本電技",
+   "market": "スタンダード",
+   "pct": 0.0,
+   "excess": -0.1854,
+   "chg1524": -1.0864,
+   "vol": 3.26,
+   "adv": 1007.1,
+   "float_oku": 625.2,
+   "demand_days": 62.1,
+   "close_mult": 7.61,
+   "runup": -0.99,
+   "growth": 0,
+   "implied_passive": 12.09
+  },
+  {
+   "code": "1965",
+   "name": "テクノ菱和",
+   "market": "スタンダード",
+   "pct": -0.0466,
+   "excess": -0.232,
+   "chg1524": -0.6948,
+   "vol": 3.38,
+   "adv": 556.4,
+   "float_oku": 171.9,
+   "demand_days": 30.9,
+   "close_mult": 9.07,
+   "runup": -4.01,
+   "growth": 0,
+   "implied_passive": 29.04
+  },
+  {
+   "code": "2160",
+   "name": "ジーエヌアイ",
+   "market": "グロース",
+   "pct": 0.8512,
+   "excess": -0.3035,
+   "chg1524": -15.9565,
+   "vol": 4.31,
+   "adv": 5447.5,
+   "float_oku": 1488.3,
+   "demand_days": 27.3,
+   "close_mult": 2.28,
+   "runup": -6.97,
+   "growth": 1,
+   "implied_passive": 8.0
+  },
+  {
+   "code": "2702",
+   "name": "マクドナルド",
+   "market": "スタンダード",
+   "pct": -0.9615,
+   "excess": -1.1469,
+   "chg1524": -0.2398,
+   "vol": 1.51,
+   "adv": 6165.6,
+   "float_oku": 5237.2,
+   "demand_days": 84.9,
+   "close_mult": 9.01,
+   "runup": 16.83,
+   "growth": 0,
+   "implied_passive": 10.5
+  },
+  {
+   "code": "2782",
+   "name": "セリア",
+   "market": "スタンダード",
+   "pct": -1.9767,
+   "excess": -2.1621,
+   "chg1524": -1.0357,
+   "vol": 1.99,
+   "adv": 1691.5,
+   "float_oku": 1507.9,
+   "demand_days": 89.1,
+   "close_mult": 8.13,
+   "runup": 6.34,
+   "growth": 0,
+   "implied_passive": 9.0
+  },
+  {
+   "code": "2805",
+   "name": "エスビー",
+   "market": "スタンダード",
+   "pct": 0.4418,
+   "excess": 0.2564,
+   "chg1524": 1.1923,
+   "vol": 2.96,
+   "adv": 689.9,
+   "float_oku": 759.0,
+   "demand_days": 110.0,
+   "close_mult": 11.18,
+   "runup": 2.97,
+   "growth": 0,
+   "implied_passive": 10.07
+  },
+  {
+   "code": "4107",
+   "name": "伊勢化",
+   "market": "スタンダード",
+   "pct": 1.7143,
+   "excess": 1.5289,
+   "chg1524": 4.6651,
+   "vol": 3.33,
+   "adv": 956.0,
+   "float_oku": 541.3,
+   "demand_days": 56.6,
+   "close_mult": 7.75,
+   "runup": 7.16,
+   "growth": 0,
+   "implied_passive": 13.52
+  },
+  {
+   "code": "4478",
+   "name": "フリー",
+   "market": "グロース",
+   "pct": 2.4533,
+   "excess": 1.2986,
+   "chg1524": -0.9259,
+   "vol": 2.28,
+   "adv": 2112.9,
+   "float_oku": 1233.9,
+   "demand_days": 58.4,
+   "close_mult": 5.77,
+   "runup": 27.84,
+   "growth": 1,
+   "implied_passive": 9.72
+  },
+  {
+   "code": "4588",
+   "name": "オンコリス",
+   "market": "グロース",
+   "pct": 4.2254,
+   "excess": 3.0707,
+   "chg1524": -10.1266,
+   "vol": 5.82,
+   "adv": 7436.4,
+   "float_oku": 1354.3,
+   "demand_days": 18.2,
+   "close_mult": 2.25,
+   "runup": 20.25,
+   "growth": 1,
+   "implied_passive": 11.8
+  },
+  {
+   "code": "4816",
+   "name": "東映アニメ",
+   "market": "スタンダード",
+   "pct": -1.0239,
+   "excess": -1.2093,
+   "chg1524": -2.1703,
+   "vol": 1.67,
+   "adv": 1649.7,
+   "float_oku": 1451.6,
+   "demand_days": 88.0,
+   "close_mult": 7.92,
+   "runup": 7.75,
+   "growth": 0,
+   "implied_passive": 8.89
+  },
+  {
+   "code": "4966",
+   "name": "上村工",
+   "market": "スタンダード",
+   "pct": -0.4764,
+   "excess": -0.6618,
+   "chg1524": -0.264,
+   "vol": 3.01,
+   "adv": 1655.3,
+   "float_oku": 1542.1,
+   "demand_days": 93.2,
+   "close_mult": 7.09,
+   "runup": -9.79,
+   "growth": 0,
+   "implied_passive": 7.51
+  },
+  {
+   "code": "5161",
+   "name": "西川ゴム",
+   "market": "スタンダード",
+   "pct": 2.3776,
+   "excess": 2.1922,
+   "chg1524": 0.9887,
+   "vol": 1.73,
+   "adv": 513.7,
+   "float_oku": 575.1,
+   "demand_days": 111.9,
+   "close_mult": 11.36,
+   "runup": 9.32,
+   "growth": 0,
+   "implied_passive": 10.05
+  },
+  {
+   "code": "6227",
+   "name": "ＡＩメカ",
+   "market": "スタンダード",
+   "pct": -0.3401,
+   "excess": -0.5255,
+   "chg1524": -2.9703,
+   "vol": 6.9,
+   "adv": 10124.5,
+   "float_oku": 597.3,
+   "demand_days": 5.9,
+   "close_mult": 0.57,
+   "runup": -27.86,
+   "growth": 0,
+   "implied_passive": 8.01
+  },
+  {
+   "code": "6366",
+   "name": "千代建",
+   "market": "スタンダード",
+   "pct": 0.6623,
+   "excess": 0.4769,
+   "chg1524": -1.1457,
+   "vol": 2.55,
+   "adv": 1315.1,
+   "float_oku": 696.0,
+   "demand_days": 52.9,
+   "close_mult": 6.01,
+   "runup": -4.9,
+   "growth": 0,
+   "implied_passive": 11.17
+  },
+  {
+   "code": "6613",
+   "name": "ＱＤレーザ",
+   "market": "グロース",
+   "pct": 4.3159,
+   "excess": 3.1612,
+   "chg1524": 0.6079,
+   "vol": 4.37,
+   "adv": 3556.0,
+   "float_oku": 803.3,
+   "demand_days": 22.6,
+   "close_mult": 1.5,
+   "runup": 4.15,
+   "growth": 1,
+   "implied_passive": 6.18
+  },
+  {
+   "code": "6736",
+   "name": "サン電子",
+   "market": "スタンダード",
+   "pct": 3.0644,
+   "excess": 2.879,
+   "chg1524": -1.8054,
+   "vol": 3.79,
+   "adv": 377.7,
+   "float_oku": 876.5,
+   "demand_days": 232.0,
+   "close_mult": 14.8,
+   "runup": 12.72,
+   "growth": 0,
+   "implied_passive": 6.33
+  },
+  {
+   "code": "6777",
+   "name": "ｓａｎｔｅｃ",
+   "market": "スタンダード",
+   "pct": 0.1052,
+   "excess": -0.0802,
+   "chg1524": 0.6882,
+   "vol": 4.73,
+   "adv": 3134.4,
+   "float_oku": 772.1,
+   "demand_days": 24.6,
+   "close_mult": 2.59,
+   "runup": -21.42,
+   "growth": 0,
+   "implied_passive": 10.12
+  },
+  {
+   "code": "6834",
+   "name": "精工技研",
+   "market": "スタンダード",
+   "pct": 3.2895,
+   "excess": 3.1041,
+   "chg1524": -1.1382,
+   "vol": 5.72,
+   "adv": 5157.0,
+   "float_oku": 1225.8,
+   "demand_days": 23.8,
+   "close_mult": 2.19,
+   "runup": -11.97,
+   "growth": 0,
+   "implied_passive": 8.77
+  },
+  {
+   "code": "6890",
+   "name": "フェローテク",
+   "market": "スタンダード",
+   "pct": -1.1962,
+   "excess": -1.3816,
+   "chg1524": -0.3576,
+   "vol": 5.04,
+   "adv": 14014.3,
+   "float_oku": 3372.0,
+   "demand_days": 24.1,
+   "close_mult": 1.86,
+   "runup": -26.25,
+   "growth": 0,
+   "implied_passive": 7.31
+  },
+  {
+   "code": "6960",
+   "name": "フクダ電",
+   "market": "スタンダード",
+   "pct": 0.8234,
+   "excess": 0.638,
+   "chg1524": -1.2647,
+   "vol": 1.78,
+   "adv": 982.7,
+   "float_oku": 1253.1,
+   "demand_days": 127.5,
+   "close_mult": 10.35,
+   "runup": -1.28,
+   "growth": 0,
+   "implied_passive": 8.04
+  },
+  {
+   "code": "7287",
+   "name": "日精機",
+   "market": "スタンダード",
+   "pct": 0.2555,
+   "excess": 0.0701,
+   "chg1524": -0.1276,
+   "vol": 2.64,
+   "adv": 741.0,
+   "float_oku": 733.0,
+   "demand_days": 98.9,
+   "close_mult": 9.64,
+   "runup": -12.02,
+   "growth": 0,
+   "implied_passive": 9.65
+  },
+  {
+   "code": "7564",
+   "name": "ワークマン",
+   "market": "スタンダード",
+   "pct": -0.396,
+   "excess": -0.5814,
+   "chg1524": -1.9417,
+   "vol": 2.1,
+   "adv": 2502.3,
+   "float_oku": 813.0,
+   "demand_days": 32.5,
+   "close_mult": 3.03,
+   "runup": 2.68,
+   "growth": 0,
+   "implied_passive": 9.02
+  },
+  {
+   "code": "7716",
+   "name": "ナカニシ",
+   "market": "スタンダード",
+   "pct": 0.0709,
+   "excess": -0.1145,
+   "chg1524": -1.3287,
+   "vol": 1.9,
+   "adv": 1183.8,
+   "float_oku": 697.1,
+   "demand_days": 58.9,
+   "close_mult": 9.34,
+   "runup": -2.44,
+   "growth": 0,
+   "implied_passive": 15.68
+  },
+  {
+   "code": "7806",
+   "name": "ＭＴＧ",
+   "market": "グロース",
+   "pct": 1.9846,
+   "excess": 0.8299,
+   "chg1524": 0.443,
+   "vol": 4.08,
+   "adv": 2146.5,
+   "float_oku": 901.3,
+   "demand_days": 42.0,
+   "close_mult": 5.16,
+   "runup": 0.85,
+   "growth": 1,
+   "implied_passive": 12.04
+  },
+  {
+   "code": "7906",
+   "name": "ヨネックス",
+   "market": "スタンダード",
+   "pct": -0.2129,
+   "excess": -0.3983,
+   "chg1524": -1.178,
+   "vol": 1.43,
+   "adv": 1280.0,
+   "float_oku": 1045.9,
+   "demand_days": 81.7,
+   "close_mult": 7.89,
+   "runup": 4.17,
+   "growth": 0,
+   "implied_passive": 9.53
+  },
+  {
+   "code": "8117",
+   "name": "中央自",
+   "market": "スタンダード",
+   "pct": -0.3958,
+   "excess": -0.5812,
+   "chg1524": -1.8456,
+   "vol": 1.89,
+   "adv": 606.9,
+   "float_oku": 610.4,
+   "demand_days": 100.6,
+   "close_mult": 9.28,
+   "runup": 0.53,
+   "growth": 0,
+   "implied_passive": 9.13
+  },
+  {
+   "code": "8508",
+   "name": "Ｊトラスト",
+   "market": "スタンダード",
+   "pct": 0.3851,
+   "excess": 0.1997,
+   "chg1524": -0.2561,
+   "vol": 1.75,
+   "adv": 653.9,
+   "float_oku": 508.1,
+   "demand_days": 77.7,
+   "close_mult": 7.9,
+   "runup": 2.46,
+   "growth": 0,
+   "implied_passive": 10.04
+  },
+  {
+   "code": "9436",
+   "name": "沖縄セルラー",
+   "market": "スタンダード",
+   "pct": 0.7899,
+   "excess": 0.6045,
+   "chg1524": -5.3812,
+   "vol": 1.9,
+   "adv": 994.4,
+   "float_oku": 919.6,
+   "demand_days": 92.5,
+   "close_mult": 7.7,
+   "runup": -14.22,
+   "growth": 0,
+   "implied_passive": 8.21
+  },
+  {
+   "code": "141A",
+   "name": "トライアル",
+   "market": "グロース",
+   "pct": 3.5623,
+   "excess": 2.4076,
+   "chg1524": 3.1496,
+   "vol": 2.49,
+   "adv": 1707.8,
+   "float_oku": 1062.3,
+   "demand_days": 62.2,
+   "close_mult": 4.77,
+   "runup": 1.41,
+   "growth": 1,
+   "implied_passive": 7.51
+  },
+  {
+   "code": "186A",
+   "name": "アストロＨＤ",
+   "market": "グロース",
+   "pct": 4.9909,
+   "excess": 3.8362,
+   "chg1524": -2.0444,
+   "vol": 4.24,
+   "adv": 3441.2,
+   "float_oku": 1077.4,
+   "demand_days": 31.3,
+   "close_mult": 2.18,
+   "runup": -3.13,
+   "growth": 1,
+   "implied_passive": 6.65
+  },
+  {
+   "code": "215A",
+   "name": "タイミー",
+   "market": "グロース",
+   "pct": 0.2677,
+   "excess": -0.887,
+   "chg1524": -1.9685,
+   "vol": 2.14,
+   "adv": 2094.4,
+   "float_oku": 824.9,
+   "demand_days": 39.4,
+   "close_mult": 3.93,
+   "runup": 9.83,
+   "growth": 1,
+   "implied_passive": 9.72
+  },
+  {
+   "code": "290A",
+   "name": "Ｓｙｎｓ",
+   "market": "グロース",
+   "pct": 4.8,
+   "excess": 3.6453,
+   "chg1524": 1.626,
+   "vol": 3.85,
+   "adv": 1326.3,
+   "float_oku": 643.7,
+   "demand_days": 48.5,
+   "close_mult": 3.48,
+   "runup": -12.36,
+   "growth": 1,
+   "implied_passive": 6.96
+  },
+  {
+   "code": "485A",
+   "name": "ＰｏｗｅｒＸ",
+   "market": "グロース",
+   "pct": 4.4126,
+   "excess": 3.2579,
+   "chg1524": -2.0,
+   "vol": 4.47,
+   "adv": 7641.4,
+   "float_oku": 1051.7,
+   "demand_days": 13.8,
+   "close_mult": 1.01,
+   "runup": -10.2,
+   "growth": 1,
+   "implied_passive": 6.62
+  },
+  {
+   "code": "581A",
+   "name": "ＧＯ",
+   "market": "グロース",
+   "pct": 1.0989,
+   "excess": -0.0558,
+   "chg1524": -1.2403,
+   "vol": 3.78,
+   "adv": 7446.7,
+   "float_oku": 1235.1,
+   "demand_days": 16.6,
+   "close_mult": 1.58,
+   "runup": -8.25,
+   "growth": 1,
+   "implied_passive": 8.93
+  },
+  {
+   "code": "593A",
+   "name": "ティアフォー",
+   "market": "グロース",
+   "pct": 4.417,
+   "excess": 3.2623,
+   "chg1524": 4.7663,
+   "vol": 7.0,
+   "adv": 15793.7,
+   "float_oku": 174.9,
+   "demand_days": 1.1,
+   "close_mult": 0.21,
+   "runup": 7.64,
+   "growth": 1,
+   "implied_passive": 9.86
+  }
+ ]
+}
