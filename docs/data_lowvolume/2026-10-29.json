@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-29",
+  "as_of": "2026-10-29 16:00",
+  "updated": "2026-10-29",
+  "generated": "2026-10-29T16:45:39+09:00",
+  "min_value": 1000,
+  "window_days": 365,
+  "ma_days": 5,
+  "counts": {
+    "scanned": 800,
+    "universe": 781,
+    "hit": 0,
+    "day_low": 0,
+    "ma_low": 0,
+    "watch": 0,
+    "failed": 0,
+    "stale": 0,
+    "skipped": 1
+  },
+  "failed": [],
+  "stocks": []
+}
