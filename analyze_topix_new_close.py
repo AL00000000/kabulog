@@ -9,6 +9,9 @@
                  パッシブ比率(全銘柄共通の定数)なので、順位相関はこの比と同じになる
   close_mult   … 10/29の引け約定代金 ÷ 過去20営業日の売買代金中央値(実際に引けで出た量)
   runup        … 公表前日 10/6 終値 → 10/28 終値 の騰落率から同期間のTOPIXを引いた値(先回り)
+  r5           … 直近5営業日 10/21 終値 → 10/28 終値 の騰落率
+  r5x          … r5 から同期間の市場指数(スタンダード=TOPIX、グロース=グロース250)を引いた値
+  r5_1524      … 10/21 終値 → 10/29 15:24 の騰落率(当日の引け直前まで含めた5営業日)
   chg1524      … 15:24時点の前日比(当日のザラ場で既に動いていた分)
   float_oku    … 推定浮動株時価総額(億円、サイズ)
   growth       … グロース市場なら1
@@ -35,6 +38,7 @@ D = BASE / "docs" / "data_intraday"
 DATE = "2026-10-29"
 ANNOUNCE_PREV = "20261006"   # 公表(10/7)の前営業日
 PREV = "20261028"
+FIVE_AGO = "20261021"        # 10/28 から5営業日前
 
 
 def daily(code):
@@ -115,6 +119,9 @@ def main():
 
     topix = daily("0010")
     topix_ret = topix[PREV][0] / topix[ANNOUNCE_PREV][0] - 1
+    growth = daily("0012")
+    r5_bench = {"スタンダード": (topix[PREV][0] / topix[FIVE_AGO][0] - 1) * 100,
+                "グロース": (growth[PREV][0] / growth[FIVE_AGO][0] - 1) * 100}
     time.sleep(0.3)
 
     bench = {"スタンダード": index_close_move("0010"), "グロース": index_close_move("0012")}
@@ -141,6 +148,9 @@ def main():
             "demand_days": round(float_now / adv, 1),
             "close_mult": round(s["close_value"] / adv, 2),
             "runup": round(runup, 2) if runup is not None else None,
+            "r5": round((dd[PREV][0] / dd[FIVE_AGO][0] - 1) * 100, 2),
+            "r5x": round((dd[PREV][0] / dd[FIVE_AGO][0] - 1) * 100 - r5_bench[s["market"]], 2),
+            "r5_1524": round((s["p1524"] / dd[FIVE_AGO][0] - 1) * 100, 2),
             "growth": 1 if s["market"] == "グロース" else 0,
             # 引けの超過約定(平常の引けを1日の売買代金の10%と置いた差)÷浮動株 = 実質のパッシブ比率の目安
             "implied_passive": round((s["close_value"] - 0.1 * adv) / float_now * 100, 2),
@@ -152,6 +162,9 @@ def main():
         ("demand_days", "推定指数買い ÷ 普段の売買代金(浮動株時価総額 ÷ 20日売買代金中央値)"),
         ("close_mult", "引け約定代金 ÷ 普段の売買代金"),
         ("runup", "公表前日→10/28 の対TOPIX騰落率(先回り)"),
+        ("r5", "直近5営業日騰落率(10/21→10/28)"),
+        ("r5x", "直近5営業日騰落率の市場指数比(10/21→10/28)"),
+        ("r5_1524", "10/21終値→10/29 15:24の騰落率"),
         ("chg1524", "15:24時点の前日比"),
         ("float_oku", "推定浮動株時価総額(サイズ)"),
         ("adv", "普段の売買代金(20日中央値)"),
@@ -186,11 +199,12 @@ def main():
         within[m] = {"n": len(sub), "bench_close_move": round(bench[m], 3),
                      "pct_mean": round(mean(r["pct"] for r in sub), 3),
                      "excess_mean": round(mean(r["excess"] for r in sub), 3)}
-        for key in ("demand_days", "close_mult", "vol"):
+        for key in ("demand_days", "close_mult", "vol", "r5", "r5x", "r5_1524"):
             xs, ys = [r[key] for r in sub], [r["pct"] for r in sub]
             within[m][key] = {"spearman": round(spearman(xs, ys), 3), "p": round(perm_p(xs, ys), 4)}
 
     out = {"date": DATE, "topix_runup_pct": round(topix_ret * 100, 2),
+           "r5_bench_pct": {k: round(v, 2) for k, v in r5_bench.items()},
            "implied_passive_median": round(median(r["implied_passive"] for r in rows), 2),
            "tests": tests, "terciles": groups, "within_market": within, "rows": rows}
     (D / f"topix_new_{DATE}_analysis.json").write_text(
