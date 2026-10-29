@@ -412,6 +412,20 @@ footer a { color: var(--accent); }
         <tbody id="iaBody"><tr><td class="loading" colspan="8">読み込み中…</td></tr></tbody>
       </table>
     </div>
+    <div id="iaTopix" hidden>
+      <div class="banner" style="margin-top:22px"><span class="topix-new-mark">TOPIX新規追加35銘柄</span> の 15:24 → 引け(売買代金順位に関係なく全銘柄)</div>
+      <div class="cards" id="iaTopixCards"></div>
+      <div class="hintRow">
+        <div class="hint">2026年10月のTOPIX定期入替で<b>10/30に新規追加される35銘柄</b>(JPX総研 2026/10/7公表)を、上の売買代金上位200に入っているかどうかに関係なく全件取ったものです。<b>10/29はTOPIX連動資金が引けで買う入替前日</b>にあたります。
+          「引け出来高比率」= 15:30の引け(板寄せ)の出来高 ÷ その日の出来高。「引け約定代金」= 引けの出来高 × 引け値。「15:24時点」は15:24の株価の前日比で、前日比%との差が引けで上乗せされた分です。表は列見出しクリックで並び替えできます。</div>
+      </div>
+      <div class="tablecard">
+        <table>
+          <thead><tr id="itHeadRow"></tr></thead>
+          <tbody id="itBody"></tbody>
+        </table>
+      </div>
+    </div>
     <footer>
       データ取得元: <a href="https://kabutan.jp/stock/chart" target="_blank" rel="noopener">株探(kabutan.jp)</a> の分足データ / 株価は15分ディレイ / 市場休場日は更新されません。<br>
       本サイトのデータの正確性は保証されません。投資判断はご自身の責任で行ってください。
@@ -1609,6 +1623,107 @@ async function iaLoad(d) {
     iaData.count + "</b> 銘柄 / 15:24 → 15:30(大引け)の変化率";
   iaRenderCards();
   iaRenderTable();
+  itLoad(d);
+}
+
+/* ---- TOPIX新規追加35銘柄(入替前日だけ存在する一度きりのデータ) ---- */
+const IT_COLS = [
+  { key: "code",          label: "コード",       code: true, left: true },
+  { key: "name",          label: "銘柄名",       left: true, cls: "name tl" },
+  { key: "market",        label: "市場",         left: true, cls: "tl" },
+  { key: "value",         label: "売買代金",     num: s => s.value ?? -Infinity, fmt: fmtOku },
+  { key: "p1524",         label: "15:24",        num: s => s.p1524 ?? -Infinity, fmt: fmtPrice },
+  { key: "p1530",         label: "15:30",        num: s => s.p1530 ?? -Infinity, fmt: fmtPrice },
+  { key: "change1524_pct", label: "15:24時点",   num: s => s.change1524_pct ?? -Infinity, color: true, fmt: fmtPct },
+  { key: "change_pct",    label: "前日比%",      num: s => s.change_pct ?? -Infinity, color: true, fmt: fmtPct },
+  { key: "pct",           label: "変化率",       num: s => s.pct ?? -Infinity, color: true, fmt: fmtPct },
+  { key: "close_share",   label: "引け出来高比率", num: s => s.close_share ?? -Infinity, fmt: v => v == null ? "-" : v.toFixed(1) + "%" },
+  { key: "close_value",   label: "引け約定代金", num: s => s.close_value ?? -Infinity, fmt: fmtOku },
+];
+let itData = null, itSortKey = "pct", itSortAsc = false;
+
+async function itLoad(d) {
+  const box = document.getElementById("iaTopix");
+  try {
+    const res = await fetch("data_intraday/topix_new_" + d + ".json", { cache: "no-cache" });
+    if (!res.ok) throw new Error(res.status);
+    itData = await res.json();
+  } catch (e) {
+    itData = null;
+    box.hidden = true;
+    return;
+  }
+  box.hidden = false;
+  const t = itData;
+  document.getElementById("iaTopixCards").innerHTML =
+    '<div class="card overall"><div class="ttl">新規追加' + t.count + '銘柄 15:24→引け</div>' +
+    '<div class="big ' + signCls(t.mean) + '">' + fmtPct(t.mean) + '</div>' +
+    '<div class="sub">中央値 <b>' + fmtPct(t.median) + '</b><br>' +
+    '上昇 <span class="u">' + t.up + '</span> / 下落 <span class="d">' + t.down + '</span> / 変わらず ' + t.flat + '</div></div>' +
+    (iaData ? '<div class="card"><div class="ttl">比較: 売買代金上位' + iaData.count + '銘柄</div>' +
+      '<div class="big ' + signCls(iaData.overall.mean) + '">' + fmtPct(iaData.overall.mean) + '</div>' +
+      '<div class="sub">中央値 <b>' + fmtPct(iaData.overall.median) + '</b></div></div>' : '') +
+    '<div class="card"><div class="ttl">引け出来高比率(中央値)</div>' +
+    '<div class="big">' + t.close_share_median.toFixed(1) + '%</div>' +
+    '<div class="sub">その日の出来高のうち引けで約定した割合</div></div>' +
+    '<div class="card"><div class="ttl">引け約定代金(35銘柄合計)</div>' +
+    '<div class="big">' + fmtOku(t.close_value_sum) + '</div>' +
+    '<div class="sub">引けの出来高 × 引け値</div></div>';
+  itRenderTable();
+}
+
+function itRenderTable() {
+  if (!itData) return;
+  const tr = document.getElementById("itHeadRow");
+  tr.innerHTML = "";
+  for (const c of IT_COLS) {
+    const th = document.createElement("th");
+    th.textContent = c.label;
+    if (c.left) th.classList.add("tl");
+    if (c.key === itSortKey) {
+      const a = document.createElement("span");
+      a.className = "arw";
+      a.textContent = itSortAsc ? "▲" : "▼";
+      th.appendChild(a);
+    }
+    th.onclick = () => {
+      if (itSortKey === c.key) itSortAsc = !itSortAsc;
+      else { itSortKey = c.key; itSortAsc = !c.num; }
+      itRenderTable();
+    };
+    tr.appendChild(th);
+  }
+  const col = IT_COLS.find(c => c.key === itSortKey);
+  const rows = itData.stocks.slice().sort((a, b) => {
+    const r = col.num ? col.num(a) - col.num(b) : String(a[col.key]).localeCompare(String(b[col.key]), "ja");
+    return itSortAsc ? r : -r;
+  });
+  const frag = document.createDocumentFragment();
+  for (const s of rows) {
+    const row = document.createElement("tr");
+    row.className = "topix-new";
+    for (const c of IT_COLS) {
+      const v = s[c.key];
+      const td = document.createElement("td");
+      if (c.code) {
+        td.className = "code tl";
+        const a = document.createElement("a");
+        a.href = "https://kabutan.jp/stock/chart?code=" + encodeURIComponent(v) + "&ashi=4";
+        a.target = "_blank"; a.rel = "noopener";
+        a.textContent = v;
+        td.appendChild(a);
+      } else {
+        if (c.cls) td.className = c.cls;
+        else if (c.color) td.className = signCls(v);
+        td.textContent = c.fmt ? c.fmt(v) : (v == null ? "-" : v);
+      }
+      row.appendChild(td);
+    }
+    frag.appendChild(row);
+  }
+  const tb = document.getElementById("itBody");
+  tb.innerHTML = "";
+  tb.appendChild(frag);
 }
 
 async function iaInit() {
