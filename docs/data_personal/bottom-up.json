@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-27",
+  "updated": "2026-10-30",
   "items": [
     {
       "name": "トグルHD",
@@ -186,6 +186,21 @@
       "source_note": "本人がこのチャットで指定。「フジパターン期待」は本人の見解・期待として原文のまま記録。",
       "recorded_at": "2026-10-27",
       "checked_at": "2026-10-27"
+    },
+    {
+      "name": "IBJ",
+      "code": "6071",
+      "market": "JP",
+      "approach": "ボトムアップアプローチ",
+      "theme": "",
+      "original_note": "IBJ\nボトムアップアプローチ",
+      "bullish": "",
+      "bearish": "",
+      "facts": "公式IRの株式情報で、株式会社IBJの証券コード6071、東京証券取引所プライム市場への上場を確認。",
+      "source_url": "https://www.ibjapan.jp/ir/stock",
+      "source_note": "本人がこのチャットでIBJを指定し、分類の確認に「ボトムアップアプローチ」と回答。テーマ・投資理由は未指定。",
+      "recorded_at": "2026-10-30",
+      "checked_at": "2026-10-30"
     }
   ]
 }
