@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30",
+ "updated": "2026-10-31",
  "events": [
   {
    "date": "2021-01-28",
@@ -1137,24 +1137,6 @@
   },
   {
    "date": "2026-10-30",
-   "time": "05:00頃",
-   "name": "決算 インテル",
-   "country": "US",
-   "note": "INTC・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/INTC/"
-  },
-  {
-   "date": "2026-10-30",
-   "time": "05:00頃",
-   "name": "決算 サンディスク",
-   "country": "US",
-   "note": "SNDK・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/SNDK/"
-  },
-  {
-   "date": "2026-10-30",
    "time": "08:30",
    "name": "日本雇用統計(労働力調査)",
    "country": "JP",
@@ -1176,36 +1158,9 @@
    "time": "昼頃",
    "name": "日銀 金融政策決定会合",
    "country": "JP",
-   "note": "10月29日（木）・30日（金） の2日目に結果公表",
+   "note": "10月29日（木）・30日（金）[PDF153KB] の2日目に結果公表",
    "source": "boj",
    "url": "https://www.boj.or.jp/mopo/mpmsche_minu/index.htm"
-  },
-  {
-   "date": "2026-10-30",
-   "time": "決算発表",
-   "name": "決算 キオクシアホールディングス",
-   "country": "JP",
-   "note": "285A・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=285A"
-  },
-  {
-   "date": "2026-10-30",
-   "time": "決算発表",
-   "name": "決算 レーザーテック",
-   "country": "JP",
-   "note": "6920・6月期第１",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=6920"
-  },
-  {
-   "date": "2026-10-30",
-   "time": "決算発表",
-   "name": "決算 東京エレクトロン",
-   "country": "JP",
-   "note": "8035・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=8035"
   },
   {
    "date": "2026-11-02",
