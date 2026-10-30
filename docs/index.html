@@ -345,6 +345,7 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="kensho1up">1UP企業取材の翌日</button>
         <button class="tab" data-tab="kenshokaiun">海運株の予想PER</button>
         <button class="tab" data-tab="kenshokessan">海運株は決算で上がったか</button>
+        <button class="tab" data-tab="kenshoshosha">シクリカル割引は解けるか</button>
         <button class="tab" data-tab="kenshotob">TOBされる会社は安いのか</button>
         <button class="tab" data-tab="kenshonewhigh">新高値を毎日買い続けたら</button>
       </div>
@@ -1083,6 +1084,11 @@ footer a { color: var(--accent); }
   <div id="view-kenshokessan" hidden>
     <div class="embed-note">コロナ特需の海運大手3社（2020年1月〜2024年3月）の上昇を、<b>決算短信・業績修正の前後5営業日</b>と<b>決算の間</b>に分けたレポート。日数で約23%の決算前後に、郵船56%・川崎61%の上昇が集まった（偶然ではp≒0.03〜0.04）。商船三井は37%で偏りなし。偏りの大半は2021年8月と2022年7月の数回から — <a href="./kensho_kessan.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
     <iframe class="embed" title="海運株は決算で上がったのか — 仮説検証レポート" data-src="./kensho_kessan.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-kenshoshosha" hidden>
+    <div class="embed-note">「景気循環株の割引は、好調な数字が続けば解けるのか」を、同じ2021〜2022年に最高益を出した<b>総合商社5社と海運大手3社</b>のその後のPERで比べたレポート。商社は市場比0.4倍前後→1倍前後まで割引が解け、海運は5期平均利益に対して5倍前後のまま。分かれ目は好調の長さではなく、ピーク後にどこまで減益したか — <a href="./kensho_shosha.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="シクリカル割引は解けるか — 仮説検証レポート" data-src="./kensho_shosha.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-tsetop5" hidden>
@@ -4576,7 +4582,7 @@ const VIEW_ID = {
   uchu: "view-uchu", topix: "view-topix", turnover: "view-turnover", period: "view-period",
   wk: "view-wk", fx: "view-fx",
   selran: "view-selran", baibai: "view-baibai", search: "view-search",
-  event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun", kenshokessan: "view-kenshokessan",
+  event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun", kenshokessan: "view-kenshokessan", kenshoshosha: "view-kenshoshosha",
   tsetop5: "view-tsetop5",
   kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", congestion: "view-congestion", soxhistory: "view-soxhistory",
   bottomup: "view-bottomup",

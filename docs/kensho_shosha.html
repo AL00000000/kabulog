@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>シクリカル割引は解けるか</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F6F6F2; --surface:#FFFFFF; --surface-2:#EFEFE9; --line:#DBDBD2; --line-soft:#E8E8E1;
+  --ink:#1B2026; --ink-2:#4E5560; --ink-3:#7C838D;
+  --brass:#9C6B18; --brass-soft:#C9952F; --teal:#2F6A5C; --slate:#4E718D; --nikkei:#9A5340;
+  --pos:#2C6E4E; --neg:#A8443A; --band:#F2EDE0;
+  --shadow:0 1px 2px rgba(27,32,38,.05),0 6px 18px -10px rgba(27,32,38,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12161A; --surface:#191E24; --surface-2:#20262D; --line:#2E353D; --line-soft:#252C33;
+    --ink:#E9E7E1; --ink-2:#A8AEB6; --ink-3:#79808A;
+    --brass:#DCA946; --brass-soft:#B9852C; --teal:#64AE9A; --slate:#86A9C6; --nikkei:#D28B70;
+    --pos:#5FB489; --neg:#D97B6D; --band:#242019;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12161A; --surface:#191E24; --surface-2:#20262D; --line:#2E353D; --line-soft:#252C33;
+  --ink:#E9E7E1; --ink-2:#A8AEB6; --ink-3:#79808A;
+  --brass:#DCA946; --brass-soft:#B9852C; --teal:#64AE9A; --slate:#86A9C6; --nikkei:#D28B70;
+  --pos:#5FB489; --neg:#D97B6D; --band:#242019;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.85; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 96px}
+h1,h2,h3{font-family:"Shippori Mincho B1",'Yu Mincho',serif;font-weight:700;text-wrap:balance;line-height:1.4;margin:0}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* header */
+header.top{border-bottom:1px solid var(--line);padding:56px 0 30px;margin-bottom:40px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);font-weight:700;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+h1{font-size:clamp(28px,5.2vw,42px);letter-spacing:.01em}
+.sub{color:var(--ink-2);font-size:15px;margin-top:16px;max-width:62ch}
+
+/* answer cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:34px 0 8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 20px 18px;box-shadow:var(--shadow);border-top:3px solid var(--c,var(--slate))}
+.card .lbl{font-size:12px;color:var(--ink-2);line-height:1.55;min-height:3.1em}
+.card .big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:31px;font-weight:600;color:var(--c,var(--ink));letter-spacing:-.02em;margin-top:10px}
+.card .foot{font-size:11.5px;color:var(--ink-3);margin-top:4px;font-family:"IBM Plex Mono",monospace}
+
+section{margin-top:56px}
+h2{font-size:22px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:8px;display:flex;align-items:baseline;gap:12px}
+h2 .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--brass);font-weight:600;letter-spacing:.08em}
+h3{font-size:16px;margin:30px 0 10px}
+p{margin:14px 0}
+.lead{color:var(--ink-2)}
+.small{font-size:13px;color:var(--ink-3);line-height:1.7}
+
+/* tables */
+.scroll{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:9px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line-soft)}
+th{background:var(--surface-2);font-weight:700;font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);border-bottom:1px solid var(--line)}
+td:first-child,th:first-child{text-align:left;white-space:normal;min-width:190px}
+tbody tr:last-child td{border-bottom:none}
+tr.hl td{background:var(--band)}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:baseline}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+/* charts */
+figure{margin:22px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 18px 14px;box-shadow:var(--shadow)}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:12px;line-height:1.65}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:12.5px;margin-bottom:14px}
+.legend span{display:flex;align-items:center;gap:7px;color:var(--ink-2)}
+.legend i{width:14px;height:3px;border-radius:2px;display:block}
+
+/* caveat */
+.caveats{margin-top:22px;display:grid;gap:2px}
+.cv{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:0 3px 3px 0;padding:16px 20px}
+.cv h4{margin:0 0 6px;font-size:14.5px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.cv p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);margin-right:8px;vertical-align:1px}
+.badge.m{color:var(--teal);border-color:var(--teal)}
+.badge.i{color:var(--brass);border-color:var(--brass)}
+
+ul{padding-left:1.15em;margin:12px 0}
+li{margin:7px 0;color:var(--ink-2);font-size:14px}
+li strong{color:var(--ink)}
+a{color:var(--brass);text-underline-offset:3px}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.8}
+@media (max-width:620px){ td:first-child,th:first-child{min-width:140px} .wrap{padding:0 16px 70px} }
+
+/* process steps */
+.steps{counter-reset:st;display:grid;gap:2px;margin-top:20px}
+.step{background:var(--surface);border:1px solid var(--line);padding:18px 22px 18px 62px;position:relative;border-radius:3px}
+.step::before{counter-increment:st;content:counter(st);position:absolute;left:20px;top:18px;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--brass);border:1px solid var(--brass);border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.step h4{margin:0 0 6px;font-size:15px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.step p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+.step p+p{margin-top:8px}
+.kv{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--surface-2);padding:1px 6px;border-radius:2px;border:1px solid var(--line)}
+.note{background:var(--band);border:1px solid var(--line);border-radius:3px;padding:14px 18px;font-size:13.5px;color:var(--ink-2);line-height:1.75;margin:18px 0}
+.note strong{color:var(--ink)}
+</style>
+
+
+<style>
+/* --- サイト(kabutan-ranking)のダーク配色に合わせる --- */
+:root[data-theme="dark"]{
+  --bg:#0a0f1c; --surface:#101830; --surface-2:#16203c; --line:#1e2a48; --line-soft:#17203a;
+  --ink:#dbe4f5; --ink-2:#9fb0cd; --ink-3:#7787a5;
+  --brass:#ffd166; --brass-soft:#c9952f; --teal:#5fd3b4; --slate:#4da3ff; --nikkei:#ff8f7a;
+  --pos:#4da3ff; --neg:#ff5b6a; --band:#16203c;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px -12px rgba(0,0,0,.75);
+}
+body{font-size:15px}
+.wrap{max-width:100%;padding:0 4px 48px}
+header.top{padding:20px 0 26px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">2020.01 — 2026.10 ／ 総合商社5社 × 海運大手3社 ／ 実績EPSと株価から再計算</div>
+  <h1>シクリカル割引は、<br>数字が続けば解けるのか</h1>
+  <p class="sub">景気循環株は、好調な利益を「天井の利益」として割り引かれます。<strong>好調な数字が出続けると、その割引は解けるのか</strong>。同じ2021〜2022年に過去最高益を出した総合商社と海運で、その後のPERを比べました。</p>
+</header>
+
+<div class="cards">
+  <div class="card" style="--c:var(--brass)"><div class="lbl">総合商社のPER ÷ 市場PER<br>2022/05 → 2026/08</div><div class="big">0.29→0.85</div><div class="foot">実績PER・5社中央値</div></div>
+  <div class="card" style="--c:var(--slate)"><div class="lbl">海運の5年平均利益PER<br>2022/9 → 2026/10</div><div class="big">5.4→6.3</div><div class="foot">倍・3社中央値（商社は16.7倍）</div></div>
+  <div class="card" style="--c:var(--teal)"><div class="lbl">ピーク（FY2023/3）からの利益の落ち方<br>FY2026/3時点</div><div class="big" style="font-size:22px">商社 −22〜+17%<br>海運 −75〜−72%</div><div class="foot">1株益・各社</div></div>
+</div>
+
+<div class="note"><strong>結論。</strong>総合商社では割引が解けました。市場と比べたPERは0.4倍前後から1倍前後まで上がり、PBRも0.6倍台から2倍前後になっています。海運は、ならした利益に対するPERが5倍前後のまま動いていません。<span class="badge i">解釈</span>両者を分けたのは好調な数字が続いた長さではなく、<strong>ピークの後に利益がどこまで落ちたか</strong>に見えます。商社の割引が解け始めたのは、ピークを過ぎて減益になっても利益が崩れないと分かった2023年以降です。ただ同じ時期にバフェット氏の買い増しや東証のPBR改善要請が重なっており、このデータでは切り分けられません。</div>
+
+<section>
+  <h2><span class="n">01</span>市場と比べたPER</h2>
+  <p class="lead">実績PER（株価 ÷ 発表済みの直近通期の1株益）を、同じ月の東証一部／プライム全体の実績PERで割った値です。1倍なら市場並みです。</p>
+  <figure><div class="legend"><span><i style="background:var(--brass)"></i>総合商社5社（中央値）</span><span><i style="background:var(--slate)"></i>海運大手3社（中央値）</span></div><svg viewBox="0 0 860 280"><line x1="48" x2="850" y1="252.0" y2="252.0" stroke="var(--line-soft)"/><text x="42" y="256.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">0倍</text><line x1="48" x2="850" y1="202.0" y2="202.0" stroke="var(--line-soft)"/><text x="42" y="206.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">0.25倍</text><line x1="48" x2="850" y1="152.0" y2="152.0" stroke="var(--line-soft)"/><text x="42" y="156.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">0.5倍</text><line x1="48" x2="850" y1="102.0" y2="102.0" stroke="var(--line-soft)"/><text x="42" y="106.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">0.75倍</text><line x1="48" x2="850" y1="52.0" y2="52.0" stroke="var(--line-soft)"/><text x="42" y="56.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">1倍</text><line x1="48" x2="850" y1="52.0" y2="52.0" stroke="var(--ink-3)" stroke-dasharray="4 4"/><line x1="48.0" x2="48.0" y1="12" y2="252" stroke="var(--line)"/><text x="51.0" y="270" font-size="11" fill="var(--ink-3)" class="num">2020</text><line x1="166.8" x2="166.8" y1="12" y2="252" stroke="var(--line)"/><text x="169.8" y="270" font-size="11" fill="var(--ink-3)" class="num">2021</text><line x1="285.6" x2="285.6" y1="12" y2="252" stroke="var(--line)"/><text x="288.6" y="270" font-size="11" fill="var(--ink-3)" class="num">2022</text><line x1="404.4" x2="404.4" y1="12" y2="252" stroke="var(--line)"/><text x="407.4" y="270" font-size="11" fill="var(--ink-3)" class="num">2023</text><line x1="523.3" x2="523.3" y1="12" y2="252" stroke="var(--line)"/><text x="526.3" y="270" font-size="11" fill="var(--ink-3)" class="num">2024</text><line x1="642.1" x2="642.1" y1="12" y2="252" stroke="var(--line)"/><text x="645.1" y="270" font-size="11" fill="var(--ink-3)" class="num">2025</text><line x1="760.9" x2="760.9" y1="12" y2="252" stroke="var(--line)"/><text x="763.9" y="270" font-size="11" fill="var(--ink-3)" class="num">2026</text><polyline points="48.0,163.8 57.9,155.0 67.8,167.2 77.7,171.2 87.6,165.0 97.5,180.8 107.4,178.6 117.3,169.6 127.2,176.8 137.1,179.8 147.0,179.6 156.9,176.0 166.8,175.2 176.7,168.2 186.6,170.8 196.5,171.0 206.4,157.8 216.3,159.2 226.2,157.0 236.1,159.6 246.0,161.6 255.9,157.6 265.8,152.0 275.7,146.8 285.6,133.2 295.5,132.8 305.4,106.2 315.3,103.0 325.2,194.0 335.1,174.2 345.0,179.6 354.9,170.6 364.8,174.6 374.7,172.2 384.6,158.0 394.5,158.4 404.4,160.8 414.3,157.2 424.2,152.8 434.1,147.4 444.0,169.6 454.0,153.6 463.9,151.8 473.8,157.8 483.7,156.4 493.6,153.4 503.5,158.6 513.4,161.4 523.3,153.6 533.2,148.8 543.1,144.2 553.0,133.8 562.9,107.8 572.8,107.6 582.7,115.4 592.6,123.0 602.5,131.0 612.4,129.8 622.3,129.8 632.2,124.4 642.1,126.0 652.0,121.8 661.9,120.2 671.8,116.2 681.7,135.0 691.6,127.8 701.5,124.2 711.4,119.0 721.3,108.4 731.2,108.6 741.1,100.0 751.0,83.8 760.9,77.4 770.8,69.8 780.7,52.6 790.6,60.8 800.5,101.4 810.4,99.6 820.3,81.8 830.2,81.4" fill="none" stroke="var(--brass)" stroke-width="2"/><polyline points="87.6,150.6 97.5,168.2 107.4,173.4 117.3,162.6 127.2,159.0 137.1,149.6 147.0,140.8 156.9,136.6 166.8,137.6 176.7,109.2 186.6,92.8 196.5,66.6 206.4,209.2 216.3,200.0 226.2,196.8 236.1,170.8 246.0,178.0 255.9,180.2 265.8,182.6 275.7,168.4 285.6,160.2 295.5,147.4 305.4,133.4 315.3,139.6 325.2,234.4 335.1,229.4 345.0,227.8 354.9,227.4 364.8,234.6 374.7,233.4 384.6,231.8 394.5,230.4 404.4,231.4 414.3,228.4 424.2,231.0 434.1,230.6 444.0,233.0 454.0,231.8 463.9,230.2 473.8,227.6 483.7,227.2 493.6,227.8 503.5,227.2 513.4,225.0 523.3,221.8 533.2,224.8 543.1,229.2 553.0,226.8 562.9,129.4 572.8,135.0 582.7,128.8 592.6,114.8 602.5,114.4 612.4,117.4 622.3,124.8 632.2,115.6 642.1,124.8 652.0,109.8 661.9,118.2 671.8,126.4 681.7,194.6 691.6,193.2 701.5,192.6 711.4,191.8 721.3,196.8 731.2,195.6 741.1,200.2 751.0,198.2 760.9,200.6 770.8,203.2 780.7,192.8 790.6,198.2 800.5,149.6 810.4,141.4 820.3,119.0 830.2,105.2" fill="none" stroke="var(--slate)" stroke-width="2"/></svg><figcaption>点線が市場並み（1倍）。赤字の期や、2社以上で計算できない月は線を切っています。2021年は市場の利益がコロナで落ちて市場PERが25倍前後に膨らんでいるため、比が低めに出ます。</figcaption></figure>
+  <p><span class="badge m">実測</span>商社は2020〜2022年に0.4倍前後（最低は2022/05の0.29倍）で推移し、2023年以降はほぼ一貫して上がって、2026/03に市場並みの1.00倍に達しました（2026/08は0.85倍）。海運は利益の振れが大きすぎて、実績PERの比は0.09倍から0.93倍まで跳ね回ります。2024年後半や足元で市場並みに近く見えるのは、<strong>評価が上がったからではなく、利益が落ちて分母が縮んだから</strong>です。このため、海運は次の物差しで見ます。</p>
+</section>
+
+<section>
+  <h2><span class="n">02</span>ならした利益で見たPER</h2>
+  <p class="lead">株価 ÷ 直近5期の1株益の平均。景気循環の山と谷を均した利益に、市場が何倍を付けているかを見ます。</p>
+  <figure><div class="legend"><span><i style="background:var(--brass)"></i>総合商社5社</span><span><i style="background:var(--slate)"></i>海運大手3社</span></div><svg viewBox="0 0 860 280"><line x1="48" x2="850" y1="252.0" y2="252.0" stroke="var(--line-soft)"/><text x="42" y="256.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">0倍</text><line x1="48" x2="850" y1="204.0" y2="204.0" stroke="var(--line-soft)"/><text x="42" y="208.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">5倍</text><line x1="48" x2="850" y1="156.0" y2="156.0" stroke="var(--line-soft)"/><text x="42" y="160.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">10倍</text><line x1="48" x2="850" y1="108.0" y2="108.0" stroke="var(--line-soft)"/><text x="42" y="112.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">15倍</text><line x1="48" x2="850" y1="60.0" y2="60.0" stroke="var(--line-soft)"/><text x="42" y="64.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">20倍</text><line x1="48" x2="850" y1="12.0" y2="12.0" stroke="var(--line-soft)"/><text x="42" y="16.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">25倍</text><line x1="48.0" x2="48.0" y1="12" y2="252" stroke="var(--line)"/><text x="51.0" y="270" font-size="11" fill="var(--ink-3)" class="num">2020</text><line x1="166.8" x2="166.8" y1="12" y2="252" stroke="var(--line)"/><text x="169.8" y="270" font-size="11" fill="var(--ink-3)" class="num">2021</text><line x1="285.6" x2="285.6" y1="12" y2="252" stroke="var(--line)"/><text x="288.6" y="270" font-size="11" fill="var(--ink-3)" class="num">2022</text><line x1="404.4" x2="404.4" y1="12" y2="252" stroke="var(--line)"/><text x="407.4" y="270" font-size="11" fill="var(--ink-3)" class="num">2023</text><line x1="523.3" x2="523.3" y1="12" y2="252" stroke="var(--line)"/><text x="526.3" y="270" font-size="11" fill="var(--ink-3)" class="num">2024</text><line x1="642.1" x2="642.1" y1="12" y2="252" stroke="var(--line)"/><text x="645.1" y="270" font-size="11" fill="var(--ink-3)" class="num">2025</text><line x1="760.9" x2="760.9" y1="12" y2="252" stroke="var(--line)"/><text x="763.9" y="270" font-size="11" fill="var(--ink-3)" class="num">2026</text><polyline points="48.0,134.8 57.9,141.0 67.8,158.5 77.7,160.1 87.6,157.7 97.5,165.4 107.4,166.7 117.3,150.9 127.2,152.4 137.1,159.3 147.0,149.7 156.9,142.3 166.8,140.7 176.7,134.4 186.6,118.8 196.5,125.6 206.4,141.5 216.3,143.0 226.2,142.1 236.1,139.4 246.0,136.4 255.9,133.9 265.8,138.8 275.7,130.1 285.6,124.3 295.5,123.7 305.4,101.7 315.3,108.8 325.2,145.9 335.1,150.8 345.0,148.2 354.9,144.9 364.8,150.6 374.7,145.8 384.6,130.8 394.5,133.5 404.4,126.6 414.3,126.6 424.2,125.7 434.1,120.1 444.0,136.4 454.0,117.4 463.9,115.4 473.8,118.1 483.7,118.3 493.6,118.5 503.5,116.2 513.4,115.5 523.3,92.3 533.2,90.4 543.1,76.6 553.0,63.6 562.9,82.4 572.8,85.0 582.7,91.8 592.6,108.8 602.5,119.2 612.4,117.1 622.3,118.7 632.2,109.4 642.1,114.1 652.0,113.8 661.9,111.8 671.8,106.6 681.7,132.0 691.6,131.1 701.5,126.9 711.4,117.6 721.3,112.6 731.2,106.7 741.1,93.3 751.0,77.7 760.9,59.2 770.8,36.1 780.7,47.8 790.6,50.0 800.5,90.0 810.4,99.5 820.3,85.7 830.2,88.5 840.1,90.4 850.0,91.7" fill="none" stroke="var(--brass)" stroke-width="2"/><polyline points="325.2,178.8 335.1,186.9 345.0,179.0 354.9,176.9 364.8,200.1 374.7,195.2 384.6,188.1 394.5,186.5 404.4,187.3 414.3,177.6 424.2,187.0 434.1,184.6 444.0,218.9 454.0,215.9 463.9,212.9 473.8,207.9 483.7,207.9 493.6,210.3 503.5,207.0 513.4,202.5 523.3,194.2 533.2,197.9 543.1,203.8 553.0,199.9 562.9,201.9 572.8,205.0 582.7,202.8 592.6,199.0 602.5,199.6 612.4,200.4 622.3,203.8 632.2,199.0 642.1,202.9 652.0,199.0 661.9,202.6 671.8,205.2 681.7,208.1 691.6,209.5 701.5,207.8 711.4,207.6 721.3,210.0 731.2,207.6 741.1,210.8 751.0,209.7 760.9,209.8 770.8,207.3 780.7,202.8 790.6,204.8 800.5,209.4 810.4,210.1 820.3,203.0 830.2,195.6 840.1,194.1 850.0,191.4" fill="none" stroke="var(--slate)" stroke-width="2"/></svg><figcaption>海運は5期平均が赤字になる2022年春以前は計算できません。毎年5月に5期の範囲が1年ずれるため、段差が出ます。</figcaption></figure>
+  <p><span class="badge m">実測</span>海運は2022年秋から足元まで4〜7倍の範囲で、ほぼ動いていません。ブームの利益を含めた平均利益に対しても、市場は5倍前後しか付けていません。商社は10倍前後から17〜21倍に上がりました。</p>
+</section>
+
+<section>
+  <h2><span class="n">03</span>利益の推移 — ピークの後にどこまで落ちたか</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>1株益（円・分割補正後）</th><th>FY2019</th><th>FY2020</th><th>FY2021</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2026</th><th>FY2023/3比</th></tr></thead>
+    <tbody><tr><td>伊藤忠商事<span class="small">（商社）</span></td><td class="n">65</td><td class="n">67</td><td class="n">54</td><td class="n">111</td><td class="n">109</td><td class="n">111</td><td class="n">123</td><td class="n">128</td><td class="n"><span class="pos">+17%</span></td></tr><tr><td>丸紅<span class="small">（商社）</span></td><td class="n">133</td><td class="n">-114</td><td class="n">129</td><td class="n">245</td><td class="n">318</td><td class="n">280</td><td class="n">303</td><td class="n">330</td><td class="n"><span class="pos">+4%</span></td></tr><tr><td>三井物産<span class="small">（商社）</span></td><td class="n">119</td><td class="n">113</td><td class="n">100</td><td class="n">281</td><td class="n">361</td><td class="n">353</td><td class="n">307</td><td class="n">291</td><td class="n"><span class="neg">-19%</span></td></tr><tr><td>住友商事<span class="small">（商社）</span></td><td class="n">64</td><td class="n">34</td><td class="n">-31</td><td class="n">93</td><td class="n">113</td><td class="n">79</td><td class="n">116</td><td class="n">125</td><td class="n"><span class="pos">+10%</span></td></tr><tr><td>三菱商事<span class="small">（商社）</span></td><td class="n">124</td><td class="n">116</td><td class="n">39</td><td class="n">212</td><td class="n">270</td><td class="n">230</td><td class="n">237</td><td class="n">211</td><td class="n"><span class="neg">-22%</span></td></tr><tr><td>日本郵船<span class="small">（海運）</span></td><td class="n">-88</td><td class="n">61</td><td class="n">275</td><td class="n">1,992</td><td class="n">1,994</td><td class="n">454</td><td class="n">1,048</td><td class="n">497</td><td class="n"><span class="neg">-75%</span></td></tr><tr><td>商船三井<span class="small">（海運）</span></td><td class="n">75</td><td class="n">91</td><td class="n">251</td><td class="n">1,973</td><td class="n">2,206</td><td class="n">723</td><td class="n">1,179</td><td class="n">620</td><td class="n"><span class="neg">-72%</span></td></tr><tr><td>川崎汽船<span class="small">（海運）</span></td><td class="n">-132</td><td class="n">6</td><td class="n">129</td><td class="n">765</td><td class="n">822</td><td class="n">139</td><td class="n">449</td><td class="n">210</td><td class="n"><span class="neg">-74%</span></td></tr></tbody>
+  </table></div>
+  <p class="small">FY2019＝2019年3月期。商社はIRBANKの値、海運は「海運株の予想PER」タブで使った自前計算の値（IRBANKは川崎汽船の分割補正が年により不完全なため）。日本郵船のFY2023のみIRBANKの値で補っています。</p>
+  <p><span class="badge m">実測</span>商社はピーク後に資源系の三菱商事・三井物産が約2割減益になった一方、非資源の多い伊藤忠・丸紅・住友商事は増益です。それでも全社がコロナ前（FY2019）の1.7〜2.5倍の水準を保っています。海運は翌期に7〜8割減り、FY2026でもピークの3割前後です。</p>
+  <p><span class="badge i">解釈</span>2022年のピーク時点では、商社の事後の予想PER（その期の実際の1株益で割った値）は4〜6倍で、海運と同じく「天井の利益」として割り引かれていました。違いが出たのはその後です。<strong>減益の局面で利益が崩れなかった側だけが、倍率を上げてもらえた</strong>と読めます。「好調な数字が続けば解ける」というより、「悪い局面を通っても崩れないと確認されて解ける」です。</p>
+</section>
+
+<section>
+  <h2><span class="n">04</span>半年ごとの数値</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>月末</th><th>市場PER</th><th>商社 実績PER</th><th>商社 ÷ 市場</th><th>商社 5期平均PER</th><th>商社 PBR</th><th>海運 実績PER</th><th>海運 ÷ 市場</th><th>海運 5期平均PER</th></tr></thead>
+    <tbody><tr><td>2020/03</td><td class="n">14.5倍</td><td class="n">6.2倍</td><td class="n"><b>0.42倍</b></td><td class="n">9.7倍</td><td class="n">0.61倍</td><td class="n">—</td><td class="n"><b>—</b></td><td class="n">—</td></tr><tr><td>2020/09</td><td class="n">21.2倍</td><td class="n">8.0倍</td><td class="n"><b>0.38倍</b></td><td class="n">10.4倍</td><td class="n">0.71倍</td><td class="n">9.8倍</td><td class="n"><b>0.47倍</b></td><td class="n">—</td></tr><tr><td>2021/03</td><td class="n">25.7倍</td><td class="n">10.4倍</td><td class="n"><b>0.41倍</b></td><td class="n">13.9倍</td><td class="n">1.03倍</td><td class="n">20.5倍</td><td class="n"><b>0.80倍</b></td><td class="n">—</td></tr><tr><td>2021/09</td><td class="n">27.1倍</td><td class="n">12.2倍</td><td class="n"><b>0.45倍</b></td><td class="n">12.0倍</td><td class="n">0.90倍</td><td class="n">10.0倍</td><td class="n"><b>0.37倍</b></td><td class="n">—</td></tr><tr><td>2022/03</td><td class="n">22.0倍</td><td class="n">16.0倍</td><td class="n"><b>0.73倍</b></td><td class="n">15.7倍</td><td class="n">1.22倍</td><td class="n">13.1倍</td><td class="n"><b>0.59倍</b></td><td class="n">—</td></tr><tr><td>2022/09</td><td class="n">14.2倍</td><td class="n">5.5倍</td><td class="n"><b>0.39倍</b></td><td class="n">10.6倍</td><td class="n">0.88倍</td><td class="n">1.2倍</td><td class="n"><b>0.09倍</b></td><td class="n">5.4倍</td></tr><tr><td>2023/03</td><td class="n">14.8倍</td><td class="n">7.3倍</td><td class="n"><b>0.50倍</b></td><td class="n">13.2倍</td><td class="n">1.18倍</td><td class="n">1.6倍</td><td class="n"><b>0.10倍</b></td><td class="n">6.8倍</td></tr><tr><td>2023/09</td><td class="n">15.7倍</td><td class="n">7.5倍</td><td class="n"><b>0.48倍</b></td><td class="n">13.9倍</td><td class="n">1.30倍</td><td class="n">1.9倍</td><td class="n"><b>0.12倍</b></td><td class="n">4.6倍</td></tr><tr><td>2024/03</td><td class="n">18.3倍</td><td class="n">9.9倍</td><td class="n"><b>0.54倍</b></td><td class="n">18.3倍</td><td class="n">1.70倍</td><td class="n">2.1倍</td><td class="n"><b>0.11倍</b></td><td class="n">5.0倍</td></tr><tr><td>2024/09</td><td class="n">16.7倍</td><td class="n">10.1倍</td><td class="n"><b>0.60倍</b></td><td class="n">13.8倍</td><td class="n">1.26倍</td><td class="n">11.5倍</td><td class="n"><b>0.69倍</b></td><td class="n">5.5倍</td></tr><tr><td>2025/03</td><td class="n">16.2倍</td><td class="n">10.7倍</td><td class="n"><b>0.66倍</b></td><td class="n">14.6倍</td><td class="n">1.15倍</td><td class="n">10.8倍</td><td class="n"><b>0.67倍</b></td><td class="n">5.2倍</td></tr><tr><td>2025/09</td><td class="n">17.0倍</td><td class="n">12.2倍</td><td class="n"><b>0.72倍</b></td><td class="n">14.5倍</td><td class="n">1.50倍</td><td class="n">4.7倍</td><td class="n"><b>0.28倍</b></td><td class="n">4.4倍</td></tr><tr><td>2026/03</td><td class="n">18.6倍</td><td class="n">18.6倍</td><td class="n"><b>1.00倍</b></td><td class="n">21.3倍</td><td class="n">2.27倍</td><td class="n">5.5倍</td><td class="n"><b>0.30倍</b></td><td class="n">5.1倍</td></tr><tr><td>2026/09</td><td class="n">—</td><td class="n">16.9倍</td><td class="n"><b>—</b></td><td class="n">16.8倍</td><td class="n">1.82倍</td><td class="n">14.5倍</td><td class="n"><b>—</b></td><td class="n">6.0倍</td></tr><tr><td>2026/10</td><td class="n">—</td><td class="n">17.2倍</td><td class="n"><b>—</b></td><td class="n">16.7倍</td><td class="n">1.85倍</td><td class="n">15.2倍</td><td class="n"><b>—</b></td><td class="n">6.3倍</td></tr></tbody>
+  </table></div>
+  <h3>参考: 事後の予想PER</h3>
+  <p class="lead">株価 ÷ その時点で進行中の期の、後から分かった実際の1株益。今期（FY2027/3）だけは会社予想です。市場は実績PERなので、水準の比較ではなく形の参考です。</p>
+  <figure><div class="legend"><span><i style="background:var(--brass)"></i>総合商社5社</span><span><i style="background:var(--slate)"></i>海運大手3社</span><span><i style="background:var(--ink-3)"></i>市場（実績PER・参考）</span></div><svg viewBox="0 0 860 280"><line x1="48" x2="850" y1="252.0" y2="252.0" stroke="var(--line-soft)"/><text x="42" y="256.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">0倍</text><line x1="48" x2="850" y1="212.0" y2="212.0" stroke="var(--line-soft)"/><text x="42" y="216.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">5倍</text><line x1="48" x2="850" y1="172.0" y2="172.0" stroke="var(--line-soft)"/><text x="42" y="176.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">10倍</text><line x1="48" x2="850" y1="132.0" y2="132.0" stroke="var(--line-soft)"/><text x="42" y="136.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">15倍</text><line x1="48" x2="850" y1="92.0" y2="92.0" stroke="var(--line-soft)"/><text x="42" y="96.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">20倍</text><line x1="48" x2="850" y1="52.0" y2="52.0" stroke="var(--line-soft)"/><text x="42" y="56.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">25倍</text><line x1="48" x2="850" y1="12.0" y2="12.0" stroke="var(--line-soft)"/><text x="42" y="16.0" text-anchor="end" font-size="11" fill="var(--ink-3)" class="num">30倍</text><line x1="48.0" x2="48.0" y1="12" y2="252" stroke="var(--line)"/><text x="51.0" y="270" font-size="11" fill="var(--ink-3)" class="num">2020</text><line x1="166.8" x2="166.8" y1="12" y2="252" stroke="var(--line)"/><text x="169.8" y="270" font-size="11" fill="var(--ink-3)" class="num">2021</text><line x1="285.6" x2="285.6" y1="12" y2="252" stroke="var(--line)"/><text x="288.6" y="270" font-size="11" fill="var(--ink-3)" class="num">2022</text><line x1="404.4" x2="404.4" y1="12" y2="252" stroke="var(--line)"/><text x="407.4" y="270" font-size="11" fill="var(--ink-3)" class="num">2023</text><line x1="523.3" x2="523.3" y1="12" y2="252" stroke="var(--line)"/><text x="526.3" y="270" font-size="11" fill="var(--ink-3)" class="num">2024</text><line x1="642.1" x2="642.1" y1="12" y2="252" stroke="var(--line)"/><text x="645.1" y="270" font-size="11" fill="var(--ink-3)" class="num">2025</text><line x1="760.9" x2="760.9" y1="12" y2="252" stroke="var(--line)"/><text x="763.9" y="270" font-size="11" fill="var(--ink-3)" class="num">2026</text><polyline points="48.0,185.0 57.9,189.6 67.8,198.6 77.7,190.2 87.6,184.9 97.5,185.6 107.4,186.3 117.3,173.3 127.2,176.0 137.1,182.2 147.0,175.4 156.9,170.2 166.8,168.7 176.7,159.6 186.6,152.6 196.5,219.2 206.4,217.6 216.3,216.4 226.2,216.4 236.1,217.4 246.0,216.9 255.9,215.0 265.8,215.6 275.7,213.2 285.6,211.4 295.5,211.2 305.4,204.6 315.3,215.6 325.2,216.2 335.1,218.8 345.0,219.0 354.9,215.4 364.8,217.8 374.7,215.5 384.6,207.8 394.5,209.7 404.4,209.7 414.3,208.2 424.2,206.4 434.1,193.8 444.0,187.3 454.0,175.0 463.9,174.9 473.8,176.1 483.7,176.5 493.6,177.6 503.5,173.5 513.4,174.2 523.3,165.5 533.2,163.2 543.1,159.3 553.0,159.3 562.9,155.7 572.8,156.8 582.7,159.9 592.6,170.6 602.5,169.1 612.4,169.5 622.3,170.2 632.2,165.7 642.1,171.5 652.0,179.1 661.9,179.0 671.8,172.4 681.7,168.8 691.6,171.0 701.5,166.8 711.4,157.8 721.3,150.9 731.2,147.5 741.1,138.1 751.0,128.6 760.9,128.2 770.8,106.6 780.7,116.0 790.6,119.0 800.5,135.4 810.4,142.8 820.3,133.4 830.2,128.6 840.1,130.5 850.0,128.6" fill="none" stroke="var(--brass)" stroke-width="2"/><polyline points="48.0,173.1 57.9,185.0 67.8,196.2 77.7,238.2 87.6,237.0 97.5,237.3 107.4,238.8 117.3,235.9 127.2,234.4 137.1,233.4 147.0,229.9 156.9,228.7 166.8,228.6 176.7,222.3 186.6,215.4 196.5,246.2 206.4,246.1 216.3,244.8 226.2,244.4 236.1,240.5 246.0,241.8 255.9,242.3 265.8,243.2 275.7,240.5 285.6,240.1 295.5,239.4 305.4,238.2 315.3,240.9 325.2,239.5 335.1,240.7 345.0,238.8 354.9,238.7 364.8,242.6 374.7,241.3 384.6,239.8 394.5,240.1 404.4,240.4 414.3,239.1 424.2,240.0 434.1,195.6 444.0,199.7 454.0,195.8 463.9,191.3 473.8,183.6 483.7,183.6 493.6,187.3 503.5,182.1 513.4,175.0 523.3,162.2 533.2,168.0 543.1,180.4 553.0,217.9 562.9,214.0 572.8,216.2 582.7,214.6 592.6,213.8 602.5,212.6 612.4,214.1 622.3,216.5 632.2,211.8 642.1,216.1 652.0,213.1 661.9,215.9 671.8,177.8 681.7,169.2 691.6,174.3 701.5,170.6 711.4,166.1 721.3,171.9 731.2,167.8 741.1,173.0 751.0,170.2 760.9,170.3 770.8,165.5 780.7,159.1 790.6,175.7 800.5,180.5 810.4,181.8 820.3,169.8 830.2,157.3 840.1,155.0 850.0,150.4" fill="none" stroke="var(--slate)" stroke-width="2"/><polyline points="48.0,114.4 57.9,132.8 67.8,136.0 77.7,129.6 87.6,119.2 97.5,95.2 107.4,101.6 117.3,91.2 127.2,82.4 137.1,89.6 147.0,74.4 156.9,71.2 166.8,69.6 176.7,66.4 186.6,46.4 196.5,51.2 206.4,47.2 216.3,41.6 226.2,45.6 236.1,40.0 246.0,35.2 255.9,40.0 265.8,52.8 275.7,48.8 285.6,64.0 295.5,62.4 305.4,76.0 315.3,88.8 325.2,93.6 335.1,142.4 345.0,136.8 354.9,135.2 364.8,138.4 374.7,134.4 384.6,131.2 394.5,136.8 404.4,132.8 414.3,132.0 424.2,133.6 434.1,132.0 444.0,130.4 454.0,127.2 463.9,125.6 473.8,124.0 483.7,126.4 493.6,130.4 503.5,124.0 513.4,122.4 523.3,116.0 533.2,111.2 543.1,105.6 553.0,108.8 562.9,108.8 572.8,111.2 582.7,112.0 592.6,116.8 602.5,118.4 612.4,117.6 622.3,119.2 632.2,116.0 642.1,116.8 652.0,121.6 661.9,122.4 671.8,121.6 681.7,116.8 691.6,128.0 701.5,123.2 711.4,117.6 721.3,116.0 731.2,112.0 741.1,108.8 751.0,108.0 760.9,101.6 770.8,84.0 780.7,103.2 790.6,91.2 800.5,84.8 810.4,100.0 820.3,104.0 830.2,97.6" fill="none" stroke="var(--ink-3)" stroke-width="2"/></svg></figure>
+</section>
+
+<section>
+  <h2><span class="n">05</span>条件と、この検証が答えていないこと</h2>
+  <div class="caveats">
+    <div class="cv"><h4>なぜ商社の割引が解けたかは分けられない</h4><p>2023年以降、バフェット氏の買い増し、東証のPBR改善要請（2023年3月）、各社の累進配当・自社株買いの約束が重なりました。利益が崩れなかったことの効果と、これらの効果は、このデータでは区別できません。</p></div>
+    <div class="cv"><h4>市場PERはJPXの単純な集計値</h4><p>JPX「規模別・業種別PER・PBR」の東証一部（2022年4月以降はプライム）総合の値で、小数1桁までしか公表されていません。2026年9月以降は未公表のため、比は8月までです。</p></div>
+    <div class="cv"><h4>株価は配当を含まない</h4><p>Yahooの分割補正済み終値を使っています。PERの計算なので配当は関係しません。</p></div>
+    <div class="cv"><h4>標本は2業種8社</h4><p>「割引が解けた例」と「解けなかった例」を1つずつ並べたものです。一般則とするには、半導体製造装置など他業種の例を足す必要があります。</p></div>
+  </div>
+</section>
+
+<footer>
+  データ: IRBANK（商社のEPS・BPS）／ TDnet短信からの自前計算（海運のEPS）／ Yahoo Finance 日足 ／ JPX「規模別・業種別PER・PBR」月次<br>
+  期間 2020-01 〜 2026-10。スクリプトとデータは kabutan-ranking/kensho_shosha/ にあります（fetch.py → analyze.py → build_page.py）。
+</footer>
+</div>
+</body>
+</html>
