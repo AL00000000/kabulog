@@ -82,7 +82,8 @@ def cached_5y(code, fetch=True):
     p = CACHE5 / f"{code}.json"
     if p.exists():
         bars = (json.loads(p.read_text(encoding="utf-8")) or {}).get("bars") or []
-        return [[b[0], b[1], b[3]] if len(b) == 3 else [b[0], b[2], b[3]] for b in bars]
+        return fp.fix_jumps([[b[0], b[1], b[3]] if len(b) == 3 else [b[0], b[2], b[3]]
+                             for b in bars])
     if not fetch:
         return []
     try:
@@ -95,7 +96,7 @@ def cached_5y(code, fetch=True):
     p.write_text(json.dumps({"bars": [[d, c, c, v] for d, c, v in raw]},
                             ensure_ascii=False), encoding="utf-8")
     time.sleep(SLEEP)
-    return raw
+    return fp.fix_jumps(raw)
 
 
 def stale(c5, short_bars):
@@ -170,7 +171,7 @@ def main():
             (CACHE5 / f"{code}.json").unlink(missing_ok=True)
             c5 = cached_5y(code, True)
             refreshed.append(code)
-        bars = merge(c5, sh)
+        bars = fp.fix_jumps(merge(c5, sh))
         bars = [b for b in bars if b[0] >= START and b[1]]
         if len(bars) < 2:
             missing += 1

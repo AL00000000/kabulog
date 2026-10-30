@@ -28,6 +28,7 @@ import argparse
 import csv
 import glob
 import json
+import math
 import statistics
 import sys
 import time
@@ -312,6 +313,66 @@ def fetch_bars(sym):
     return bars
 
 
+JUMP = 3.0          # 前日比がこれ以上(または1/これ以下)なら値幅制限上ありえない
+FACTORS = (2, 3, 4, 5, 10, 20, 25, 50, 100, 200, 500, 1000)
+SPIKE_DAYS = 5      # これ以内に元の水準へ戻ったら「数日だけ壊れた値」とみなす
+
+
+def _factor(r):
+    """r に一番近い分割・併合比率(r<1なら逆数側)を返す。"""
+    inv = r < 1
+    x = 1 / r if inv else r
+    f = min(FACTORS, key=lambda k: abs(math.log(x / k)))
+    return 1 / f if inv else f
+
+
+def fix_jumps(bars):
+    """Yahooの日足に残る**未調整の分割・併合**と**数日だけ桁がずれた値**を直す。
+
+    2026-10-19に1366(iFreeETF日経225ダブルインバース)が100株→1株に併合したが、
+    Yahooは併合前の終値を遡って調整せず(10/16=68 → 10/19=7000)、さらに10/20・10/21だけ
+    717000・701700 と実際(株探で7170・7017)の100倍が入っていた。そのまま使うと期間騰落率が
+    +11528% になった。東証の値幅制限では1日で3倍・1/3にはならないので、それを超える
+    前日比は値動きではなくデータの不具合とみなす:
+      - SPIKE_DAYS 以内に元の水準へ戻る → その数日だけ比率で割り戻す
+      - 戻らない → 分割・併合。それより前の全日を比率で調整する(出来高は逆に割る)
+    比率は計算値そのままでなく近い整数比(FACTORS)に丸める(1366なら103倍→100倍)。
+    2026-10-30時点で同じ不具合が他に10銘柄あった(ETFの分割を中心に 1321/1328/1365/
+    1367/1545/2558/2559/2869、6574の併合、上場廃止前後の 1909/2180)。
+    Yahooが後から正しく調整すれば段差が無くなり、何もしない。"""
+    bars = [list(b) for b in bars]
+    i = 1
+    while i < len(bars):
+        prev, cur = bars[i - 1][-2], bars[i][-2]
+        if not prev or not cur or 1 / JUMP < cur / prev < JUMP:
+            i += 1
+            continue
+        f = _factor(cur / prev)
+        if abs(math.log(cur / prev / f)) > 0.15:
+            # どの整数比にも当たらない段差は値そのものが壊れている。上場廃止の前後で
+            # 1909・2180が数か月ぶん136億などの値(出来高0)になっていた。水準が戻るまで捨てる
+            back = next((j for j in range(i + 1, len(bars)) if bars[j][-2]
+                         and 1 / JUMP < bars[j][-2] / prev < JUMP), len(bars))
+            del bars[i:back]
+            continue
+        back = next((j for j in range(i + 1, min(i + 1 + SPIKE_DAYS, len(bars)))
+                     if bars[j][-2] and 1 / JUMP < bars[j][-2] / prev < JUMP), None)
+        if back is not None:
+            for b in bars[i:back]:
+                b[1:-1] = [x / f if x else x for x in b[1:-1]]
+                b[-1] = b[-1] * f
+            i = back
+        else:
+            for b in bars[:i]:
+                b[1:-1] = [x * f if x else x for x in b[1:-1]]
+                b[-1] = b[-1] / f
+            i += 1
+    for b in bars:
+        b[1:-1] = [round(x, 2) if x else x for x in b[1:-1]]
+        b[-1] = round(b[-1])
+    return bars
+
+
 KEEP_BARS = 140   # キャッシュに残す日足の本数(6か月=約123本+余裕)
 
 
@@ -434,6 +495,18 @@ def main():
             if i % 100 == 0:
                 save_json(CACHE, cache, compact=True)
                 print(f"{i}/{len(targets)}", flush=True)
+        save_json(CACHE, cache, compact=True)
+
+    # 未調整の併合や桁ずれを直す。--no-fetch でもキャッシュの既存分に効くよう取得とは別に回す
+    fixed = []
+    for code in set(codes) | set(gcodes) | set(xcodes):
+        if cache.get(code):
+            nb = fix_jumps(cache[code])
+            if nb != cache[code]:
+                fixed.append(code)
+                cache[code] = nb
+    if fixed:
+        print(f"併合・桁ずれを補正: {','.join(sorted(fixed))}", flush=True)
         save_json(CACHE, cache, compact=True)
 
     # ベンチマークは指数そのもの。取得元が株探で銘柄(Yahoo)と別なので取得も分ける
