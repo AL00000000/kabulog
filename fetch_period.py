@@ -47,6 +47,7 @@ RAWCLOSE = BASE / "cache_period" / "raw_close.json"   # 未調整の最新終値
 
 OUT0901 = BASE / "docs" / "data_0901"
 TOPIX_SUMMARY = BASE / "docs" / "data_topix" / "summary.json"
+BOTTOMUP = BASE / "docs" / "data_personal" / "bottom-up.json"   # 「注目銘柄」タブのリスト
 START_0901 = "2026-08-31"  # 「9/1-」タブの起点。この日の終値を基準にするので9/1当日の値動きから乗る
 PASSIVE_0901 = 0.12        # パッシブ保有 ÷ 浮動株時価総額(TOPIXのウエイトは浮動株基準なので全銘柄共通)
 
@@ -129,7 +130,24 @@ def load_groups():
             code = (row.get("コード") or "").strip()
             if g and code:
                 groups.setdefault(g, []).append((code, (row.get("銘柄名") or "").strip()))
+    groups.update(bottomup_group())
     return groups
+
+
+def bottomup_group():
+    """「注目銘柄」タブ(手動更新のメモ)の銘柄を1グループにする。
+
+    メモを足せば翌日の定時実行で自動的にグループにも入る(CSVへの転記は要らない)。
+    米国株などYahooの「.T」で引けないコードは除く。
+    """
+    items = (load_json(BOTTOMUP, {}) or {}).get("items") or []
+    seen, out = set(), []
+    for x in items:
+        code = str(x.get("code") or "").strip().upper()
+        if re.fullmatch(r"\d[0-9A-Z]{3}", code) and code not in seen:
+            seen.add(code)
+            out.append((code, x.get("name") or ""))
+    return {"注目銘柄": out} if out else {}
 
 
 def topix_groups():
@@ -149,9 +167,12 @@ def topix_groups():
     return out
 
 
-def fetch_index(code):
+def fetch_index(code, volume=False):
     """株探の指数日足(約300営業日ぶん返る)。銘柄の日足と同じ [日付, 終値, 出来高] 形式で
-    古い順に返す(出来高は使わないので0)。"""
+    古い順に返す(出来高は使わないので0)。
+
+    個別銘柄のコードでも同じ形で返るので、Yahooに無い銘柄(名証単独上場の岡谷鋼機など)の
+    代わりにも使う。そのときは volume=True で出来高(6列目・株数)も拾う。"""
     req = urllib.request.Request(INDEX_URL.format(code=code), headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=30) as r:
         text = r.read().decode("utf-8", "replace")
@@ -167,7 +188,8 @@ def fetch_index(code):
         if len(ymd) != 8 or not ymd.isdigit():
             continue
         try:
-            out.append([f"{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}", float(p[4]) / div, 0])
+            vol = float(p[5]) if volume and len(p) > 5 and p[5] else 0
+            out.append([f"{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}", float(p[4]) / div, vol])
         except ValueError:
             continue
     out.sort()
@@ -484,7 +506,14 @@ def main():
         for i, code in enumerate(targets, 1):
             for attempt in range(RETRY):
                 try:
-                    cache[code] = merge_bars(cache.get(code), fetch_bars(f"{code}.T"))
+                    try:
+                        bars = fetch_bars(f"{code}.T")
+                    except urllib.error.HTTPError as e:
+                        # Yahooに銘柄が無い(名証単独上場など)。株探の日足で代用する
+                        if e.code != 404:
+                            raise
+                        bars = fetch_index(code, volume=True)
+                    cache[code] = merge_bars(cache.get(code), bars)
                     break
                 except Exception as e:
                     if attempt == RETRY - 1:

@@ -55,6 +55,25 @@ a.srcbtn:hover { border-color: var(--accent); }
 .toolbar input { width: 220px; }
 .toolbar input.streakMin { width: 56px; }
 .toolbar input.chk { width: auto; accent-color: var(--accent); vertical-align: middle; }
+.colPick { position: relative; }
+.colPick > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  background: var(--panel2); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 12px; font-size: .85rem;
+}
+.colPick > summary::-webkit-details-marker { display: none; }
+.colPick[open] > summary { border-color: var(--accent); }
+.colPickBox {
+  position: absolute; z-index: 20; top: calc(100% + 6px); left: 0;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.45);
+  display: grid; grid-template-columns: repeat(2, max-content); gap: 4px 18px;
+  max-width: calc(100vw - 32px);
+}
+.colPickBox label { color: var(--text); font-size: .84rem; margin: 0; white-space: nowrap; cursor: pointer; }
+.toolbar .colPickBox input { width: auto; accent-color: var(--accent); margin-right: 6px; vertical-align: middle; padding: 0; }
+.colPickBox .cpAct { grid-column: 1 / -1; display: flex; gap: 12px; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+.colPickBox .cpAct a { color: var(--accent); font-size: .8rem; cursor: pointer; }
 button.refresh {
   background: linear-gradient(135deg, #1d8f98, #39c5cf);
   color: #04121a; font-weight: 700; font-size: .9rem;
@@ -728,6 +747,8 @@ footer a { color: var(--accent); }
         <option value="0">すべて</option>
       </select></span>
       <input id="pdQ" type="search" placeholder="銘柄名・コードで絞り込み">
+      <details class="colPick" data-sub="all"><summary>表示する列 ▾</summary><div class="colPickBox" id="pdColPick"></div></details>
+      <details class="colPick" data-sub="grp" hidden><summary>表示する列 ▾</summary><div class="colPickBox" id="pgColPick"></div></details>
       <span class="stat" id="pdStat"></span>
     </div>
     <div class="banner" id="pdBanner">読み込み中…</div>
@@ -739,7 +760,8 @@ footer a { color: var(--accent); }
         <div class="hint">売買代金ランキング(上位500位)に<b>一度でも登場した銘柄</b>を母集団に、<b>開始日の終値を100として</b>終了日の終値までの騰落率を並べたものです。株価はYahoo Financeの終値で、<b>株式分割・併合だけを遡って調整</b>してあります(配当は調整していません。指数と同じ価格ベースにそろえるため)。<br>
         「対TOPIX」= 同じ期間の<b>TOPIX(指数そのもの)</b>の騰落率を引いた超過リターン。<b>株価も指数も配当を含まない価格ベース</b>なので、3月末・9月末の権利落ちは両方が同じように下がって相殺されます。地合いぶんを除いてどれだけ強かったかを見るための列です。「期間高値」は開始日〜終了日の終値ベースの最高値、「高値比」は終値がそこからどれだけ下がったか(0%なら期間の最高値で引けている)、「最大上昇率」は開始日から期間高値までの上昇率です。<b>高値比が大きくマイナスの銘柄は、期間中に急騰したあと大きく戻している</b>ことを意味します。<br>
         「平均売買代金」は直近20営業日の平均(終値×出来高)。小型株のノイズを外したいときは下限を入れて絞り込めます。「代金順位」は最新営業日の売買代金ランキング順位で、空欄は現在500位圏外の銘柄です。<br>
-        <b>開始日より前に上場していない銘柄・その日の株価が取れない銘柄は除外されます。</b>列見出しクリックで並び替えできます(既定は騰落率の降順)。</div>
+        「1週間騰落率」〜「1年騰落率」は<b>終了日の終値</b>を、その1週間・1か月・3か月・6か月・1年前(休場日ならその前の営業日)の終値と比べたものです。開始日には関係しません。その時点で上場していない銘柄は「-」です。<br>
+        <b>開始日より前に上場していない銘柄・その日の株価が取れない銘柄は除外されます。</b>列見出しクリックで並び替えできます(既定は騰落率の降順)。「表示する列」で列ごとに表示/非表示を切り替えられ、設定はこのブラウザに保存されて次回も反映されます。</div>
       </div>
       <div class="tablecard">
         <table id="pdTbl">
@@ -756,6 +778,7 @@ footer a { color: var(--accent); }
         <div class="hint"><b>テーマ・業種などでまとめた銘柄群ごとの騰落率</b>です。期間は上のプルダウンで自由に変えられます。「6.23-」「9/1-」として別タブにしていたものは、<b>期間プルダウンの「起点の日を決める」プリセット</b>になりました。同じグループの数字を期間だけ変えて見比べられます。<br>
         カードの「平均」は等ウェイト(全銘柄を同じ金額ずつ買った場合)、「主要20」は平均売買代金の上位20銘柄だけの平均です。<b>平均と中央値が近いほど全面高</b>、主要20だけが高い場合は大型株が牽引していることを意味します。カードをクリックするとそのグループだけに絞り込めます。<br>
         <b>SaaSの定義について</b> … 株探の「SaaS」テーマはNTT・KDDI・NEC・富士通やSIerまで含む広い括りだったため、<b>売上の過半がSaaS(サブスクリプション型のクラウドソフト)と見られる銘柄</b>に絞り直しました(189銘柄 → 63銘柄)。<b>これは決算のセグメント売上を1社ずつ検証したものではなく、事業内容から見た選別です。</b>受託開発・SI・パッケージ販売が主のもの(テラスカイ・フレクト・オービック・ミロク情報など)、マッチングや手数料ビジネス(クラウドワークス・BASE・ビジョナルなど)は外しています。入れ直したい銘柄があれば <code>groups_623.csv</code> を直せば反映されます。<br><b>そのほかの母集団の作り方</b> … コンサル・エンタメは株探のテーマ別銘柄一覧(エンタメはゲーム/アニメ/音楽/映画/コンテンツ/キャラクター/アミューズメント/テーマパーク/玩具/劇場の10テーマの和集合)、地銀はJPXの「銀行業」からメガ3・りそな・三井住友トラスト・ゆうちょ・セブン銀・楽天銀・SBI新生・あおぞらを除いたもの、建設はJPXの「建設業」全社、非TOPIXは「TOPIX入替」タブと同じリスト、2026IPOは株探の「2026年のIPO」テーマ、女性消費関連はMTG・サンリオ・Aiロボティクス・フルッタフルッタに化粧品・美容の専業銘柄とファッション/ブランドリユースを加えたもの、サイバーセキュリティは売上の大半がサイバーセキュリティと見られる専業・主力と認証/不正対策の銘柄(NEC・富士通・NRIなど部門を持つ大手ITは除外。事業内容から見た選別)です。<br>
+        <b>注目銘柄</b>は「注目銘柄」タブのリストそのもので、メモに銘柄を足すと翌営業日の更新でこのグループにも入ります(米国株など東証コードでない銘柄は対象外)。<br>
         <b>TOPIX除外(確定的)・TOPIX採用(確定的)</b>は「TOPIX入替確定(推定)」タブの推計から作ったグループで、<b>当落線上(risk=mid/high)は入れていません</b>。当落線上の銘柄は小型株が多く株価を持っているものが3割前後しかなく、平均が母集団を代表しなくなるためです。<br>
         <b>開始日より後に上場した銘柄</b>は起点が揃わないため、行を<span class="lateNote">黄色</span>にして<b>カードの集計値からは除外</b>しています(カードに「+n銘柄は起点が違う」と表示)。<b>時価総額</b>と<b>平均売買代金</b>の絞り込みは表だけでなくカードの集計値にも反映されるので、「大型だけ」「小型だけ」で平均がどう変わるかを見比べられます。1銘柄が複数グループに入ることがあります。<br>
         TOPIX除外銘柄の<b>売日数つきの一覧</b>(8/31起点)は <a href="./d0901.html" target="_blank" rel="noopener">こちら ↗</a> にあります。</div>
@@ -3397,7 +3420,17 @@ async function pvEnsure() {
   const V = PV[pdSub];
   const box = document.getElementById("pdBanner");
   if (!V.data) { box.textContent = "株価を読み込み中…"; await pvLoad(pdSub); }
-  const si = PD_AXIS.indexOf(document.getElementById("pdFromSel").value);
+  let si = PD_AXIS.indexOf(document.getElementById("pdFromSel").value);
+  // 1年騰落率などの列は終了日から遡るので、開始日より前の株価が要ることがある
+  const ei = PD_AXIS.indexOf(document.getElementById("pdToSel").value);
+  const hid = colHidden[pdSub === "grp" ? "pg" : "pd"];
+  if (ei >= 0) {
+    for (const t of PD_TRAIL) {
+      if (hid.has(t.key)) continue;
+      const bi = pdTrailIdx(ei, t);
+      if (bi >= 0 && (si < 0 || bi < si)) si = bi;
+    }
+  }
   if (si >= 0 && si < PD_LONG_N && !V.longLoaded) {
     box.textContent = "2024年からの株価を読み込み中…（初回だけ時間がかかります）";
     await pvLoadLong(pdSub);
@@ -3424,6 +3457,78 @@ function pdSpark(c, si, ei) {
     '" fill="none" stroke="var(--' + (up ? "up" : "down") + ')" stroke-width="1.5"/></svg>';
 }
 
+/* 終了日から遡った固定期間の騰落率(1週間〜1年)。開始日とは独立に、
+   終了日の終値を「その日付の1週間前/1か月前…」以前で最後の営業日の終値と比べる。 */
+const PD_TRAIL = [
+  { key: "t1w", label: "1週間騰落率", days: 7 },
+  { key: "t1m", label: "1か月騰落率", months: 1 },
+  { key: "t3m", label: "3か月騰落率", months: 3 },
+  { key: "t6m", label: "6か月騰落率", months: 6 },
+  { key: "t1y", label: "1年騰落率",   months: 12 },
+];
+function pdTrailCols(fmt) {
+  return PD_TRAIL.map(t => ({ key: t.key, label: t.label, color: true, fmt,
+    num: s => s[t.key] ?? -Infinity }));
+}
+// 終了日 ei から遡った基準日の添字(日付軸より前なら -1)
+function pdTrailIdx(ei, t) {
+  const [y, m, d] = PD_AXIS[ei].split("-").map(Number);
+  let dt;
+  if (t.days) dt = new Date(Date.UTC(y, m - 1, d - t.days));
+  else {
+    // 月末の繰り上がりを防ぐ(3/31の1か月前は2/28)
+    const last = new Date(Date.UTC(y, m - t.months, 0)).getUTCDate();
+    dt = new Date(Date.UTC(y, m - 1 - t.months, Math.min(d, last)));
+  }
+  const ymd = dt.toISOString().slice(0, 10);
+  for (let i = ei; i >= 0; i--) if (PD_AXIS[i] <= ymd) return i;
+  return -1;
+}
+// 終了日の値 to と株価配列 c から、固定期間の騰落率をまとめて求める
+function pdTrailVals(c, ei, to) {
+  const out = {};
+  for (const t of PD_TRAIL) {
+    const bi = pdTrailIdx(ei, t);
+    const b = bi < 0 ? null : pdAt(c, bi);
+    out[t.key] = (b && to) ? (to / b - 1) * 100 : null;
+  }
+  return out;
+}
+
+/* 列の表示/非表示。**隠した列のキー**をブラウザに保存する(あとから足した列は最初から見える)。 */
+const COLVIS_KEY = { pd: "kabulog.period.hiddenCols", pg: "kabulog.periodGroup.hiddenCols" };
+const colHidden = { pd: new Set(), pg: new Set() };
+for (const k of Object.keys(COLVIS_KEY)) {
+  try { colHidden[k] = new Set(JSON.parse(localStorage.getItem(COLVIS_KEY[k])) || []); }
+  catch (e) { /* 保存できない環境では毎回すべて表示 */ }
+}
+function colSave(k) {
+  try { localStorage.setItem(COLVIS_KEY[k], JSON.stringify([...colHidden[k]])); } catch (e) { /* 表示は続行 */ }
+}
+const colVisible = (k, cols) => cols.filter(c => !colHidden[k].has(c.key));
+function colPickBuild(k, cols, boxId) {
+  const box = document.getElementById(boxId);
+  box.innerHTML = cols.map(c =>
+    '<label><input type="checkbox" data-k="' + c.key + '"' + (colHidden[k].has(c.key) ? "" : " checked") + ">"
+    + c.label + "</label>").join("")
+    + '<div class="cpAct"><a data-act="all">すべて表示</a><a data-act="none">すべて隠す</a></div>';
+  box.querySelectorAll("input").forEach(el => {
+    el.onchange = () => {
+      if (el.checked) colHidden[k].delete(el.dataset.k); else colHidden[k].add(el.dataset.k);
+      colSave(k);
+      pdRender();
+    };
+  });
+  box.querySelectorAll("a[data-act]").forEach(a => {
+    a.onclick = () => {
+      colHidden[k] = new Set(a.dataset.act === "all" ? [] : cols.map(c => c.key));
+      colSave(k);
+      colPickBuild(k, cols, boxId);
+      pdRender();
+    };
+  });
+}
+
 const PD_COLS = [
   { key: "rank",   label: "順位",     num: s => s.rank },
   { key: "code",   label: "コード",   code: true, left: true },
@@ -3439,6 +3544,7 @@ const PD_COLS = [
   { key: "tv",     label: "平均売買代金", num: s => s.tv ?? -Infinity,
     fmt: v => (v == null ? "-" : fmtOku(v)) },
   { key: "r",      label: "代金順位", num: s => s.r ?? Infinity, fmt: v => (v == null ? "" : v) },
+  ...pdTrailCols(fmtPct),
   { key: "spark",  label: "推移",     num: s => s.chg, html: true, fmt: (v, s) => s.spark },
 ];
 
@@ -3479,6 +3585,7 @@ function pdCompute() {
       maxUp: (hi / from - 1) * 100,
       fromHi: (to / hi - 1) * 100,
       spark: pdSpark(c, si, ei),
+      ...pdTrailVals(c, ei, to),
     });
   }
   pdRows = rows;
@@ -3488,7 +3595,7 @@ function pdCompute() {
 function pdBuildHead() {
   const tr = document.getElementById("pdHeadRow");
   tr.innerHTML = "";
-  for (const col of PD_COLS) {
+  for (const col of colVisible("pd", PD_COLS)) {
     const th = document.createElement("th");
     th.textContent = col.label;
     if (col.left) th.classList.add("tl");
@@ -3533,7 +3640,7 @@ function pdRenderAll() {
   if (si < 0 || ei < 0 || si >= ei) {
     banner.innerHTML = '<span class="err">開始日は終了日より前の日付を選んでください</span>';
     document.getElementById("pdBody").innerHTML =
-      '<tr><td class="loading" colspan="' + PD_COLS.length + '">期間を選び直してください</td></tr>';
+      '<tr><td class="loading" colspan="' + Math.max(1, colVisible("pd", PD_COLS).length) + '">期間を選び直してください</td></tr>';
     document.getElementById("pdCards").innerHTML = "";
     document.getElementById("pdStat").textContent = "";
     return;
@@ -3569,12 +3676,13 @@ function pdRenderAll() {
   const tb = document.getElementById("pdBody");
   tb.innerHTML = "";
   if (!rows.length) {
-    tb.innerHTML = '<tr><td class="loading" colspan="' + PD_COLS.length + '">該当する銘柄がありません</td></tr>';
+    tb.innerHTML = '<tr><td class="loading" colspan="' + Math.max(1, colVisible("pd", PD_COLS).length) + '">該当する銘柄がありません</td></tr>';
   } else {
     const frag = document.createDocumentFragment();
+    const vis = colVisible("pd", PD_COLS);
     for (const s of rows) {
       const tr = document.createElement("tr");
-      for (const col of PD_COLS) {
+      for (const col of vis) {
         const v = s[col.key];
         const td = document.createElement("td");
         if (col.code) {
@@ -3642,7 +3750,7 @@ async function pdRender() {
   if (si < 0 || ei < 0 || si >= ei) {
     banner.innerHTML = '<span class="err">開始日は終了日より前の日付を選んでください</span>';
     document.getElementById("pgBody").innerHTML =
-      '<tr><td class="loading" colspan="' + PG_COLS.length + '">期間を選び直してください</td></tr>';
+      '<tr><td class="loading" colspan="' + Math.max(1, colVisible("pg", PG_COLS).length) + '">期間を選び直してください</td></tr>';
     document.getElementById("pgCards").innerHTML = "";
     return;
   }
@@ -3729,11 +3837,19 @@ async function pdInit() {
     document.querySelectorAll("#view-period .subtab").forEach(b => {
       b.onclick = () => pdSwitchSub(b.dataset.sub);
     });
+    colPickBuild("pd", PD_COLS, "pdColPick");
+    colPickBuild("pg", PG_COLS, "pgColPick");
+    // 列選択の外をクリックしたら閉じる
+    document.addEventListener("click", e => {
+      document.querySelectorAll("#view-period .colPick[open]").forEach(d => {
+        if (!d.contains(e.target)) d.open = false;
+      });
+    });
     pdRender();
   } catch (e) {
     document.getElementById("pdBanner").innerHTML = '<span class="err">読み込みエラー: ' + e + "</span>";
     document.getElementById("pdBody").innerHTML =
-      '<tr><td class="loading" colspan="' + PD_COLS.length + '">読み込めませんでした</td></tr>';
+      '<tr><td class="loading" colspan="' + Math.max(1, colVisible("pd", PD_COLS).length) + '">読み込めませんでした</td></tr>';
   }
 }
 /* ---- 期間騰落率 > グループ別 ----
@@ -3752,6 +3868,7 @@ const PG_COLS = [
   { key: "mc",   label: "時価総額", num: r => (r.mc == null ? -Infinity : r.mc),
     fmt: v => (v == null ? "-" : fmtOku(v * 100)) },
   { key: "from", label: "起点日",   left: true, num: null },
+  ...pdTrailCols(v => fmtPct2(v)),
 ];
 let pgSort = "chg", pgAsc = false, pgRows = [];
 
@@ -3778,6 +3895,7 @@ function pgCompute(si, ei) {
       code, n: s.n, tv: s.tv ?? 0, mc: s.mc ?? null, chg,
       ex: (b0 && b1) ? chg - (b1 / b0 - 1) * 100 : null,
       late: (i0 - si) > 3, from: V.data.dates[i0],
+      ...pdTrailVals(s.c, ei, to),
     };
     // 1銘柄が複数グループに入ることがあるので、グループごとに行を作る
     for (const gi of (s.g || [])) rows.push({ ...base, gi, g: V.data.groups[gi] });
@@ -3867,7 +3985,7 @@ function pgRenderCards(rows) {
 function pgBuildHead() {
   const tr = document.getElementById("pgHeadRow");
   tr.innerHTML = "";
-  for (const c of PG_COLS) {
+  for (const c of colVisible("pg", PG_COLS)) {
     const th = document.createElement("th");
     th.textContent = c.label;
     if (c.left) th.classList.add("tl");
@@ -3910,10 +4028,11 @@ function pgRender(si, ei) {
   const tb = document.getElementById("pgBody");
   tb.innerHTML = "";
   const frag = document.createDocumentFragment();
+  const vis = colVisible("pg", PG_COLS);
   for (const r of rows) {
     const tr = document.createElement("tr");
     if (r.late) tr.className = "late";
-    for (const c of PG_COLS) {
+    for (const c of vis) {
       const td = document.createElement("td");
       const v = r[c.key];
       if (c.code) {
