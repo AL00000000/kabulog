@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-10-20",
+  "researched_at": "2026-10-31",
   "scope": "半導体史の主要事象と、高値更新直前1〜14暦日のニュース候補。原因や網羅性を保証しない。",
   "pending": [
     {
@@ -1753,13 +1753,146 @@
       "kind": "industry",
       "requested": true,
       "evidence": "発表は公式確認・括弧内は指定の評価",
-      "note": "V4.1-Flash-1017への更新と検索API公開。括弧内はユーザー指定の呼称。翌営業日の騰落は表示するが、評価は1営業日だけで確定せず、発表の因果効果とも断定しない。",
+      "note": "V4.1-Flash-1017への更新と検索API公開。括弧内はユーザー指定の呼称。翌営業日の騰落は表示するが、評価は1営業日だけで確定せず、発表の因果効果とも断定しない。 追記（2026/10/31）：指定の「ショックなし」は次の取引日19日の反応に関する評価。22日のSOX急落とは分け、発表後に近い急落日へ自動対応しても因果を示すものではない。",
       "sources": [
         {
           "label": "DeepSeek公式 10/17更新履歴",
           "url": "https://api-docs.deepseek.com/updates/#date-2026-10-17"
         }
       ]
+    },
+    {
+      "id": "lam-2026sep",
+      "date": "2026-10-21",
+      "title": "Lam Research決算・供給制約への言及",
+      "short": "Lam Research決算・供給制約への言及",
+      "kind": "industry",
+      "evidence": "公式確認（急落との因果は未判定）",
+      "note": "米国引け後の決算と説明会で、部材の供給制約が翌四半期の売上見通しを制限すると説明。発表は21日、対応日は22日。SOXの22日の急落に時期が近い候補であり、単独原因とは断定しない。",
+      "sources": [
+        {
+          "label": "Lam公式決算",
+          "url": "https://investor.lamresearch.com/2026-10-21-Lam-Research-Corporation-Reports-Financial-Results-for-the-Quarter-Ended-September-27%2C-2026"
+        },
+        {
+          "label": "公式掲載の説明会記録：発表時刻・供給制約",
+          "url": "https://investor.lamresearch.com/image/LRCX-USQ_Transcript_2026-10-21.pdf"
+        }
+      ],
+      "checked_at": "2026-10-31",
+      "market_date": "2026-10-22"
+    },
+    {
+      "id": "meta-2026q3",
+      "date": "2026-10-21",
+      "title": "Meta決算・フリーキャッシュフロー赤字",
+      "short": "Meta決算・フリーキャッシュフロー赤字",
+      "kind": "industry",
+      "evidence": "公式確認（急落との因果は未判定）",
+      "note": "第3四半期のフリーキャッシュフローは21.2億ドルの赤字。米国引け後の決算発表として翌22日に対応。AI投資の資金負担を考える資料だが、SOX下落への寄与は未推計。",
+      "sources": [
+        {
+          "label": "Meta公式決算・説明会時刻",
+          "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/"
+        }
+      ],
+      "checked_at": "2026-10-31",
+      "market_date": "2026-10-22"
+    },
+    {
+      "id": "anthropic-broadcom-financing-2026oct",
+      "date": "2026-10-26",
+      "title": "Anthropic向け630億ドルのAI計算基盤金融取引",
+      "short": "Anthropic向け630億ドルのAI計算基盤金融取引",
+      "kind": "industry",
+      "evidence": "公式確認（急落との因果は未判定）",
+      "note": "金融機関4社がBroadcomの技術を用いるAnthropic向け630億ドルの取引を発表。SPVがAIアクセラレーターなどを購入しAnthropicへリースする構造。完成や全額支払済みという意味ではない。引け後発表として27日に対応。価格上昇との因果は未判定。",
+      "sources": [
+        {
+          "label": "Broadcom掲載の共同発表",
+          "url": "https://investors.broadcom.com/node/64786/pdf"
+        },
+        {
+          "label": "当時記事：26日引け後発表・27日の値動き",
+          "url": "https://www.kiplinger.com/investing/stocks/nasdaq-jumps-308-points-on-broadcoms-big-gains-stock-market-today"
+        }
+      ],
+      "checked_at": "2026-10-31",
+      "market_date": "2026-10-27"
+    },
+    {
+      "id": "skhynix-2026q3",
+      "date": "2026-10-28",
+      "title": "SK hynix決算・HBM4と長期供給契約",
+      "short": "SK hynix決算・HBM4と長期供給契約",
+      "kind": "industry",
+      "evidence": "公式確認（急落との因果は未判定）",
+      "note": "第3四半期決算でHBM4・高付加価値サーバー製品の販売拡大と、2027〜2028年の生産能力の50％超について長期契約を確保したと公表。会社発表時点の内容であり、SOXの日次騰落の原因認定ではない。",
+      "sources": [
+        {
+          "label": "SK hynix公式決算",
+          "url": "https://news.skhynix.com/en/q3-2026-business-results/"
+        }
+      ],
+      "checked_at": "2026-10-31"
+    },
+    {
+      "id": "amazon-2026q3",
+      "date": "2026-10-29",
+      "title": "Amazon決算・AI設備投資の資金負担への懸念",
+      "short": "Amazon決算・AI設備投資の資金負担への懸念",
+      "kind": "industry",
+      "evidence": "公式確認（急落との因果は未判定）",
+      "note": "29日引け後に第3四半期決算を発表し、2026年の現金設備投資見通し約2200億ドルを維持。翌30日のReutersはIntelとAmazonの決算への失望、AI関連投資の資金消費への懸念と半導体株売りを報道。設備投資額だけから需要の崩壊やSOXへの因果は断定しない。",
+      "sources": [
+        {
+          "label": "Amazon公式決算",
+          "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/default.aspx"
+        },
+        {
+          "label": "Reuters 10/30当日市況（配信先）",
+          "url": "https://www.aol.ca/articles/nasdaq-futures-tumble-amazon-intel-084615000.html"
+        }
+      ],
+      "checked_at": "2026-10-31",
+      "market_date": "2026-10-30"
+    },
+    {
+      "id": "intel-2026q3",
+      "date": "2026-10-29",
+      "title": "Intel決算・PC減速と第4四半期見通し",
+      "short": "Intel決算・PC減速と第4四半期見通し",
+      "kind": "industry",
+      "evidence": "公式確認（急落との因果は未判定）",
+      "note": "29日16時01分（米東部時間）に決算を発表。第4四半期売上見通し150億〜160億ドル、PC減速が翌年上期まで続くとの見方を示した。翌30日のReutersはIntelとAmazonの決算への失望を半導体株売りの背景として報道。SOX下落の単独原因・寄与率は未確定。",
+      "sources": [
+        {
+          "label": "Intel公式決算・発表時刻",
+          "url": "https://www.intc.com/news-events/press-releases/detail/1786/intel-reports-third-quarter-2026-financial-results"
+        },
+        {
+          "label": "Reuters 10/30当日市況（配信先）",
+          "url": "https://www.aol.ca/articles/nasdaq-futures-tumble-amazon-intel-084615000.html"
+        }
+      ],
+      "checked_at": "2026-10-31",
+      "market_date": "2026-10-30"
+    },
+    {
+      "id": "samsung-2026q3",
+      "date": "2026-10-29",
+      "title": "Samsung決算・AIメモリー需要と設備投資",
+      "short": "Samsung決算・AIメモリー需要と設備投資",
+      "kind": "industry",
+      "evidence": "公式確認（急落との因果は未判定）",
+      "note": "第3四半期決算でAI製品を中心とするメモリー事業の最高業績を説明。四半期設備投資は29兆ウォン、うち半導体部門27.2兆ウォン。10月8日の速報とは別の詳細決算。SOX急落と時期が近くても悪材料と断定しない。",
+      "sources": [
+        {
+          "label": "Samsung公式詳細決算",
+          "url": "https://news.samsung.com/global/samsung-electronics-announces-third-quarter-2026-results"
+        }
+      ],
+      "checked_at": "2026-10-31"
     }
   ]
 }

@@ -45,10 +45,16 @@ class SoxHistory(unittest.TestCase):
         # 2017 surpassing the 2000 record must not reset at a chart's year boundary.
         record = next(r for r in saved['records']['close'] if r['date'] == '2017-11-21')
         self.assertEqual(record['previous_record_date'], '2000-03-10')
-        # User's Saturday news maps to Monday and has no fabricated five-day result.
+        # User's Saturday news maps to Monday. The forward result stays null
+        # until all five actual sessions exist, then uses their saved closes.
         event = next(e for e in saved['events'] if e['id'] == 'deepseek2026')
         self.assertEqual(event['plot_date'], '2026-10-19')
-        self.assertIsNone(event['sox_5session_pct'])
+        i = next(i for i, row in enumerate(data['rows']) if row[0] == event['plot_date'])
+        if i + 4 < len(data['rows']):
+            expected = round((data['rows'][i + 4][1] / data['rows'][i - 1][1] - 1) * 100, 4)
+            self.assertEqual(event['sox_5session_pct'], expected)
+        else:
+            self.assertIsNone(event['sox_5session_pct'])
 
     def test_drop_threshold_raw_return_and_announcement_availability(self):
         rows = [['2026-01-01', 100, 100], ['2026-01-02', 95, 97],
