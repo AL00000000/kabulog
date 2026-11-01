@@ -309,7 +309,7 @@ footer a { color: var(--accent); }
     <div class="tabgroup">
       <span class="tabgroup-label">毎日更新</span>
       <div class="tabgroup-items">
-        <button class="tab active" data-tab="ranking">売買代金ランキング</button>
+        <button class="tab" data-tab="ranking">売買代金ランキング</button>
         <button class="tab" data-tab="turnover">市場活況度</button>
         <button class="tab" data-tab="baibai">売買代金</button>
         <button class="tab" data-tab="search">株探検索ランキング</button>
@@ -330,7 +330,7 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="streaks">指数連騰日数</button>
         <button class="tab" data-tab="pts">PTS株価</button>
         <button class="tab" data-tab="watch">監視銘柄リスト</button>
-        <button class="tab" data-tab="period">期間騰落率</button>
+        <button class="tab active" data-tab="period">期間騰落率</button>
       </div>
     </div>
     <div class="tabgroup">
@@ -377,7 +377,7 @@ footer a { color: var(--accent); }
     </div>
   </nav>
 
-  <div id="view-ranking">
+  <div id="view-ranking" hidden>
   <div class="toolbar">
     <button class="refresh" id="refreshBtn">🔄 最新データを取得</button>
     <span><label>データ群</label><select id="viewSel">
@@ -702,7 +702,7 @@ footer a { color: var(--accent); }
     </footer>
   </div><!-- /view-jigyou -->
 
-  <div id="view-period" hidden>
+  <div id="view-period">
     <!-- 母集団の切り替え。期間の設定は下のツールバーで共通なので、
          「同じ期間を、全銘柄で見るか / グループ別で見るか」だけがここで変わる -->
     <div class="subnav">
@@ -716,14 +716,14 @@ footer a { color: var(--accent); }
       <span><label>期間</label><select id="pdPresetSel">
         <optgroup label="直近から数える">
           <option value="5">直近5営業日</option>
-          <option value="20" selected>直近20営業日</option>
+          <option value="20">直近20営業日</option>
           <option value="60">直近60営業日</option>
           <option value="120">直近120営業日</option>
         </optgroup>
         <optgroup label="起点の日を決める" id="pdPinGroup">
           <option value="d:2026-09-25">2026-09-25から（9/28-）</option>
           <option value="d:2026-08-31">2026-08-31から（9/1-）</option>
-          <option value="d:2026-06-23">2026-06-23から（6.23-）</option>
+          <option value="d:2026-06-23" selected>2026-06-23から（6.23-）</option>
           <option value="d:2024-06-19">2024-06-19から（TOPIX入替の追跡）</option>
         </optgroup>
         <optgroup label="その他">
@@ -3394,9 +3394,15 @@ async function pvLoad(key) {
 }
 
 /* 過去ぶんを読み足して、空けてあった先頭の枠を埋める */
-async function pvLoadLong(key) {
+function pvLoadLong(key) {
   const V = PV[key];
-  if (V.longLoaded || !PD_LONG_N) return;
+  if (V.longLoaded || !PD_LONG_N) return Promise.resolve();
+  // 開始日の変更と固定期間の列の両方から呼ばれるので、取得は1回にまとめる
+  if (!V.longPromise) V.longPromise = pvFetchLong(V).finally(() => { V.longPromise = null; });
+  return V.longPromise;
+}
+
+async function pvFetchLong(V) {
   const res = await fetch(V.longUrl, { cache: "no-cache" });
   if (!res.ok) throw new Error(V.longUrl + " " + res.status);
   const j = await res.json();
@@ -3420,22 +3426,24 @@ async function pvEnsure() {
   const V = PV[pdSub];
   const box = document.getElementById("pdBanner");
   if (!V.data) { box.textContent = "株価を読み込み中…"; await pvLoad(pdSub); }
-  let si = PD_AXIS.indexOf(document.getElementById("pdFromSel").value);
-  // 1年騰落率などの列は終了日から遡るので、開始日より前の株価が要ることがある
-  const ei = PD_AXIS.indexOf(document.getElementById("pdToSel").value);
-  const hid = colHidden[pdSub === "grp" ? "pg" : "pd"];
-  if (ei >= 0) {
-    for (const t of PD_TRAIL) {
-      if (hid.has(t.key)) continue;
-      const bi = pdTrailIdx(ei, t);
-      if (bi >= 0 && (si < 0 || bi < si)) si = bi;
-    }
-  }
+  const si = PD_AXIS.indexOf(document.getElementById("pdFromSel").value);
   if (si >= 0 && si < PD_LONG_N && !V.longLoaded) {
     box.textContent = "2024年からの株価を読み込み中…（初回だけ時間がかかります）";
     await pvLoadLong(pdSub);
   }
   pdData = V.data;              // 既存コードは pdData を見ている
+  // 1年騰落率などの列は終了日から遡るので、開始日より前の株価が要ることがある。
+  // 表は先に出し、読めたら描き直す(それまでその列は「-」)
+  const ei = PD_AXIS.indexOf(document.getElementById("pdToSel").value);
+  const hid = colHidden[pdSub === "grp" ? "pg" : "pd"];
+  if (ei >= 0 && !V.longLoaded && PD_TRAIL.some(t => {
+    if (hid.has(t.key)) return false;
+    const bi = pdTrailIdx(ei, t);
+    return bi >= 0 && bi < PD_LONG_N;
+  })) {
+    pvLoadLong(pdSub).then(() => pdRender())
+      .catch(e => console.warn("過去ぶんの株価を読めませんでした", e));
+  }
 }
 
 // 指定インデックス以前で直近の値を返す(その日が欠損でも遡って拾う)
@@ -3818,7 +3826,7 @@ async function pdInit() {
       if (!PD_AXIS.some(x => x >= d)) o.disabled = true;
     }
 
-    document.getElementById("pdPresetSel").value = PD_AXIS.length > 20 ? "20" : "all";
+    document.getElementById("pdPresetSel").value = "d:2026-06-23";
     pdApplyPreset();
 
     document.getElementById("pdPresetSel").onchange = () => { pdApplyPreset(); pdRender(); };
@@ -4734,7 +4742,7 @@ function switchTab(name) {
   clearBadge(name);   // 開いたら既読にしてNEWを消す
 }
 document.querySelectorAll(".tab").forEach(b => { b.onclick = () => switchTab(b.dataset.tab); });
-if (location.hash === "#bottomup") switchTab("bottomup");
+switchTab(location.hash === "#bottomup" ? "bottomup" : "period");
 
 /* ===== タブ別の最終更新日を取得して NEW バッジを出す =====
    各サイトは同一オリジン(al00000000.github.io)なので直接fetchできる。
