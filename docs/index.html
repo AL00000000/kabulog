@@ -193,6 +193,14 @@ footer a { color: var(--accent); }
   color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .06em;
 }
 .tabgroup-items { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+/* 普段は畳んでおくグループ。中身のタブは親のflexにそのまま並ぶ */
+.tabgroup-sub { display: contents; }
+.tabgroup-sub[hidden] { display: none; }
+.tabgroup-toggle {
+  background: transparent; color: var(--muted); border: 1px dashed var(--border);
+  border-radius: 8px; padding: 8px 12px; font: inherit; font-size: .85rem; cursor: pointer;
+}
+.tabgroup-toggle:hover, .tabgroup-toggle.has-active { color: var(--text); border-color: var(--accent); }
 /* 更新終了は破線で「止まっている」ことを形でも示す */
 .tab.is-ended { border-style: dashed; opacity: .72; }
 .tab.is-ended:hover, .tab.is-ended.active { opacity: 1; }
@@ -359,6 +367,8 @@ footer a { color: var(--accent); }
     <div class="tabgroup">
       <span class="tabgroup-label">仮説検証</span>
       <div class="tabgroup-items">
+        <button class="tabgroup-toggle" id="kenshoToggle" type="button" aria-expanded="false" aria-controls="kenshoTabs"></button>
+        <div class="tabgroup-sub" id="kenshoTabs" hidden>
         <button class="tab" data-tab="kensho">高配当上位50の25年</button>
         <button class="tab" data-tab="kenshopbr">PBR要請とグロース株</button>
         <button class="tab" data-tab="kensho1up">1UP企業取材の翌日</button>
@@ -367,6 +377,7 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="kenshoshosha">シクリカル割引は解けるか</button>
         <button class="tab" data-tab="kenshotob">TOBされる会社は安いのか</button>
         <button class="tab" data-tab="kenshonewhigh">新高値を毎日買い続けたら</button>
+        </div>
       </div>
     </div>
     <div class="tabgroup">
@@ -4740,7 +4751,21 @@ function switchTab(name) {
   const ifr = view.querySelector("iframe[data-src]");
   if (ifr && !ifr.src) ifr.src = ifr.dataset.src;
   clearBadge(name);   // 開いたら既読にしてNEWを消す
+  kenshoToggleSync();
 }
+/* 仮説検証は普段は畳んでおく。畳んだ中のタブを開いているときはボタンを強調して、見失わないようにする */
+function kenshoToggleSync() {
+  const btn = document.getElementById("kenshoToggle"), box = document.getElementById("kenshoTabs");
+  const open = !box.hidden;
+  btn.setAttribute("aria-expanded", open);
+  btn.textContent = open ? "閉じる ▴" : box.querySelectorAll(".tab").length + "件を表示 ▾";
+  btn.classList.toggle("has-active", !open && !!box.querySelector(".tab.active"));
+}
+document.getElementById("kenshoToggle").onclick = () => {
+  const box = document.getElementById("kenshoTabs");
+  box.hidden = !box.hidden;
+  kenshoToggleSync();
+};
 document.querySelectorAll(".tab").forEach(b => { b.onclick = () => switchTab(b.dataset.tab); });
 switchTab(location.hash === "#bottomup" ? "bottomup" : "period");
 
