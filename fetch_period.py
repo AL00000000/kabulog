@@ -513,6 +513,8 @@ def main():
                         if e.code != 404:
                             raise
                         bars = fetch_index(code, volume=True)
+                        if bars:
+                            RAW_CLOSE[code] = [bars[-1][0], bars[-1][1]]   # 時価総額の計算に使う
                     cache[code] = merge_bars(cache.get(code), bars)
                     break
                 except Exception as e:
