@@ -557,14 +557,15 @@ def main():
             time.sleep(SLEEP)
         save_json(CACHE, cache, compact=True)
 
-    # 時価総額は「6.23-」タブでしか使わないので、対象はグループ銘柄だけでよい
-    shares = update_shares(gcodes, args.shares_limit) if args.shares_limit else         (load_json(SHARES, {}) or {})
+    # 時価総額はグループ別で使うので、対象はグループ銘柄と「TOPIX除外(確定的)」
+    scodes = sorted(set(gcodes) | set(xcodes))
+    shares = update_shares(scodes, args.shares_limit) if args.shares_limit else         (load_json(SHARES, {}) or {})
     raw = load_json(RAWCLOSE, {}) or {}
     raw.update(RAW_CLOSE)
     if RAW_CLOSE:
         save_json(RAWCLOSE, raw, compact=True)
     caps = market_caps(shares, raw)
-    print(f"時価総額: {len(caps)}/{len(gcodes)} 銘柄", flush=True)
+    print(f"時価総額: {len(caps)}/{len(scodes)} 銘柄", flush=True)
 
     # 全銘柄の営業日を統合(念のため和集合)
     dates = sorted({b[0] for code in codes for b in cache.get(code, [])})
