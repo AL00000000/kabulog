@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01",
+ "updated": "2026-11-02",
  "apps": {
   "1015521325": {
    "name": "Fate/Grand Order",
@@ -75,6 +75,11 @@
    "name": "ドラゴンボールZ ドッカンバトル",
    "release": "2015-02-18",
    "seller": "Bandai Namco Entertainment Inc."
+  },
+  "6444520814": {
+   "name": "モンスターハンターアウトランダーズ",
+   "release": "2026-10-28",
+   "seller": "PROXIMA BETA PTE.LIMITED"
   }
  },
  "days": [
@@ -2100,23 +2105,58 @@
    "apps": {
     "6756641135": {
      "name": "ホロライブドリームス",
-     "last": 23,
-     "high": 23,
+     "last": 20,
+     "high": 19,
      "low": 26,
+     "samples": 288
+    },
+    "951627670": {
+     "name": "ドラゴンボールZ ドッカンバトル",
+     "last": 113,
+     "high": 105,
+     "low": 120,
+     "samples": 288
+    }
+   },
+   "top1": {
+    "name": "YouTube",
+    "apid": "544007664"
+   },
+   "top1_others": [
+    {
+     "name": "eFootball™",
+     "apid": "1117270703"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-02",
+   "apps": {
+    "6756641135": {
+     "name": "ホロライブドリームス",
+     "last": 20,
+     "high": 20,
+     "low": 20,
      "samples": 103
     },
     "951627670": {
      "name": "ドラゴンボールZ ドッカンバトル",
-     "last": 111,
-     "high": 105,
-     "low": 111,
+     "last": 117,
+     "high": 112,
+     "low": 117,
      "samples": 103
     }
    },
    "top1": {
-    "name": "eFootball™",
-    "apid": "1117270703"
-   }
+    "name": "YouTube",
+    "apid": "544007664"
+   },
+   "top1_others": [
+    {
+     "name": "モンスターハンターアウトランダーズ",
+     "apid": "6444520814"
+    }
+   ]
   }
  ]
 }
