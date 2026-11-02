@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02",
+ "updated": "2026-11-03",
  "apps": {
   "1015521325": {
    "name": "Fate/Grand Order",
@@ -46,6 +46,11 @@
    "release": "2012-09-11",
    "seller": "Google LLC"
   },
+  "6444520814": {
+   "name": "モンスターハンターアウトランダーズ",
+   "release": "2026-10-28",
+   "seller": "PROXIMA BETA PTE.LIMITED"
+  },
   "6448311069": {
    "name": "ChatGPT",
    "release": "2023-05-25",
@@ -75,11 +80,6 @@
    "name": "ドラゴンボールZ ドッカンバトル",
    "release": "2015-02-18",
    "seller": "Bandai Namco Entertainment Inc."
-  },
-  "6444520814": {
-   "name": "モンスターハンターアウトランダーズ",
-   "release": "2026-10-28",
-   "seller": "PROXIMA BETA PTE.LIMITED"
   }
  },
  "days": [
@@ -2134,29 +2134,56 @@
    "apps": {
     "6756641135": {
      "name": "ホロライブドリームス",
-     "last": 20,
+     "last": 27,
      "high": 20,
-     "low": 20,
-     "samples": 103
+     "low": 27,
+     "samples": 288
     },
     "951627670": {
      "name": "ドラゴンボールZ ドッカンバトル",
-     "last": 117,
+     "last": 132,
      "high": 112,
-     "low": 117,
-     "samples": 103
+     "low": 132,
+     "samples": 288
     }
    },
    "top1": {
-    "name": "YouTube",
-    "apid": "544007664"
+    "name": "ChatGPT",
+    "apid": "6448311069"
    },
    "top1_others": [
+    {
+     "name": "YouTube",
+     "apid": "544007664"
+    },
     {
      "name": "モンスターハンターアウトランダーズ",
      "apid": "6444520814"
     }
    ]
+  },
+  {
+   "date": "2026-11-03",
+   "apps": {
+    "6756641135": {
+     "name": "ホロライブドリームス",
+     "last": 31,
+     "high": 27,
+     "low": 31,
+     "samples": 103
+    },
+    "951627670": {
+     "name": "ドラゴンボールZ ドッカンバトル",
+     "last": 130,
+     "high": 130,
+     "low": 132,
+     "samples": 103
+    }
+   },
+   "top1": {
+    "name": "ChatGPT",
+    "apid": "6448311069"
+   }
   }
  ]
 }
