@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02",
+ "updated": "2026-11-03",
  "events": [
   {
    "date": "2021-01-28",
@@ -1147,7 +1147,7 @@
   {
    "date": "2026-10-30",
    "time": "上場日",
-   "name": "IPO トグルホールディングス（株）",
+   "name": "IPO トグルホールディングス（株）代表者インタビュー",
    "country": "JP",
    "note": "652A・上場承認 2026/09/28",
    "source": "ipo",
@@ -1287,6 +1287,15 @@
    "note": "9984・3月期第２",
    "source": "kessan",
    "url": "https://kabutan.jp/stock/?code=9984"
+  },
+  {
+   "date": "2026-11-10",
+   "time": "決算発表",
+   "name": "決算 フジクラ",
+   "country": "JP",
+   "note": "5803・3月期第２",
+   "source": "kessan",
+   "url": "https://kabutan.jp/stock/?code=5803"
   },
   {
    "date": "2026-11-13",
