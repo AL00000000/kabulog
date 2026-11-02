@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-02",
+  "as_of": "2026-11-02 16:00",
+  "updated": "2026-11-02",
+  "generated": "2026-11-02T16:45:37+09:00",
+  "min_value": 1000,
+  "window_days": 365,
+  "ma_days": 5,
+  "counts": {
+    "scanned": 700,
+    "universe": 649,
+    "hit": 1,
+    "day_low": 1,
+    "ma_low": 0,
+    "watch": 0,
+    "failed": 0,
+    "stale": 0,
+    "skipped": 3
+  },
+  "failed": [],
+  "stocks": [
+    {
+      "rank": 224,
+      "code": "7272",
+      "name": "ヤマハ発",
+      "market": "東Ｐ",
+      "close": 1723.0,
+      "change_pct": -0.35,
+      "value": 5186.0,
+      "watch": null,
+      "volume": 3008200.0,
+      "prev_min": 3286600.0,
+      "ma": 4963260,
+      "ma_prev_min": 3643460,
+      "is_low": true,
+      "ma_low": false,
+      "avg52": 7036603,
+      "vs_avg_pct": 42.8,
+      "prev_date": "2026-03-17",
+      "gap": 153,
+      "hist_days": 242,
+      "short_hist": false
+    }
+  ]
+}
