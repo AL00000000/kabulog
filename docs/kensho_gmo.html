@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GMO各社とアクティビスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F6F6F2; --surface:#FFFFFF; --surface-2:#EFEFE9; --line:#DBDBD2; --line-soft:#E8E8E1;
+  --ink:#1B2026; --ink-2:#4E5560; --ink-3:#7C838D;
+  --brass:#9C6B18; --teal:#2F6A5C; --slate:#4E718D;
+  --pos:#2C6E4E; --neg:#A8443A; --band:#F2EDE0;
+  --shadow:0 1px 2px rgba(27,32,38,.05),0 6px 18px -10px rgba(27,32,38,.18);
+}
+:root[data-theme="dark"]{
+  --bg:#0a0f1c; --surface:#101830; --surface-2:#16203c; --line:#1e2a48; --line-soft:#17203a;
+  --ink:#dbe4f5; --ink-2:#9fb0cd; --ink-3:#7787a5;
+  --brass:#ffd166; --teal:#5fd3b4; --slate:#4da3ff;
+  --pos:#4da3ff; --neg:#ff5b6a; --band:#16203c;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px -12px rgba(0,0,0,.75);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.85; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:100%;margin:0 auto;padding:0 4px 48px}
+h1,h2,h3{font-family:"Shippori Mincho B1",'Yu Mincho',serif;font-weight:700;text-wrap:balance;line-height:1.4;margin:0}
+header.top{border-bottom:1px solid var(--line);padding:20px 0 26px;margin-bottom:40px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;color:var(--brass);font-weight:700;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+h1{font-size:clamp(28px,5.2vw,42px);letter-spacing:.01em}
+.sub{color:var(--ink-2);font-size:15px;margin-top:16px;max-width:62ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:34px 0 8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 20px 18px;box-shadow:var(--shadow);border-top:3px solid var(--c,var(--slate))}
+.card .lbl{font-size:12px;color:var(--ink-2);line-height:1.55;min-height:3.1em}
+.card .big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:31px;font-weight:600;color:var(--c,var(--ink));letter-spacing:-.02em;margin-top:10px}
+.card .foot{font-size:11.5px;color:var(--ink-3);margin-top:4px;font-family:"IBM Plex Mono",monospace}
+section{margin-top:56px}
+h2{font-size:22px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:8px;display:flex;align-items:baseline;gap:12px}
+h2 .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--brass);font-weight:600;letter-spacing:.08em}
+h3{font-size:16px;margin:30px 0 10px}
+p{margin:14px 0}
+.lead{color:var(--ink-2)}
+.small{font-size:13px;color:var(--ink-3);line-height:1.7}
+.scroll{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:9px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line-soft)}
+th{background:var(--surface-2);font-weight:700;font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);border-bottom:1px solid var(--line)}
+td:first-child,th:first-child{text-align:left;white-space:normal;min-width:190px}
+td.l,th.l{text-align:left}
+tbody tr:last-child td{border-bottom:none}
+tr.hl td{background:var(--band)}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);margin-right:8px;vertical-align:1px;white-space:nowrap}
+.badge.m{color:var(--teal);border-color:var(--teal)}
+.badge.i{color:var(--brass);border-color:var(--brass)}
+.badge.a{color:var(--slate);border-color:var(--slate)}
+ul{padding-left:1.15em;margin:12px 0}
+li{margin:7px 0;color:var(--ink-2);font-size:14px}
+li strong{color:var(--ink)}
+a{color:var(--brass);text-underline-offset:3px}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.8}
+.note{background:var(--band);border:1px solid var(--line);border-radius:3px;padding:14px 18px;font-size:13.5px;color:var(--ink-2);line-height:1.75;margin:18px 0}
+.note strong{color:var(--ink)}
+.caveats{margin-top:22px;display:grid;gap:2px}
+.cv{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:0 3px 3px 0;padding:16px 20px}
+.cv h4{margin:0 0 6px;font-size:14.5px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.cv p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+@media (max-width:620px){ td:first-child,th:first-child{min-width:140px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">個別株 ／ 2026-11-03時点 ／ GMO社名の上場12社</div>
+  <h1>GMO各社とアクティビスト</h1>
+  <p class="sub">名前にGMOが入る上場12社について、株主構成からアクティビストファンドのつけ入る隙を考えました。結論から書くと、<strong>株主総会の票で勝てる会社はありません</strong>。隙があるとすれば議決権ではなく、<strong>親子間取引の公正性と、完全子会社化する際の価格</strong>です。</p>
+
+  <div class="cards">
+    <div class="card" style="--c:var(--neg)"><div class="lbl">親会社の持分が50%超の<br>子会社</div><div class="big">10社</div><div class="foot">上場子会社11社のうち（4051は3769が親）</div></div>
+    <div class="card" style="--c:var(--brass)"><div class="lbl">9449の熊谷氏系の持分<br>（自己株除く）</div><div class="big">45.84%</div><div class="foot">2026-06 大株主の状況</div></div>
+    <div class="card" style="--c:var(--slate)"><div class="lbl">唯一50%未満の子会社<br>3769の親会社持分</div><div class="big">40.72%</div><div class="foot">2026-03</div></div>
+    <div class="card" style="--c:var(--teal)"><div class="lbl">最も隙がある4784<br>売出価格からの下落</div><div class="big">−43%</div><div class="foot">710円→407円（11/2終値）</div></div>
+  </div>
+</header>
+
+<section>
+  <h2><span class="n">01</span>12社の比較</h2>
+  <p class="lead">上から隙が大きい順です。評価は私の推論で、大株主と時価総額は取得した実測値です。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>会社</th><th>市場</th><th>時価総額</th><th>PBR</th><th>親会社の持分</th><th class="l">その他の主な株主</th><th>隙（推論）</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>4784 GMOインターネット</td><td>P</td><td class="n">1,240億円</td><td class="n">3.67倍</td><td class="n">59.33%</td><td class="l">グループ会社1.29%、機関は少数</td><td>中</td></tr>
+      <tr><td>410A GMOコマース</td><td>G</td><td class="n">67.4億円</td><td class="n">2.50倍</td><td class="n">66.02%</td><td class="l">山名氏1.95%（10/1に親が4784へ）</td><td>小〜中</td></tr>
+      <tr><td>3788 GMOグローバルサインHD</td><td>P</td><td class="n">242億円</td><td class="n">2.30倍</td><td class="n">52.02%</td><td class="l">Fidelity 5.26%、青山氏系6.88%</td><td>小〜中</td></tr>
+      <tr><td>3769 GMOペイメントゲートウェイ</td><td>P</td><td class="n">6,474億円</td><td class="n">5.13倍</td><td class="n">40.72%</td><td class="l">Orbis 6.59%、Wellington 5.18%、三井住友銀行3.26%</td><td>小</td></tr>
+      <tr><td>4051 GMOフィナンシャルゲート</td><td>P</td><td class="n">503億円</td><td class="n">7.16倍</td><td class="n">56.97%</td><td class="l">親は3769、機関が分散</td><td>小</td></tr>
+      <tr><td>7177 GMOフィナンシャルHD</td><td>S</td><td class="n">1,243億円</td><td class="n">2.04倍</td><td class="n">65.73%</td><td class="l">大和証券G 2.13%</td><td>小</td></tr>
+      <tr><td>3633 GMOペパボ</td><td>S</td><td class="n">127億円</td><td class="n">3.63倍</td><td class="n">58.76%</td><td class="l">4784が2.09%、他は分散</td><td>小</td></tr>
+      <tr><td>6180 GMOメディア</td><td>G</td><td class="n">65.8億円</td><td class="n">2.18倍</td><td class="n">63.42%</td><td class="l">森氏6.17%</td><td>小</td></tr>
+      <tr><td>415A GMO TECH HD</td><td>G</td><td class="n">80.8億円</td><td class="n">2.04倍</td><td class="n">51.75%</td><td class="l">鈴木氏11.62%</td><td>小</td></tr>
+      <tr><td>5250 GMOプライム・ストラテジー</td><td>S</td><td class="n">45.6億円</td><td class="n">3.20倍</td><td class="n">62.83%</td><td class="l">中村氏8.25%</td><td>ほぼ無</td></tr>
+      <tr><td>3695 GMOプロダクトプラットフォーム</td><td>G</td><td class="n">57.9億円</td><td class="n">2.31倍</td><td class="n">68.11%</td><td class="l">荻田氏9.58%、4784が3.14%</td><td>ほぼ無</td></tr>
+      <tr><td>9449 GMOインターネットグループ（親）</td><td>P</td><td class="n">3,453億円</td><td class="n">1.86倍</td><td class="n">—</td><td class="l">熊谷氏系45.84%、Orbis 8.86%</td><td>ほぼ無</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">大株主はIRBANK（多くは2026年6月、3769・4051は3月、5250は5月）。Orbis・Wellington・Fidelityの比率は大量保有報告書の値で、大株主欄の比率とは算定方法が異なります。410Aの66.02%は議決権ベースです。時価総額とPBRは株探（11/2頃）。</p>
+  <p class="note"><strong>アクティビストの保有は確認できていません。</strong>大量保有報告の一覧で確認したのは9449・3769・3788・4051・4784で、提出者の目的はいずれも純投資や資産運用、または親会社の安定保有でした。他の社の報告書は未確認です。</p>
+</section>
+
+<section>
+  <h2><span class="n">02</span>親会社 9449：割安の余地はあるが、攻められない</h2>
+  <p><span class="badge i">推論</span>熊谷氏と資産管理会社で45.84%を持ちます。総会の出席率を85%と仮定すると約54%で、単独で普通決議を通せます。さらに議決権20%以上の買付けを対象とする買収防衛策も継続中です。</p>
+  <p>持株会社としての割安さは、見かけより小さいです。上場子会社の持分価値だけなら時価総額の1.31倍に見えますが、親会社の負債を引くと差はかなり縮みます。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>項目</th><th>金額</th></tr></thead>
+    <tbody>
+      <tr><td>上場子会社の持分価値（合計、うち3769が約58%）</td><td class="n">約4,541億円</td></tr>
+      <tr><td>投資有価証券（単体、2025年末）</td><td class="n">+303億円</td></tr>
+      <tr><td>単体の負債合計2,999億円 − 現預金1,265億円（2025年末）</td><td class="n">−1,734億円</td></tr>
+      <tr><td>4784売出しの手取り概算（710円×約6,793万株、手数料控除前）</td><td class="n">+482億円</td></tr>
+      <tr class="hl"><td><strong>差引き</strong></td><td class="n"><strong>約3,590億円</strong></td></tr>
+      <tr><td>自己株を除く時価総額</td><td class="n">約3,140億円</td></tr>
+      <tr class="hl"><td><strong>割引率</strong></td><td class="n"><strong>約13%</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small"><span class="badge a">仮定</span>粗い推計です。非上場資産（GMOあおぞらネット銀行など）と売却時の税金は入れていません。単体の負債には借入以外も含みます。410Aは4784の持分価値に含まれるものとして二重計上を避けました。</p>
+</section>
+
+<section>
+  <h2><span class="n">03</span>4784 GMOインターネット：最も隙がある</h2>
+  <ul>
+    <li><span class="badge m">実測</span><strong>需給：</strong>2026年4月に親会社が710円で売り出しましたが、11/2の終値は407円です。<span class="badge i">推論</span>この価格で買った投資家に不満が溜まりやすい状態です。</li>
+    <li><span class="badge m">実測</span><strong>株主構成：</strong>親会社の保有割合は91.86%（4月の報告）から60.52%（5月の報告）へ下がりました。<span class="badge i">推計</span>流通株式比率は2025年末の7.7%から約39%まで上がった計算で、プライム基準の35%は超えそうです。公式判定は2026年末時点の分です。</li>
+    <li><span class="badge m">実測</span><strong>親からの取得①：</strong>9/24に親会社から410A株を43.76億円で取得すると決めました。1株約1,217円で、9/24終値1,128円より約8%高い水準です。</li>
+    <li><span class="badge m">実測</span><strong>親からの取得②：</strong>2025年3月に親会社から11社を取得しました。その中のタイ暗号資産事業は赤字で、2026年3月に撤退を決めています。</li>
+  </ul>
+  <p><strong>限界：</strong>親会社が約6割を握るので、提案は通りません。9/24の取引もKPMGの算定と特別委員会の答申を経ています。<span class="badge i">推論</span>アクティビストにできるのは、公開の場で問題提起して圧力をかけることまでです。</p>
+</section>
+
+<section>
+  <h2><span class="n">04</span>その他の会社</h2>
+  <h3>410A GMOコマース：親会社側との取引が多いが、市場は好感</h3>
+  <p>7月に3788から子会社を取得し、さらに4784からGMO NIKKOとGMOインサイトを計36億円で買います。時価総額67億円に対してかなり大きい取引です。ただ、発表翌日の9/25は1,128円→1,280円と13%上昇しました。<span class="badge i">推論</span>市場は少数株主に不利とは見ておらず、「搾取」という主張は通りにくいです。</p>
+  <h3>3769 GMOペイメントゲートウェイ：唯一過半数を割っているが、攻める理由が薄い</h3>
+  <p>親会社は40.72%ですが、三井住友銀行と合わせると約44%で、出席率85%なら約52%になります（仮定に基づく計算）。PBR 5.13倍、PER 27.4倍と割安ではなく、5%取得にも約324億円かかります。親会社による残り全株の買取りには約3,840億円必要で、<span class="badge i">推論</span>親会社の財務では難しく、TOB価格の吊り上げも狙いにくいと見ます。</p>
+  <h3>3788 GMOグローバルサインHD：小型の中では材料がある</h3>
+  <p>現預金93億円に対し有利子負債は26億円で、差額の67億円は時価総額の約28%です。5%の取得は約12億円で足ります。親会社が52%を持つので票では勝てず、還元要求で圧力をかける程度です。</p>
+  <h3>7177・4051</h3>
+  <p>7177は配当利回りが6.74%と高く、親会社の持分も65.73%で、出席率次第では親会社単独で特別決議を通せます。4051はPBR 7.16倍と割高で、割安を突く形の攻め方は成り立ちません。</p>
+  <h3>小型株（3633・6180・415A・5250・3695）</h3>
+  <p><span class="badge i">推論</span>どれも時価総額が小さく、大手ファンドには規模が足りません。個人大株主も経営側に近い人が多いように見えますが、個別の確認はしていません。配当利回りは3633が7.2%、6180が6.0%、415Aが5.6%、3695が5.4%と高めで、還元要求の余地は大きくありません。5250だけは1.59%と低いものの、PERが95.7倍で割安でもありません。</p>
+</section>
+
+<section>
+  <h2><span class="n">05</span>考え方</h2>
+  <p>「親子上場だから狙われる」は半分しか正しくないと思います。<span class="badge i">推論</span>支配株主がいる会社では、アクティビストの利益はほぼ完全子会社化の価格交渉から生まれます。親会社に買い取る資金や動機がなければ、株を持っていても出口がありません。</p>
+  <p>GMOの場合、親会社の自己資本比率は連結で7.3%です（金融事業を含むため低く出ます）。さらに4784の株を売って現金化している局面で、子会社を買い集める方向には見えません。この点も、アクティビストに不利です。</p>
+</section>
+
+<section>
+  <h2><span class="n">06</span>未確認の点</h2>
+  <div class="caveats">
+    <div class="cv"><h4>親会社単体の4月以降の財務</h4><p>単体の数字は2025年末の有価証券報告書の値で、売出しの手取りだけを概算で足しています。</p></div>
+    <div class="cv"><h4>小型子会社の現金</h4><p>親会社への預け金があるかは確認できておらず、ネットキャッシュが過小に見えている可能性があります。</p></div>
+    <div class="cv"><h4>子会社の防衛策</h4><p>買収防衛策を確認したのは9449だけです。</p></div>
+    <div class="cv"><h4>6社の大量保有報告</h4><p>7177は2023年までの掲載分のみ、410A・3633・3695・415A・6180・5250は報告書の一覧を見ていません。</p></div>
+  </div>
+</section>
+
+<footer>
+  <p>出典：
+  <a href="https://disclosure2dl.edinet-fsa.go.jp/searchdocument/pdf/S100XSG3.pdf" target="_blank" rel="noopener">9449 有価証券報告書（第35期）</a> ／
+  <a href="https://ir.group.gmo/management-policy/governance/anti-takeover/" target="_blank" rel="noopener">9449 買収防衛策</a> ／
+  <a href="https://internet.gmo/ir/pdf/irlibrary/gmointernet_j_disclose_20260309.pdf" target="_blank" rel="noopener">4784 上場維持基準の計画</a> ／
+  <a href="https://internet.gmo/ir/pdf/irlibrary/gmointernet_j_disclose_20260924.pdf" target="_blank" rel="noopener">4784 410A取得の開示</a> ／
+  <a href="https://ir.group.gmo/pdf/irlibrary/gmo_disclose_info20260924.pdf" target="_blank" rel="noopener">9449 410A譲渡の開示</a> ／
+  <a href="https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260924/20260924539658.pdf" target="_blank" rel="noopener">9449 タイ子会社譲渡の開示</a> ／
+  <a href="https://pdf.irpocket.com/C410A/xoA3/MuFf/REjk/uBvE.pdf" target="_blank" rel="noopener">410A 親会社異動の開示</a> ／
+  <a href="https://www.daiwa.jp/products/equity/po/4784.html" target="_blank" rel="noopener">4784 売出しの案内</a> ／
+  <a href="https://irbank.net/" target="_blank" rel="noopener">IRBANK</a> ／
+  <a href="https://kabutan.jp/" target="_blank" rel="noopener">株探</a> ／
+  <a href="https://www.kabutore.biz/genzaikabuka/tairyohoyu.html?code=9449" target="_blank" rel="noopener">大量保有報告の一覧</a></p>
+  <p>2026-11-03作成、自動更新なし。投資助言ではありません。</p>
+</footer>
+
+</div>
+</body>
+</html>

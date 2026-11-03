@@ -196,6 +196,9 @@ footer a { color: var(--accent); }
 /* 普段は畳んでおくグループ。中身のタブは親のflexにそのまま並ぶ */
 .tabgroup-sub { display: contents; }
 .tabgroup-sub[hidden] { display: none; }
+/* グループ内の小分類。行を分けて見出しを付ける */
+.tabgroup-cat { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.tabgroup-cat-label { color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .06em; margin-right: 4px; }
 .tabgroup-toggle {
   background: transparent; color: var(--muted); border: 1px dashed var(--border);
   border-radius: 8px; padding: 8px 12px; font: inherit; font-size: .85rem; cursor: pointer;
@@ -378,6 +381,10 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="kenshoshosha">シクリカル割引は解けるか</button>
         <button class="tab" data-tab="kenshotob">TOBされる会社は安いのか</button>
         <button class="tab" data-tab="kenshonewhigh">新高値を毎日買い続けたら</button>
+        <div class="tabgroup-cat">
+          <span class="tabgroup-cat-label">個別株</span>
+          <button class="tab" data-tab="kenshogmo">GMO各社とアクティビスト</button>
+        </div>
         </div>
       </div>
     </div>
@@ -1150,6 +1157,11 @@ footer a { color: var(--accent); }
   <div id="view-kenshotob" hidden>
     <div class="embed-note">「PBR1倍割れ是正要請で、評価されないくらいなら買収された方がいいと考える会社が増えたのでは」という仮説を、<b>2024年以降にTOBされた299社の公表直前PBR</b>で検証したレポート。普通の上場企業300社を対照群に置いた。TOB対象は市場平均より割安ではなく、仮説は否定 — <a href="./kensho_tob.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
     <iframe class="embed" title="TOBされる会社は安いのか — 仮説検証レポート" data-src="./kensho_tob.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-kenshogmo" hidden>
+    <div class="embed-note">名前にGMOが入る上場12社の<b>株主構成</b>から、アクティビストファンドのつけ入る隙を考えたレポート（2026-11-03時点、自動更新なし）。票で勝てる会社はなく、隙は親子間取引と完全子会社化の価格。最も隙があるのは4784 GMOインターネット。実測と推論を分けて記載 — <a href="./kensho_gmo.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="GMO各社とアクティビスト — 仮説検証レポート" data-src="./kensho_gmo.html" loading="lazy"></iframe>
   </div>
 </div>
 
@@ -4731,7 +4743,7 @@ const VIEW_ID = {
   selran: "view-selran", baibai: "view-baibai", search: "view-search",
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun", kenshokessan: "view-kenshokessan", kenshoshosha: "view-kenshoshosha",
   tsetop5: "view-tsetop5",
-  kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", congestion: "view-congestion", soxhistory: "view-soxhistory",
+  kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", kenshogmo: "view-kenshogmo", congestion: "view-congestion", soxhistory: "view-soxhistory",
   bottomup: "view-bottomup", itayose: "view-itayose",
 };
 function switchTab(name) {
