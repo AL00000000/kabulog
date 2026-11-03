@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GMO板寄せ売買代金 | 株ログ</title>
+<style>
+:root{color-scheme:dark;--bg:#0c1420;--panel:#141f30;--line:#2c3c50;--muted:#a4b6ca;--accent:#6bd3ef;--text:#eef4fa;--up:#ff9a8b;--down:#7fc4ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:24px}h1{font-size:23px;margin:0 0 6px}p{margin:6px 0}.muted{color:var(--muted);font-size:13px}.notice{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:13px}.notice ul{margin:4px 0;padding-left:18px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}select,button{font:inherit;color:var(--text);background:#1a2a3e;border:1px solid #46617b;border-radius:6px;padding:6px 10px}button.on{background:var(--accent);border-color:var(--accent);color:#0c1420;font-weight:600}button{cursor:pointer}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;background:var(--panel);font-size:14px;white-space:nowrap}th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:right;vertical-align:top}th{background:#1a2a3e;font-weight:600;font-size:13px}th.sortable{cursor:pointer}th.sorted{color:var(--accent)}th small{display:block;color:var(--muted);font-weight:400}tr:last-child td{border-bottom:0}td:first-child,th:first-child{text-align:left}
+.name{display:block;font-size:12px;color:var(--muted)}.val{font-weight:600;font-variant-numeric:tabular-nums}.pct,.vol{display:block;font-size:12px;font-variant-numeric:tabular-nums}.vol{color:var(--muted)}.up{color:var(--up)}.down{color:var(--down)}.flat{color:var(--muted)}.late{color:#ffcc72}.none{color:var(--muted);font-size:13px}.err{color:#ffb5a1}
+@media(max-width:780px){main{padding:12px 16px}h1{font-size:20px}th,td{padding:7px 9px}}
+</style>
+<main>
+<h1>GMO銘柄 板寄せ4回の売買代金</h1>
+<p class="muted" id="updated">読み込み中…</p>
+<div class="notice">
+<ul>
+<li><strong>前引け・大引け</strong>は単一価格の足なので確定値です。</li>
+<li><strong>寄り・後場寄り</strong>は最初に約定した1分足の出来高と代金の幅です。同じ1分のザラ場約定を含むので、板寄せ分はこれより小さくなります。<span class="late">黄色の時刻</span>は定刻より遅れて約定した足です。</li>
+<li><strong>前日比</strong>は前営業日の同じタイミングとの売買代金の増減率です。幅のある値は幅の中央で比べます。どちらかの日に約定や記録がなければ「—」です。</li>
+</ul>
+</div>
+<div class="controls">
+<button id="modeDay" class="on" type="button">日別</button>
+<button id="modeStock" type="button">銘柄別</button>
+<label id="dayBox">日付 <select id="daySel"></select></label>
+<label id="stockBox" hidden>銘柄 <select id="stockSel"></select></label>
+</div>
+<div class="scroll"><table><thead id="head"></thead><tbody id="body"></tbody></table></div>
+<p class="muted">出典: 株探の分足、JPX上場銘柄一覧 · <a href="./data_itayose/data.json" target="_blank" rel="noopener" style="color:var(--accent)">記録データ(JSON)</a></p>
+</main>
+<script>
+const SLOTS = [
+  { key: "open", label: "寄り", std: "09:00" },
+  { key: "am_close", label: "前引け", std: "11:30" },
+  { key: "pm_open", label: "後場寄り", std: "12:30" },
+  { key: "close", label: "大引け", std: "15:30" },
+];
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+let data, dates = [], names = {}, mode = "day", sortKey = null;
+
+function yen(v) {
+  if (v >= 1e8) return (v / 1e8).toFixed(2) + "億円";
+  if (v >= 1e4) return Math.round(v / 1e4) + "万円";
+  return Math.round(v) + "円";
+}
+function shares(v) {
+  if (v >= 1e8) return (v / 1e8).toFixed(2) + "億株";
+  if (v >= 1e4) return (v / 1e4).toFixed(v >= 1e6 ? 0 : 1) + "万株";
+  return v + "株";
+}
+// [時刻, 出来高, 安値, 高値] の代金(幅の中央)
+const mid = c => c[1] * (c[2] + c[3]) / 2;
+
+function pctHtml(cur, prev) {
+  if (!cur || !prev) return `<span class="pct flat">前日比 —</span>`;
+  const p = (mid(cur) / mid(prev) - 1) * 100;
+  const cls = p > 0 ? "up" : p < 0 ? "down" : "flat";
+  const txt = (p > 0 ? "+" : "") + p.toFixed(Math.abs(p) >= 1000 ? 0 : 1) + "%";
+  return `<span class="pct ${cls}">前日比 ${txt}</span>`;
+}
+function cellHtml(slot, cur, prev, res5) {
+  if (!cur) {
+    const msg = res5 && (slot.key === "open" || slot.key === "pm_open") ? "記録なし" : "約定なし";
+    return `<td><span class="none">${msg}</span></td>`;
+  }
+  const [t, vol, lo, hi] = cur;
+  const val = lo === hi ? yen(vol * lo) : `${yen(vol * lo)}〜${yen(vol * hi)}`;
+  const late = t !== slot.std ? `<span class="late">${t}</span> ` : "";
+  return `<td><span class="val">${val}</span>${pctHtml(cur, prev)}<span class="vol">${late}${shares(vol)}</span></td>`;
+}
+function prevDate(d) {
+  const i = dates.indexOf(d);
+  return i > 0 ? dates[i - 1] : null;
+}
+function headHtml(first, sortable) {
+  const ths = SLOTS.map(s => {
+    const cls = sortable ? `sortable${sortKey === s.key ? " sorted" : ""}` : "";
+    const mark = sortable && sortKey === s.key ? " ▼" : "";
+    return `<th class="${cls}" data-key="${s.key}">${s.label}${mark}<small>${s.std}</small></th>`;
+  });
+  return `<tr><th>${first}</th>${ths.join("")}</tr>`;
+}
+function renderDay() {
+  const d = $("daySel").value;
+  const today = data.days[d] || {};
+  const yest = data.days[prevDate(d)] || {};
+  let codes = Object.keys(today).sort();
+  if (sortKey) {
+    const v = c => (today[c][sortKey] ? mid(today[c][sortKey]) : -1);
+    codes = codes.slice().sort((a, b) => v(b) - v(a));
+  }
+  $("head").innerHTML = headHtml("銘柄", true);
+  $("body").innerHTML = codes.map(c => {
+    const r = today[c], p = yest[c] || {};
+    return `<tr><td>${esc(c)}<span class="name">${esc(names[c] || "")}</span></td>` +
+      SLOTS.map(s => cellHtml(s, r[s.key], p[s.key], r.res5)).join("") + "</tr>";
+  }).join("");
+}
+function renderStock() {
+  const c = $("stockSel").value;
+  $("head").innerHTML = headHtml("日付", false);
+  $("body").innerHTML = dates.filter(d => data.days[d][c]).reverse().map(d => {
+    const r = data.days[d][c], p = (data.days[prevDate(d)] || {})[c] || {};
+    return `<tr><td>${d}</td>` + SLOTS.map(s => cellHtml(s, r[s.key], p[s.key], r.res5)).join("") + "</tr>";
+  }).join("");
+}
+function render() {
+  $("modeDay").classList.toggle("on", mode === "day");
+  $("modeStock").classList.toggle("on", mode === "stock");
+  $("dayBox").hidden = mode !== "day";
+  $("stockBox").hidden = mode !== "stock";
+  (mode === "day" ? renderDay : renderStock)();
+}
+$("modeDay").onclick = () => { mode = "day"; render(); };
+$("modeStock").onclick = () => { mode = "stock"; render(); };
+$("daySel").onchange = render;
+$("stockSel").onchange = render;
+$("head").onclick = e => {
+  const th = e.target.closest("th.sortable");
+  if (!th) return;
+  sortKey = sortKey === th.dataset.key ? null : th.dataset.key;
+  render();
+};
+fetch("./data_itayose/data.json", { cache: "no-cache" }).then(r => {
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}).then(j => {
+  data = j;
+  dates = Object.keys(j.days).sort();
+  j.symbols.forEach(s => { names[s.code] = s.name; });
+  $("updated").textContent = `最終更新: ${j.updated} ・ ${j.symbols.length}銘柄 ・ ${dates.length}営業日分`;
+  $("daySel").innerHTML = dates.slice().reverse().map(d => `<option>${d}</option>`).join("");
+  $("stockSel").innerHTML = j.symbols.map(s => `<option value="${esc(s.code)}">${esc(s.code)} ${esc(s.name)}</option>`).join("");
+  render();
+}).catch(e => {
+  $("updated").innerHTML = `<span class="err">データを読み込めませんでした (${esc(e.message)})</span>`;
+});
+</script>
+</html>
