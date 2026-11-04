@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04",
+ "updated": "2026-11-05",
  "events": [
   {
    "date": "2021-01-28",
@@ -1173,15 +1173,6 @@
   },
   {
    "date": "2026-11-04",
-   "time": "06:00頃",
-   "name": "決算 AMD",
-   "country": "US",
-   "note": "AMD・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/AMD/"
-  },
-  {
-   "date": "2026-11-04",
    "time": "上場日",
    "name": "IPO AllganizeHoldings（株）",
    "country": "JP",
@@ -1278,6 +1269,15 @@
    "note": "660A・上場承認 2026/10/06",
    "source": "ipo",
    "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
+   "date": "2026-11-10",
+   "time": "決算発表",
+   "name": "決算 ソフトバンクグループ",
+   "country": "JP",
+   "note": "9984・3月期第２",
+   "source": "kessan",
+   "url": "https://kabutan.jp/stock/?code=9984"
   },
   {
    "date": "2026-11-10",
