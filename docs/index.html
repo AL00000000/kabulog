@@ -381,6 +381,7 @@ footer a { color: var(--accent); }
         <button class="tab" data-tab="kenshoshosha">シクリカル割引は解けるか</button>
         <button class="tab" data-tab="kenshotob">TOBされる会社は安いのか</button>
         <button class="tab" data-tab="kenshonewhigh">新高値を毎日買い続けたら</button>
+        <button class="tab" data-tab="kenshosize">2026年前半から後半にかけて大型株から中型株に資金流入</button>
         <div class="tabgroup-cat">
           <span class="tabgroup-cat-label">個別株</span>
           <button class="tab" data-tab="kenshogmo">GMO各社とアクティビスト</button>
@@ -1152,6 +1153,11 @@ footer a { color: var(--accent); }
   <div id="view-kenshonewhigh" hidden>
     <div class="embed-note">「その日の新高値銘柄を資産の5分の1で毎日均等に買い、資金は成績の悪い銘柄から売って作る」運用を<b>2022年9月から約4.1年</b>再現したレポート。同じルールで銘柄をくじ引きで選んだ20回を対照群に置いた。新高値で選ぶとくじ引きにもTOPIXにも負け、仮説は否定。新高値の不利は買って1か月以内に集中し、2〜3か月持てば差はほぼ消える。2026年4月の新高値→6/23の参考例、地合いフィルター版（日経25日線で買いを止める＋個別25日線割れで売る：2017年からの約9年と2023年10月からではくじ引きに全敗、4月以降だけ勝ち）と、他のAIでも実行できる運用マニュアル付き — <a href="./kensho_newhigh.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
     <iframe class="embed" title="新高値を毎日買い続けたら — 仮説検証レポート" data-src="./kensho_newhigh.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-kenshosize" hidden>
+    <div class="embed-note">内国株の全銘柄を<b>基準日の時価総額で5帯</b>に分け、2026年前半（12/30→6/30）と後半（6/30→11/4）の騰落率を比べたレポート。騰落率の首位は大型から中型に移り、500億円以下は中央値が両期間ともマイナス。「資金流入」は騰落率からの解釈で、資金の流れそのものは測っていない — <a href="./kensho_size.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="2026年前半から後半にかけて大型株から中型株に資金流入 — 仮説検証レポート" data-src="./kensho_size.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-kenshotob" hidden>
@@ -4756,7 +4762,7 @@ const VIEW_ID = {
   selran: "view-selran", baibai: "view-baibai", search: "view-search",
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun", kenshokessan: "view-kenshokessan", kenshoshosha: "view-kenshoshosha",
   tsetop5: "view-tsetop5",
-  kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", kenshogmo: "view-kenshogmo", congestion: "view-congestion", soxhistory: "view-soxhistory",
+  kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", kenshosize: "view-kenshosize", kenshogmo: "view-kenshogmo", congestion: "view-congestion", soxhistory: "view-soxhistory",
   bottomup: "view-bottomup", itayose: "view-itayose",
 };
 function switchTab(name) {

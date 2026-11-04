@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026年前半から後半にかけて大型株から中型株に資金流入</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F6F6F2; --surface:#FFFFFF; --surface-2:#EFEFE9; --line:#DBDBD2; --line-soft:#E8E8E1;
+  --ink:#1B2026; --ink-2:#4E5560; --ink-3:#7C838D;
+  --brass:#9C6B18; --brass-soft:#C9952F; --teal:#2F6A5C; --slate:#4E718D; --nikkei:#9A5340;
+  --pos:#2C6E4E; --neg:#A8443A; --band:#F2EDE0;
+  --shadow:0 1px 2px rgba(27,32,38,.05),0 6px 18px -10px rgba(27,32,38,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#12161A; --surface:#191E24; --surface-2:#20262D; --line:#2E353D; --line-soft:#252C33;
+    --ink:#E9E7E1; --ink-2:#A8AEB6; --ink-3:#79808A;
+    --brass:#DCA946; --brass-soft:#B9852C; --teal:#64AE9A; --slate:#86A9C6; --nikkei:#D28B70;
+    --pos:#5FB489; --neg:#D97B6D; --band:#242019;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12161A; --surface:#191E24; --surface-2:#20262D; --line:#2E353D; --line-soft:#252C33;
+  --ink:#E9E7E1; --ink-2:#A8AEB6; --ink-3:#79808A;
+  --brass:#DCA946; --brass-soft:#B9852C; --teal:#64AE9A; --slate:#86A9C6; --nikkei:#D28B70;
+  --pos:#5FB489; --neg:#D97B6D; --band:#242019;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15.5px; line-height:1.85; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 96px}
+h1,h2,h3{font-family:"Shippori Mincho B1",'Yu Mincho',serif;font-weight:700;text-wrap:balance;line-height:1.4;margin:0}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* header */
+header.top{border-bottom:1px solid var(--line);padding:56px 0 30px;margin-bottom:40px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);font-weight:700;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+h1{font-size:clamp(28px,5.2vw,42px);letter-spacing:.01em}
+.sub{color:var(--ink-2);font-size:15px;margin-top:16px;max-width:62ch}
+
+/* answer cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:34px 0 8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 20px 18px;box-shadow:var(--shadow);border-top:3px solid var(--c,var(--slate))}
+.card .lbl{font-size:12px;color:var(--ink-2);line-height:1.55;min-height:3.1em}
+.card .big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:31px;font-weight:600;color:var(--c,var(--ink));letter-spacing:-.02em;margin-top:10px}
+.card .foot{font-size:11.5px;color:var(--ink-3);margin-top:4px;font-family:"IBM Plex Mono",monospace}
+
+section{margin-top:56px}
+h2{font-size:22px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:8px;display:flex;align-items:baseline;gap:12px}
+h2 .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--brass);font-weight:600;letter-spacing:.08em}
+h3{font-size:16px;margin:30px 0 10px}
+p{margin:14px 0}
+.lead{color:var(--ink-2)}
+.small{font-size:13px;color:var(--ink-3);line-height:1.7}
+
+/* tables */
+.scroll{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:9px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line-soft)}
+th{background:var(--surface-2);font-weight:700;font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);border-bottom:1px solid var(--line)}
+td:first-child,th:first-child{text-align:left;white-space:normal;min-width:190px}
+tbody tr:last-child td{border-bottom:none}
+tr.hl td{background:var(--band)}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:baseline}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+
+/* charts */
+figure{margin:22px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 18px 14px;box-shadow:var(--shadow)}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:12px;line-height:1.65}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:12.5px;margin-bottom:14px}
+.legend span{display:flex;align-items:center;gap:7px;color:var(--ink-2)}
+.legend i{width:14px;height:3px;border-radius:2px;display:block}
+
+/* caveat */
+.caveats{margin-top:22px;display:grid;gap:2px}
+.cv{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:0 3px 3px 0;padding:16px 20px}
+.cv h4{margin:0 0 6px;font-size:14.5px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.cv p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);margin-right:8px;vertical-align:1px}
+.badge.m{color:var(--teal);border-color:var(--teal)}
+.badge.i{color:var(--brass);border-color:var(--brass)}
+
+ul{padding-left:1.15em;margin:12px 0}
+li{margin:7px 0;color:var(--ink-2);font-size:14px}
+li strong{color:var(--ink)}
+a{color:var(--brass);text-underline-offset:3px}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.8}
+@media (max-width:620px){ td:first-child,th:first-child{min-width:140px} .wrap{padding:0 16px 70px} }
+
+/* process steps */
+.steps{counter-reset:st;display:grid;gap:2px;margin-top:20px}
+.step{background:var(--surface);border:1px solid var(--line);padding:18px 22px 18px 62px;position:relative;border-radius:3px}
+.step::before{counter-increment:st;content:counter(st);position:absolute;left:20px;top:18px;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--brass);border:1px solid var(--brass);border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.step h4{margin:0 0 6px;font-size:15px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.step p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+.step p+p{margin-top:8px}
+.kv{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--surface-2);padding:1px 6px;border-radius:2px;border:1px solid var(--line)}
+.note{background:var(--band);border:1px solid var(--line);border-radius:3px;padding:14px 18px;font-size:13.5px;color:var(--ink-2);line-height:1.75;margin:18px 0}
+.note strong{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">仮説検証 / 時価総額別の騰落率</div>
+  <h1>2026年前半から後半にかけて大型株から中型株に資金流入</h1>
+  <p class="sub">内国株の全銘柄を基準日の時価総額で5つに分け、2026年の前半と後半の騰落率を比べました。騰落率の首位は大型から中型に移りましたが、<strong>測ったのは株価であり、資金の流れそのものは測っていません。</strong></p>
+</header>
+
+<div class="cards">
+  <div class="card" style="--c:var(--neg)"><div class="lbl">500億円以下の中央値（前半 → 後半）</div><div class="big">-4.1%</div><div class="foot">→ -0.5%</div></div>
+  <div class="card" style="--c:var(--slate)"><div class="lbl">大型の上の平均（前半 → 後半）</div><div class="big">+16.6%</div><div class="foot">→ -1.2%</div></div>
+  <div class="card" style="--c:var(--teal)"><div class="lbl">中型の下の平均（前半 → 後半）</div><div class="big">+7.9%</div><div class="foot">→ +5.9%</div></div>
+</div>
+
+<div class="note"><strong>読み方。</strong>「資金流入」はページ名に合わせた解釈です。騰落率の順序から読んだもので、投資部門別の売買や帯ごとの買い越し額は確認していません。株価は少ない売買でも動くので、中型株の上昇だけでは資金が大型株から移った証拠にはなりません。</div>
+
+<section>
+  <h2><span class="n">01</span>前半：2025/12/30 → 2026/6/30</h2>
+  <p class="lead">おおむね大きい銘柄ほど強い半年でした。</p>
+  <div class="scroll"><table><thead><tr><th>基準日の時価総額</th><th>銘柄数</th><th>平均</th><th>中央値</th><th>上昇した割合</th></tr></thead><tbody><tr><td>500億円以下</td><td class="n">2,358</td><td class="n"><span class="pos">+1.2%</span></td><td class="n"><span class="neg">-4.1%</span></td><td class="n">38%</td></tr><tr><td>501億円〜879億円（中型の下）</td><td class="n">321</td><td class="n"><span class="pos">+7.9%</span></td><td class="n"><span class="neg">-0.4%</span></td><td class="n">49%</td></tr><tr><td>881億円〜1,772億円（中型の上）</td><td class="n">322</td><td class="n"><span class="pos">+9.9%</span></td><td class="n"><span class="pos">+0.5%</span></td><td class="n">51%</td></tr><tr><td>1,773億円〜5,241億円（大型の下）</td><td class="n">321</td><td class="n"><span class="pos">+16.9%</span></td><td class="n"><span class="pos">+4.8%</span></td><td class="n">60%</td></tr><tr><td>5,243億円〜約49.0兆円（大型の上）</td><td class="n">322</td><td class="n"><span class="pos">+16.6%</span></td><td class="n"><span class="pos">+4.2%</span></td><td class="n">57%</td></tr><tr class="hl"><td>全体</td><td class="n">3,644</td><td class="n"><span class="pos">+5.3%</span></td><td class="n"><span class="neg">-2.3%</span></td><td class="n">44%</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2><span class="n">02</span>後半：2026/6/30 → 2026/11/4</h2>
+  <p class="lead">500億円超の平均は小さい帯ほど高くなり、前半と順序が逆になりました。500億円以下だけは中央値がマイナスのままです。</p>
+  <div class="scroll"><table><thead><tr><th>基準日の時価総額</th><th>銘柄数</th><th>平均</th><th>中央値</th><th>上昇した割合</th></tr></thead><tbody><tr><td>500億円以下</td><td class="n">2,361</td><td class="n"><span class="pos">+1.3%</span></td><td class="n"><span class="neg">-0.5%</span></td><td class="n">47%</td></tr><tr><td>500億円〜899億円（中型の下）</td><td class="n">326</td><td class="n"><span class="pos">+5.9%</span></td><td class="n"><span class="pos">+2.5%</span></td><td class="n">62%</td></tr><tr><td>899億円〜1,895億円（中型の上）</td><td class="n">326</td><td class="n"><span class="pos">+4.1%</span></td><td class="n"><span class="pos">+2.9%</span></td><td class="n">59%</td></tr><tr><td>1,896億円〜5,866億円（大型の下）</td><td class="n">326</td><td class="n"><span class="neg">-0.9%</span></td><td class="n"><span class="pos">+0.2%</span></td><td class="n">51%</td></tr><tr><td>5,872億円〜約49.2兆円（大型の上）</td><td class="n">326</td><td class="n"><span class="neg">-1.2%</span></td><td class="n"><span class="pos">+1.1%</span></td><td class="n">53%</td></tr><tr class="hl"><td>全体</td><td class="n">3,665</td><td class="n"><span class="pos">+1.6%</span></td><td class="n"><span class="pos">+0.1%</span></td><td class="n">50%</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2><span class="n">03</span>前半と後半を並べる</h2>
+  <p class="lead">帯の境目は期間ごとの基準日で決めているので、金額は前半と後半で少し違います。期間も約6か月と約4か月で長さが違い、年率換算はしていません。</p>
+  <div class="scroll"><table><thead><tr><th>帯</th><th>前半の平均</th><th>後半の平均</th><th>前半の中央値</th><th>後半の中央値</th></tr></thead><tbody><tr><td>500億円以下</td><td class="n"><span class="pos">+1.2%</span></td><td class="n"><span class="pos">+1.3%</span></td><td class="n"><span class="neg">-4.1%</span></td><td class="n"><span class="neg">-0.5%</span></td></tr><tr><td>中型の下</td><td class="n"><span class="pos">+7.9%</span></td><td class="n"><span class="pos">+5.9%</span></td><td class="n"><span class="neg">-0.4%</span></td><td class="n"><span class="pos">+2.5%</span></td></tr><tr><td>中型の上</td><td class="n"><span class="pos">+9.9%</span></td><td class="n"><span class="pos">+4.1%</span></td><td class="n"><span class="pos">+0.5%</span></td><td class="n"><span class="pos">+2.9%</span></td></tr><tr><td>大型の下</td><td class="n"><span class="pos">+16.9%</span></td><td class="n"><span class="neg">-0.9%</span></td><td class="n"><span class="pos">+4.8%</span></td><td class="n"><span class="pos">+0.2%</span></td></tr><tr><td>大型の上</td><td class="n"><span class="pos">+16.6%</span></td><td class="n"><span class="neg">-1.2%</span></td><td class="n"><span class="pos">+4.2%</span></td><td class="n"><span class="pos">+1.1%</span></td></tr></tbody></table></div>
+  <p class="small">「中型」は500億円超のうち下半分（約1,900億円まで）、「大型」は上半分を指す、このページだけの呼び方です。大型の上の中央値は後半も+1.1%とプラスで、平均のマイナスとは符号が違います。</p>
+</section>
+
+<section>
+  <h2><span class="n">04</span>500億円以下の内訳</h2>
+  <p class="lead">銘柄数で4等分しても、中央値に帯の差はほとんどありません。</p>
+  <h3>前半</h3>
+  <div class="scroll"><table><thead><tr><th>基準日の時価総額</th><th>銘柄数</th><th>平均</th><th>中央値</th><th>上昇した割合</th></tr></thead><tbody><tr><td>5億円〜46億円</td><td class="n">589</td><td class="n"><span class="pos">+2.3%</span></td><td class="n"><span class="neg">-4.3%</span></td><td class="n">39%</td></tr><tr><td>46億円〜99億円</td><td class="n">590</td><td class="n"><span class="neg">-0.5%</span></td><td class="n"><span class="neg">-4.6%</span></td><td class="n">37%</td></tr><tr><td>99億円〜211億円</td><td class="n">589</td><td class="n"><span class="neg">-0.0%</span></td><td class="n"><span class="neg">-3.9%</span></td><td class="n">36%</td></tr><tr><td>211億円〜499億円</td><td class="n">590</td><td class="n"><span class="pos">+3.2%</span></td><td class="n"><span class="neg">-3.8%</span></td><td class="n">40%</td></tr></tbody></table></div>
+  <h3>後半</h3>
+  <div class="scroll"><table><thead><tr><th>基準日の時価総額</th><th>銘柄数</th><th>平均</th><th>中央値</th><th>上昇した割合</th></tr></thead><tbody><tr><td>4億円〜43億円</td><td class="n">590</td><td class="n"><span class="pos">+2.4%</span></td><td class="n"><span class="neg">-0.5%</span></td><td class="n">47%</td></tr><tr><td>43億円〜92億円</td><td class="n">590</td><td class="n"><span class="pos">+0.6%</span></td><td class="n"><span class="neg">-0.7%</span></td><td class="n">47%</td></tr><tr><td>92億円〜196億円</td><td class="n">590</td><td class="n"><span class="pos">+1.8%</span></td><td class="n"><span class="neg">-0.1%</span></td><td class="n">49%</td></tr><tr><td>196億円〜500億円</td><td class="n">591</td><td class="n"><span class="pos">+0.5%</span></td><td class="n"><span class="neg">-0.9%</span></td><td class="n">45%</td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2><span class="n">05</span>起点を1営業日ずらした場合</h2>
+  <p class="lead">前半を1/5、後半を7/1の終値から測っても、傾向は変わりません。</p>
+  <div class="scroll"><table><thead><tr><th>帯（中央値）</th><th>起点 12/30・6/30</th><th>起点 1/5・7/1</th></tr></thead><tbody><tr><td>前半・500億円以下</td><td class="n"><span class="neg">-4.1%</span></td><td class="n"><span class="neg">-4.7%</span></td></tr><tr><td>前半・中型の下</td><td class="n"><span class="neg">-0.4%</span></td><td class="n"><span class="neg">-1.1%</span></td></tr><tr><td>前半・中型の上</td><td class="n"><span class="pos">+0.5%</span></td><td class="n"><span class="pos">+1.7%</span></td></tr><tr><td>前半・大型の下</td><td class="n"><span class="pos">+4.8%</span></td><td class="n"><span class="pos">+4.4%</span></td></tr><tr><td>前半・大型の上</td><td class="n"><span class="pos">+4.2%</span></td><td class="n"><span class="pos">+4.0%</span></td></tr><tr><td>後半・500億円以下</td><td class="n"><span class="neg">-0.5%</span></td><td class="n"><span class="neg">-0.5%</span></td></tr><tr><td>後半・中型の下</td><td class="n"><span class="pos">+2.5%</span></td><td class="n"><span class="pos">+2.8%</span></td></tr><tr><td>後半・中型の上</td><td class="n"><span class="pos">+2.9%</span></td><td class="n"><span class="pos">+3.2%</span></td></tr><tr><td>後半・大型の下</td><td class="n"><span class="pos">+0.2%</span></td><td class="n"><span class="pos">+1.2%</span></td></tr><tr><td>後半・大型の上</td><td class="n"><span class="pos">+1.1%</span></td><td class="n"><span class="pos">+1.0%</span></td></tr></tbody></table></div>
+</section>
+
+<section>
+  <h2><span class="n">06</span>条件と限界</h2>
+  <ul>
+    <li><strong>帯の分け方：</strong>500億円以下を1つの帯にし、500億円超を銘柄数が同じになるよう4等分しました。500億円以下が500億円超のほぼ2倍あるため、500億円以下と同じ銘柄数では上に刻めません。</li>
+    <li><strong>対象：</strong>プライム・スタンダード・グロースの内国株です。ETF、REIT、優先株、起点より後に上場した銘柄は除きました（前半64銘柄、後半43銘柄）。</li>
+    <li><strong>騰落率：</strong>Yahooの分割調整済み終値で計算し、配当は含みません。</li>
+    <li><strong>時価総額は概算：</strong>基準日の終値に現在の発行済株式数を掛けています。その後に増資した銘柄は過大になります。</li>
+    <li><strong>上場廃止の抜け：</strong>銘柄リストが2026年5月末時点より新しいものだけなので、1〜5月に廃止された銘柄は入っていません。影響の大きさは測っていません。</li>
+    <li><strong>平均は急騰銘柄に引っ張られます：</strong>比較には中央値も併せて見てください。</li>
+    <li><strong>対象期間：</strong>2026年の約10か月・2期間だけです。他の年でも同じかは検証していません。</li>
+  </ul>
+</section>
+
+<footer>
+  データ: 株価 Yahoo Finance ／ 発行済株式数 株探 ／ 銘柄一覧 JPX東証上場銘柄一覧<br>
+  2026-11-04時点の固定レポートで、自動更新はしません。スクリプトは kabutan-ranking/kensho_size/ にあります。
+</footer>
+
+</div>
+</body>
+</html>
