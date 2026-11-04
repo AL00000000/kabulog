@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02",
+ "updated": "2026-11-04",
  "days": [
   {
    "date": "2026-08-19",
@@ -3804,6 +3804,92 @@
      "turnover": 1132094.0
     }
    }
+  },
+  {
+   "date": "2026-11-04",
+   "total": 11291230.0,
+   "prime": 10805572.0,
+   "prime_volume": 351279.0,
+   "prime_risen": 425.0,
+   "prime_fallen": 1084.0,
+   "standard": 254255.0,
+   "standard_volume": 52791.0,
+   "standard_risen": 330.0,
+   "standard_fallen": 1077.0,
+   "growth": 231403.0,
+   "growth_volume": 58892.9,
+   "growth_risen": 129.0,
+   "growth_fallen": 419.0,
+   "total_volume": 462962.9,
+   "top": [
+    {
+     "code": "285A",
+     "name": "ｷｵｸｼｱHD",
+     "market": "プライム",
+     "turnover": 1672889.0
+    },
+    {
+     "code": "6857",
+     "name": "ｱﾄﾞﾊﾞﾝﾃ",
+     "market": "プライム",
+     "turnover": 743793.0
+    },
+    {
+     "code": "8035",
+     "name": "東ｴﾚｸ",
+     "market": "プライム",
+     "turnover": 302867.0
+    },
+    {
+     "code": "6976",
+     "name": "太陽誘電",
+     "market": "プライム",
+     "turnover": 288896.0
+    },
+    {
+     "code": "9984",
+     "name": "ｿﾌﾄﾊﾞﾝｸG",
+     "market": "プライム",
+     "turnover": 268789.0
+    },
+    {
+     "code": "6920",
+     "name": "ﾚｰｻﾞｰﾃｸ",
+     "market": "プライム",
+     "turnover": 254312.0
+    },
+    {
+     "code": "4062",
+     "name": "ｲﾋﾞﾃﾞﾝ",
+     "market": "プライム",
+     "turnover": 245300.0
+    },
+    {
+     "code": "6981",
+     "name": "村田製",
+     "market": "プライム",
+     "turnover": 201835.0
+    },
+    {
+     "code": "5803",
+     "name": "フジクラ",
+     "market": "プライム",
+     "turnover": 151692.0
+    },
+    {
+     "code": "8306",
+     "name": "三菱UFJ",
+     "market": "プライム",
+     "turnover": 143520.0
+    }
+   ],
+   "stocks": {
+    "285A": {
+     "name": "キオクシア",
+     "volume": 163533500.0,
+     "turnover": 1672889.0
+    }
+   }
   }
  ],
  "unit": "売買代金=百万円 / 市場の売買高=万株 / 銘柄の売買高=株",
@@ -3833,9 +3919,9 @@
     "source": "MONEY PLUS(単一銘柄の過去最高)"
    },
    "volume": {
-    "value": 144232142.0,
+    "value": 163533500.0,
     "unit": "株",
-    "date": "2026-08-19",
+    "date": "2026-11-04",
     "source": "自動更新"
    }
   }
