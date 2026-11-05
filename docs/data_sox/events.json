@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-10-31",
+  "researched_at": "2026-11-06",
   "scope": "半導体史の主要事象と、高値更新直前1〜14暦日のニュース候補。原因や網羅性を保証しない。",
   "pending": [
     {
@@ -1893,6 +1893,62 @@
         }
       ],
       "checked_at": "2026-10-31"
+    },
+    {
+      "id": "midterm-democrats-2026",
+      "date": "2026-11-03",
+      "market_date": "2026-11-04",
+      "title": "民主党ショック（米中間選挙で民主党が上下両院の過半数）",
+      "short": "民主党ショック",
+      "kind": "macro",
+      "requested": true,
+      "evidence": "選挙結果・市場反応とも当日の報道で確認（名称はユーザー指定）",
+      "note": "11月3日投票の米中間選挙。CBSは米東部時間3日22時29分に民主党の下院過半数を予測し、4日夜時点で上院も民主党が過半数（一部議席は未確定）と報道。結果判明後の最初の取引日である11月4日に対応。同日はダウ+3.03％など株式全体は上昇した一方、SOXは-3.13％（収録終値で確認）。報道は民主党議会でのAI・データセンター規制強化、データセンター建設反対の住民投票（39件中38件で開発制限）への警戒を半導体売りの背景に挙げた。翌5日も半導体売りが続いた（同日のMicron台湾工場の工事停止報道と重なる）。規制は選挙時点で未実施で、下落の単独原因・寄与率は未確定。「民主党ショック」はユーザー指定の呼称で、報道で一般化した名称かは未確認。",
+      "sources": [
+        {
+          "label": "CBS News：下院の結果速報（3日22:29に民主党過半数を予測）",
+          "url": "https://www.cbsnews.com/live-updates/house-election-results-2026/"
+        },
+        {
+          "label": "OANDA 11/5：上下両院の議席と11/4の米株・SOX・原油",
+          "url": "https://www.oanda.jp/lab-education/market_news/20261105_us_midterm_result/"
+        },
+        {
+          "label": "INDmoney：11/4の株式上昇と半導体安の背景",
+          "url": "https://www.indmoney.com/blog/us-stocks/us-stock-market-after-midterm-election-results-dow-nasdaq-sp500-gold-surged-oil-nvidia-semiconductors-fell"
+        },
+        {
+          "label": "亜洲日報 11/4：日本の半導体株急落（AI規制懸念）",
+          "url": "https://japan.ajunews.com/view/20261104174870145"
+        }
+      ],
+      "checked_at": "2026-11-06"
+    },
+    {
+      "id": "micron-taoyuan-halt-2026",
+      "date": "2026-11-05",
+      "market_date": "2026-11-05",
+      "title": "Micron台湾・桃園の新工場（Fab 11E）工事停止の報道",
+      "short": "Micron台湾工場の工事停止",
+      "kind": "industry",
+      "requested": true,
+      "evidence": "当日の報道で確認（会社の公式発表は未確認）",
+      "note": "Bloombergが、Micronは台湾・桃園で建設中のFab 11E（30億〜45億ドル規模、HBM・DRAMを2028年に生産開始予定）の工事を事実上停止したと報道。AI収益に連動した利益分配を求める地元労働組合との労使紛争が理由とされる。報道は「停止」で、計画の正式な中止・撤回かは確認できない（紛争解決後に再開するかは未定）。Micronは既存の台湾拠点は通常稼働と説明し、工事停止には直接言及していない。11月5日の米国市場でMUは寄り前から下落し、日中に12〜16％安と報道。同日は中間選挙後の半導体売りが続いており、SOXの下落をこの報道だけに帰せない。",
+      "sources": [
+        {
+          "label": "Investing.com 11/5：Bloomberg報道の要旨と株価",
+          "url": "https://uk.investing.com/news/stock-market-news/why-is-micron-technology-stock-plunging-today-93CH-4962028"
+        },
+        {
+          "label": "TipRanks 11/5：45億ドル工場の工事停止と労使紛争",
+          "url": "https://www.tipranks.com/news/micron-stock-news-4-5b-taiwan-plant-put-on-hold-amid-labor-dispute"
+        },
+        {
+          "label": "Investing.com日本語版：マイクロン株急落の理由",
+          "url": "https://jp.investing.com/news/stock-market-news/article-93CH-1745112"
+        }
+      ],
+      "checked_at": "2026-11-06"
     }
   ]
 }
