@@ -760,7 +760,7 @@ footer a { color: var(--accent); }
         <option value="ge">以上のみ</option>
         <option value="le">以下のみ</option>
       </select></span>
-      <span><label>平均売買代金 ≧</label><input id="pdMinTv" class="streakMin" type="number" min="0" step="1" placeholder="0"><label style="margin-left:4px">億円</label></span>
+      <span><label>平均売買代金 ≧</label><input id="pdMinTv" class="streakMin" type="number" min="0" step="10" value="30" placeholder="0"><label style="margin:0 6px 0 4px">億円</label><button type="button" class="colsToggle" id="pdTvOff" title="もう一度押すと30億円に戻します">解除</button> <button type="button" class="colsToggle" id="pdTv100" title="もう一度押すと30億円に戻します">100億円以上</button></span>
       <span><label>表示件数</label><select id="pdLimitSel">
         <option value="100">上位100件</option>
         <option value="200">上位200件</option>
@@ -779,7 +779,7 @@ footer a { color: var(--accent); }
       <div class="hintRow">
         <div class="hint">売買代金ランキング(上位500位)に<b>一度でも登場した銘柄</b>を母集団に、<b>開始日の終値を100として</b>終了日の終値までの騰落率を並べたものです。株価はYahoo Financeの終値で、<b>株式分割・併合だけを遡って調整</b>してあります(配当は調整していません。指数と同じ価格ベースにそろえるため)。<br>
         「対TOPIX」= 同じ期間の<b>TOPIX(指数そのもの)</b>の騰落率を引いた超過リターン。<b>株価も指数も配当を含まない価格ベース</b>なので、3月末・9月末の権利落ちは両方が同じように下がって相殺されます。地合いぶんを除いてどれだけ強かったかを見るための列です。「期間高値」は開始日〜終了日の終値ベースの最高値、「高値比」は終値がそこからどれだけ下がったか(0%なら期間の最高値で引けている)、「最大上昇率」は開始日から期間高値までの上昇率です。<b>高値比が大きくマイナスの銘柄は、期間中に急騰したあと大きく戻している</b>ことを意味します。<br>
-        「平均売買代金」は直近20営業日の平均(終値×出来高)。小型株のノイズを外したいときは下限を入れて絞り込めます。「代金順位」は最新営業日の売買代金ランキング順位で、空欄は現在500位圏外の銘柄です。<br>
+        「平均売買代金」は直近20営業日の平均(終値×出来高)。小型株のノイズを外すため<b>既定で30億円以上に絞っています</b>(「解除」で全銘柄、「100億円以上」でさらに絞り込み。同じボタンをもう一度押すと30億円に戻ります)。「代金順位」は最新営業日の売買代金ランキング順位で、空欄は現在500位圏外の銘柄です。<br>
         「1週間騰落率」〜「1年騰落率」は<b>終了日の終値</b>を、その1週間・1か月・3か月・6か月・1年前(休場日ならその前の営業日)の終値と比べたものです。開始日には関係しません。その時点で上場していない銘柄は「-」です。<br>
         <b>開始日より前に上場していない銘柄・その日の株価が取れない銘柄は除外されます。</b>列見出しクリックで並び替えできます(既定は騰落率の降順)。「表示する列」で列ごとに表示/非表示を切り替えられ、設定はこのブラウザに保存されて次回も反映されます。</div>
       </div>
@@ -3878,6 +3878,23 @@ async function pdInit() {
     for (const id of ["pdMinTv", "pdQ", "pgMc"]) {
       document.getElementById(id).oninput = pdRender;
     }
+    // 平均売買代金のワンボタン。押し直すと既定の30億円に戻す
+    const tvInput = document.getElementById("pdMinTv");
+    const tvBtns = [["pdTvOff", 0], ["pdTv100", 100]];
+    const tvSync = () => {
+      const v = parseFloat(tvInput.value) || 0;
+      for (const [id, val] of tvBtns) document.getElementById(id).classList.toggle("active", v === val);
+    };
+    for (const [id, val] of tvBtns) {
+      document.getElementById(id).onclick = () => {
+        const on = (parseFloat(tvInput.value) || 0) === val;
+        tvInput.value = on ? 30 : (val || "");
+        tvSync();
+        pdRender();
+      };
+    }
+    tvInput.addEventListener("input", tvSync);
+    tvSync();
     document.querySelectorAll("#view-period .subtab").forEach(b => {
       b.onclick = () => pdSwitchSub(b.dataset.sub);
     });
