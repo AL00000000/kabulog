@@ -801,7 +801,7 @@ footer a { color: var(--accent); }
         <b>注目銘柄</b>は「注目銘柄」タブのリストそのもので、メモに銘柄を足すと翌営業日の更新でこのグループにも入ります(米国株など東証コードでない銘柄は対象外)。<br>
         <b>TOPIX除外(確定的)・TOPIX採用(確定的)</b>は「TOPIX入替確定(推定)」タブの推計から作ったグループで、<b>当落線上(risk=mid/high)は入れていません</b>。当落線上の銘柄は小型株が多く株価を持っているものが3割前後しかなく、平均が母集団を代表しなくなるためです。<br>
         <b>株価</b>と<b>時価総額</b>は期間に関係なく最新の値です(終了日を変えても動きません)。<br>
-        <b>開始日より後に上場した銘柄</b>は起点が揃わないため、行を<span class="lateNote">黄色</span>にして<b>カードの集計値からは除外</b>しています(カードに「+n銘柄は起点が違う」と表示)。<b>時価総額</b>と<b>平均売買代金</b>の絞り込みは表だけでなくカードの集計値にも反映されるので、「大型だけ」「小型だけ」で平均がどう変わるかを見比べられます。1銘柄が複数グループに入ることがあります(「すべて」では1行にまとめ、所属グループを並べて表示します)。<br>
+        <b>開始日より後に上場した銘柄</b>は起点が揃わないため、行を<span class="lateNote">黄色</span>にして<b>カードの集計値からは除外</b>しています(カードに「+n銘柄は起点が違う」と表示)。<b>時価総額</b>の絞り込みは表だけでなくカードの集計値にも反映されるので、「大型だけ」「小型だけ」で平均がどう変わるかを見比べられます。<b>平均売買代金</b>の絞り込みは<b>表だけ</b>に効き、カードの集計値は下限に関係なくグループの全銘柄で計算します。1銘柄が複数グループに入ることがあります(「すべて」では1行にまとめ、所属グループを並べて表示します)。<br>
         TOPIX除外銘柄の<b>売日数つきの一覧</b>(8/31起点)は <a href="./d0901.html" target="_blank" rel="noopener">こちら ↗</a> にあります。</div>
       </div>
       <div class="tablecard">
@@ -3966,13 +3966,12 @@ function pgCompute(si, ei) {
   return rows;
 }
 
+// カードの集計対象。平均売買代金の下限は表だけに効かせるのでここでは見ない
 function pgUniverse(rows) {
-  const minTv = (parseFloat(document.getElementById("pdMinTv").value) || 0) * 100; // 億円→百万円
   const mode = document.getElementById("pgMcMode").value;
   const mc = +document.getElementById("pgMc").value;
   const unknown = new Set();
   const out = rows.filter(r => {
-    if (minTv && r.tv < minTv) return false;
     if (mode && Number.isFinite(mc)) {
       if (r.mc == null) { unknown.add(r.code); return false; }   // 株式数が取れない銘柄
       if (mode === "ge" && r.mc < mc) return false;
@@ -4086,7 +4085,9 @@ function pgRender(si, ei) {
 
   const q = document.getElementById("pdQ").value.trim().toLowerCase();
   const g = document.getElementById("pgGroupSel").value;
+  const minTv = (parseFloat(document.getElementById("pdMinTv").value) || 0) * 100; // 億円→百万円
   let rows = uni.rows.filter(r => (!g || r.g === g)
+    && !(minTv && r.tv < minTv)
     && (!q || r.n.toLowerCase().includes(q) || r.code.toLowerCase().includes(q)));
   if (!g) rows = pgMergeByStock(rows);
   const col = PG_COLS.find(c => c.key === pgSort) || PG_COLS[3];
