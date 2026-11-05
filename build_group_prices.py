@@ -29,6 +29,7 @@ from pathlib import Path
 BASE = Path(__file__).parent
 OUT = BASE / "docs" / "data_groups"
 LONG = BASE / "docs" / "data_long"   # 2024年まで遡る過去ぶん(必要時だけ読む)
+SEC33 = BASE / "docs" / "data_sector33"
 CACHE5 = BASE / "cache_bars_5y"
 START = "2024-06-19"        # これより前は切り捨てる
 SLEEP = 0.3
@@ -157,8 +158,16 @@ def main():
         for code, name in members:
             gi.setdefault(code, []).append(i)
             names.setdefault(code, name)
-    codes = sorted(gi)
-    print(f"グループ {len(gnames)} / 銘柄 {len(codes)}", flush=True)
+    # 「東証33業種」も同じ日付軸・同じ形で出す。1銘柄1業種
+    sectors = fp.load_sector33()
+    snames = list(sectors)
+    si = {}
+    for i, members in enumerate(sectors.values()):
+        for code, name in members:
+            si[code] = [i]
+            names.setdefault(code, name)
+    codes = sorted(set(gi) | set(si))
+    print(f"グループ {len(gnames)} / 33業種 {len(snames)} / 銘柄 {len(codes)}", flush=True)
 
     short = fp.load_json(fp.CACHE, {}) or {}
     caps = fp.market_caps(fp.load_json(fp.SHARES, {}) or {},
@@ -188,7 +197,7 @@ def main():
     idx = {d: i for i, d in enumerate(dates)}
     print(f"日付 {len(dates)}日 ({dates[0]} 〜 {dates[-1]})", flush=True)
 
-    stocks = {}
+    stocks, sec_stocks = {}, {}
     for code, bars in series.items():
         cl = [None] * len(dates)
         turn = []
@@ -196,9 +205,13 @@ def main():
             cl[idx[d]] = fp.compact_price(c)
             turn.append(c * v / 1e6)            # 百万円
         tail = turn[-20:]
-        stocks[code] = {"n": names.get(code, ""), "g": gi[code], "c": cl,
-                        "tv": round(sum(tail) / len(tail), 1) if tail else 0.0,
-                        "mc": caps.get(code)}
+        row = {"n": names.get(code, ""), "c": cl,
+               "tv": round(sum(tail) / len(tail), 1) if tail else 0.0,
+               "mc": caps.get(code)}
+        if code in gi:
+            stocks[code] = {**row, "g": gi[code]}
+        if code in si:
+            sec_stocks[code] = {**row, "g": si[code]}
 
     bench = {}
     for code, label, proxy_sym in BENCH:
@@ -235,6 +248,24 @@ def main():
                   "bench": {k: {"c": v["c"][:cut]} for k, v in bench.items()},
                   "stocks": {c: s["c"][:cut] for c, s in stocks.items()}},
                  compact=True)
+
+    # 東証33業種。銘柄数が多いので「東証33業種」ボタンを押したときにだけ読む
+    if sec_stocks:
+        SEC33.mkdir(parents=True, exist_ok=True)
+        fp.save_json(SEC33 / "prices.json",
+                     {"updated": dates[-1], "start": split, "dates": dates[cut:],
+                      "groups": snames,
+                      "bench": {k: {"n": v["n"], "c": v["c"][cut:]} for k, v in bench.items()},
+                      "stocks": {c: {**s, "c": s["c"][cut:]} for c, s in sec_stocks.items()}},
+                     compact=True)
+        fp.save_json(LONG / "sector33.json",
+                     {"dates": dates[:cut],
+                      "bench": {k: {"c": v["c"][:cut]} for k, v in bench.items()},
+                      "stocks": {c: s["c"][:cut] for c, s in sec_stocks.items()}},
+                     compact=True)
+        print(f"33業種: {len(sec_stocks)}/{len(si)} 銘柄 "
+              f"prices {(SEC33 / 'prices.json').stat().st_size / 1e6:.2f}MB / "
+              f"long {(LONG / 'sector33.json').stat().st_size / 1e6:.2f}MB", flush=True)
 
     # 期間騰落率(全銘柄)の過去ぶんも同じ日割りで作る。母集団が違うだけで作りは同じ。
     # 5年キャッシュに無い銘柄はここでは取りに行かない(グループ銘柄ほど重要ではないため)。

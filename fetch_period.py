@@ -27,6 +27,7 @@
 import argparse
 import csv
 import glob
+import io
 import json
 import math
 import statistics
@@ -42,6 +43,9 @@ RANK = BASE / "docs" / "data"
 OUT = BASE / "docs" / "data_period"
 CACHE = BASE / "cache_period" / "bars.json"
 GROUPS_CSV = BASE / "groups_623.csv"
+SECTOR33_CSV = BASE / "sector33.csv"                  # JPXの一覧から自動生成(手で編集しない)
+JPX_LIST_URL = "https://www.jpx.co.jp/markets/statistics-equities/misc/tvdivq0000001vg2-att/data_j.xlsx"
+SECTOR33_MARKETS = ("プライム（内国株式）", "スタンダード（内国株式）", "グロース（内国株式）")
 SHARES = BASE / "cache_period" / "shares.json"        # 発行済株式数(株探)
 RAWCLOSE = BASE / "cache_period" / "raw_close.json"   # 未調整の最新終値
 
@@ -117,6 +121,47 @@ def save_json(path, obj, compact=False):
         else:
             json.dump(obj, f, ensure_ascii=False, indent=2)
         f.write("\n")
+
+
+def refresh_sector33():
+    """JPXの上場銘柄一覧(月次更新)から sector33.csv を作り直す。
+
+    対象は東証3市場の内国株式。PRO Market・外国株式・ETF/REITは入れない。
+    取得に失敗したときや中身がおかしいときは、前回のCSVをそのまま使う。"""
+    try:
+        from openpyxl import load_workbook
+        req = urllib.request.Request(JPX_LIST_URL, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=60) as r:
+            wb = load_workbook(io.BytesIO(r.read()), read_only=True)
+        rows = wb.worksheets[0].iter_rows(values_only=True)
+        ix = {k: i for i, k in enumerate(next(rows))}
+        out = []
+        for r in rows:
+            if r[ix["市場・商品区分"]] not in SECTOR33_MARKETS:
+                continue
+            out.append((int(r[ix["33業種コード"]]), str(r[ix["33業種区分"]]).strip(),
+                        str(r[ix["コード"]]).strip(), str(r[ix["銘柄名"]]).strip()))
+        if len(out) < 3000 or len({x[1] for x in out}) != 33:
+            raise ValueError(f"想定外の内容: {len(out)}銘柄 / {len({x[1] for x in out})}業種")
+    except Exception as e:                       # noqa: BLE001
+        print(f"  ! 33業種の一覧を更新できず前回分を使用: {e}", flush=True)
+        return
+    out.sort()
+    with SECTOR33_CSV.open("w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["33業種コード", "33業種", "コード", "銘柄名"])
+        w.writerows(out)
+
+
+def load_sector33():
+    """sector33.csv を {33業種名: [(コード, 銘柄名), ...]} で返す(JPXの業種コード順)。"""
+    if not SECTOR33_CSV.exists():
+        return {}
+    sectors = {}
+    with SECTOR33_CSV.open(encoding="utf-8-sig", newline="") as f:
+        for row in csv.DictReader(f):
+            sectors.setdefault(row["33業種"], []).append((row["コード"], row["銘柄名"]))
+    return sectors
 
 
 def load_groups():
@@ -488,8 +533,12 @@ def main():
                     help="ベンチマーク指数だけ取り直す(銘柄の日足はキャッシュのまま)")
     ap.add_argument("--shares-limit", type=int, default=SHARES_DEFAULT_LIMIT,
                     help="発行済株式数を取り直す上限件数(0で取得しない)")
+    ap.add_argument("--only-missing", action="store_true",
+                    help="日足キャッシュに無い銘柄だけ取得する(対象を広げた直後の穴埋め用)")
     args = ap.parse_args()
 
+    if not (args.no_fetch or args.bench_only):
+        refresh_sector33()
     meta, rank = universe()
     codes = sorted(meta)
     groups = load_groups()
@@ -497,12 +546,17 @@ def main():
     # 「9/1-」タブの母集団(TOPIX確定除外)も取得対象に含める
     xcodes = sorted({x["code"] for x in (load_json(TOPIX_SUMMARY, {}).get("excluded") or [])
                      if x.get("risk") == "low"})
+    # 「東証33業種」の母集団。業種平均が大型株に偏らないよう東証3市場の全銘柄を取る
+    scodes33 = sorted({c for members in load_sector33().values() for c, _ in members})
     print(f"universe: {len(codes)} codes / groups: {len(gcodes)} / TOPIX除外: {len(xcodes)} "
-          f"(union {len(set(codes) | set(gcodes) | set(xcodes))})", flush=True)
+          f"/ 33業種: {len(scodes33)} "
+          f"(union {len(set(codes) | set(gcodes) | set(xcodes) | set(scodes33))})", flush=True)
 
     cache = load_json(CACHE, {}) or {}
     if not (args.no_fetch or args.bench_only):
-        targets = sorted(set(codes) | set(gcodes) | set(xcodes))
+        targets = sorted(set(codes) | set(gcodes) | set(xcodes) | set(scodes33))
+        if args.only_missing:
+            targets = [c for c in targets if not cache.get(c)]
         for i, code in enumerate(targets, 1):
             for attempt in range(RETRY):
                 try:
@@ -530,7 +584,7 @@ def main():
 
     # 未調整の併合や桁ずれを直す。--no-fetch でもキャッシュの既存分に効くよう取得とは別に回す
     fixed = []
-    for code in set(codes) | set(gcodes) | set(xcodes):
+    for code in set(codes) | set(gcodes) | set(xcodes) | set(scodes33):
         if cache.get(code):
             nb = fix_jumps(cache[code])
             if nb != cache[code]:
@@ -557,8 +611,8 @@ def main():
             time.sleep(SLEEP)
         save_json(CACHE, cache, compact=True)
 
-    # 時価総額はグループ別で使うので、対象はグループ銘柄と「TOPIX除外(確定的)」
-    scodes = sorted(set(gcodes) | set(xcodes))
+    # 時価総額はグループ別で使うので、対象はグループ銘柄と「TOPIX除外(確定的)」と33業種
+    scodes = sorted(set(gcodes) | set(xcodes) | set(scodes33))
     shares = update_shares(scodes, args.shares_limit) if args.shares_limit else         (load_json(SHARES, {}) or {})
     raw = load_json(RAWCLOSE, {}) or {}
     raw.update(RAW_CLOSE)

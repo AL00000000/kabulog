@@ -754,7 +754,8 @@ footer a { color: var(--accent); }
       <span><label>開始日</label><select id="pdFromSel"></select></span>
       <span><label>終了日</label><select id="pdToSel"></select></span>
       <span data-sub="all"><label>市場</label><select id="pdMarketSel"><option value="">すべて</option></select></span>
-      <span data-sub="grp" hidden><label>グループ</label><select id="pgGroupSel"><option value="">すべて</option></select></span>
+      <span data-sub="grp" hidden><button type="button" class="colsToggle" id="pgSecBtn" title="もう一度押すと元のグループに戻します">東証33業種</button></span>
+      <span data-sub="grp" hidden><label id="pgGroupLabel">グループ</label><select id="pgGroupSel"><option value="">すべて</option></select></span>
       <span data-sub="grp" hidden><label>時価総額</label><input id="pgMc" class="streakMin" type="number" min="0" step="50" value="300" list="pgMcList"><datalist id="pgMcList"><option value="100"><option value="300"><option value="500"><option value="1000"><option value="3000"><option value="10000"></datalist><label style="margin:0 4px">億円</label><select id="pgMcMode">
         <option value="">すべて</option>
         <option value="ge">以上のみ</option>
@@ -800,6 +801,7 @@ footer a { color: var(--accent); }
         <b>SaaSの定義について</b> … 株探の「SaaS」テーマはNTT・KDDI・NEC・富士通やSIerまで含む広い括りだったため、<b>売上の過半がSaaS(サブスクリプション型のクラウドソフト)と見られる銘柄</b>に絞り直しました(189銘柄 → 63銘柄)。<b>これは決算のセグメント売上を1社ずつ検証したものではなく、事業内容から見た選別です。</b>受託開発・SI・パッケージ販売が主のもの(テラスカイ・フレクト・オービック・ミロク情報など)、マッチングや手数料ビジネス(クラウドワークス・BASE・ビジョナルなど)は外しています。入れ直したい銘柄があれば <code>groups_623.csv</code> を直せば反映されます。<br><b>そのほかの母集団の作り方</b> … コンサル・エンタメは株探のテーマ別銘柄一覧(エンタメはゲーム/アニメ/音楽/映画/コンテンツ/キャラクター/アミューズメント/テーマパーク/玩具/劇場の10テーマの和集合)、地銀はJPXの「銀行業」からメガ3・りそな・三井住友トラスト・ゆうちょ・セブン銀・楽天銀・SBI新生・あおぞらを除いたもの、建設はJPXの「建設業」全社、非TOPIXは「TOPIX入替」タブと同じリスト、2026IPOは株探の「2026年のIPO」テーマ、女性消費関連はMTG・サンリオ・Aiロボティクス・フルッタフルッタに化粧品・美容の専業銘柄とファッション/ブランドリユースを加えたもの、サイバーセキュリティは売上の大半がサイバーセキュリティと見られる専業・主力と認証/不正対策の銘柄(NEC・富士通・NRIなど部門を持つ大手ITは除外。事業内容から見た選別)です。<br>
         <b>注目銘柄</b>は「注目銘柄」タブのリストそのもので、メモに銘柄を足すと翌営業日の更新でこのグループにも入ります(米国株など東証コードでない銘柄は対象外)。<br>
         <b>TOPIX除外(確定的)・TOPIX採用(確定的)</b>は「TOPIX入替確定(推定)」タブの推計から作ったグループで、<b>当落線上(risk=mid/high)は入れていません</b>。当落線上の銘柄は小型株が多く株価を持っているものが3割前後しかなく、平均が母集団を代表しなくなるためです。<br>
+        <b>東証33業種</b>のボタンを押すと、カードと表がJPXの33業種区分に切り替わります(もう一度押すと元のグループに戻ります)。母集団は<b>プライム・スタンダード・グロースの内国株式の全銘柄</b>で、PRO Market・外国株式・ETF・REITは含みません。カードは等ウェイトの平均なので、<b>東証の業種別指数(時価総額加重)とは数字が一致しません</b>。<br>
         <b>株価</b>と<b>時価総額</b>は期間に関係なく最新の値です(終了日を変えても動きません)。<br>
         <b>開始日より後に上場した銘柄</b>は起点が揃わないため、行を<span class="lateNote">黄色</span>にして<b>カードの集計値からは除外</b>しています(カードに「+n銘柄は起点が違う」と表示)。<b>時価総額</b>の絞り込みは表だけでなくカードの集計値にも反映されるので、「大型だけ」「小型だけ」で平均がどう変わるかを見比べられます。<b>平均売買代金</b>の絞り込みは<b>表だけ</b>に効き、カードの集計値は下限に関係なくグループの全銘柄で計算します。1銘柄が複数グループに入ることがあります(「すべて」では1行にまとめ、所属グループを並べて表示します)。<br>
         TOPIX除外銘柄の<b>売日数つきの一覧</b>(8/31起点)は <a href="./d0901.html" target="_blank" rel="noopener">こちら ↗</a> にあります。</div>
@@ -3403,8 +3405,11 @@ let pdData = null, pdInited = false, pdRows = [], pdSortKey = "chg", pdSortAsc =
 const PV = {
   all: { url: "data_period/prices.json", longUrl: "data_long/period.json" },
   grp: { url: "data_groups/prices.json", longUrl: "data_long/groups.json" },
+  sec: { url: "data_sector33/prices.json", longUrl: "data_long/sector33.json" },
 };
 let pdSub = "all";              // いま見ている母集団
+let pgSet = "grp";              // グループ別の中身。"grp"=テーマ等 / "sec"=東証33業種
+const pvKey = () => (pdSub === "grp" ? pgSet : pdSub);
 let PD_AXIS = [], PD_LONG_N = 0;  // 正規の日付軸と、その先頭にある過去ぶんの日数
 
 /* データを正規の日付軸に並べ直す。ファイルごとに営業日がわずかに違っても
@@ -3459,13 +3464,14 @@ async function pvFetchLong(V) {
 
 /* いまの選択を描くのに足りないファイルだけを読む */
 async function pvEnsure() {
-  const V = PV[pdSub];
+  const key = pvKey();
+  const V = PV[key];
   const box = document.getElementById("pdBanner");
-  if (!V.data) { box.textContent = "株価を読み込み中…"; await pvLoad(pdSub); }
+  if (!V.data) { box.textContent = "株価を読み込み中…"; await pvLoad(key); }
   const si = PD_AXIS.indexOf(document.getElementById("pdFromSel").value);
   if (si >= 0 && si < PD_LONG_N && !V.longLoaded) {
     box.textContent = "2024年からの株価を読み込み中…（初回だけ時間がかかります）";
-    await pvLoadLong(pdSub);
+    await pvLoadLong(key);
   }
   pdData = V.data;              // 既存コードは pdData を見ている
   // 1年騰落率などの列は終了日から遡るので、開始日より前の株価が要ることがある。
@@ -3477,7 +3483,7 @@ async function pvEnsure() {
     const bi = pdTrailIdx(ei, t);
     return bi >= 0 && bi < PD_LONG_N;
   })) {
-    pvLoadLong(pdSub).then(() => pdRender())
+    pvLoadLong(key).then(() => pdRender())
       .catch(e => console.warn("過去ぶんの株価を読めませんでした", e));
   }
 }
@@ -3804,7 +3810,7 @@ async function pdRender() {
     + " / 同期間 " + Object.values(bench).map(b =>
         b.name + " <b>" + fmtPct2(b.chg) + "</b>").join(" ・ ")
     + " / 母集団 <b>" + Object.keys(pdData.stocks).length + "</b> 銘柄（"
-    + pdData.groups.length + "グループ）";
+    + pdData.groups.length + (pgSet === "sec" ? "業種）" : "グループ）");
   pgRender(si, ei);
 }
 
@@ -3816,14 +3822,29 @@ function pdSwitchSub(sub) {
     if (el.classList.contains("subtab")) return;
     el.hidden = el.dataset.sub !== sub;
   });
-  // グループ選択肢は株価ファイルを読むまで分からないので、読めたら埋める
+  pgFillGroups();
+}
+
+// グループ選択肢は株価ファイルを読むまで分からないので、読めたら埋める
+function pgFillGroups() {
+  const set = pgSet;
   pdRender().then(() => {
-    if (sub !== "grp" || !PV.grp.data) return;
+    if (pdSub !== "grp" || set !== pgSet || !PV[set].data) return;
     const sel = document.getElementById("pgGroupSel");
-    if (sel.options.length > 1) return;
+    if (sel.dataset.set === set) return;
+    sel.dataset.set = set;
     sel.innerHTML = '<option value="">すべて</option>'
-      + PV.grp.data.groups.map(g => '<option value="' + g + '">' + g + "</option>").join("");
+      + PV[set].data.groups.map(g => '<option value="' + g + '">' + g + "</option>").join("");
   });
+}
+
+// テーマ等のグループと東証33業種の切り替え。もう一度押すと元に戻る
+function pgToggleSector() {
+  pgSet = pgSet === "sec" ? "grp" : "sec";
+  document.getElementById("pgSecBtn").classList.toggle("active", pgSet === "sec");
+  document.getElementById("pgGroupLabel").textContent = pgSet === "sec" ? "業種" : "グループ";
+  document.getElementById("pgGroupSel").value = "";   // 別の分類の選択を持ち越さない
+  pgFillGroups();
 }
 
 async function pdInit() {
@@ -3878,6 +3899,7 @@ async function pdInit() {
     for (const id of ["pdMinTv", "pdQ", "pgMc"]) {
       document.getElementById(id).oninput = pdRender;
     }
+    document.getElementById("pgSecBtn").onclick = pgToggleSector;
     // 平均売買代金のワンボタン。押し直すと既定の30億円に戻す
     const tvInput = document.getElementById("pdMinTv");
     const tvBtns = [["pdTvOff", 0], ["pdTv100", 100]];
@@ -3944,7 +3966,7 @@ function fmtPct2(v) {
    開始日より後に上場した銘柄はそこが起点になるので、集計からは外す(late)。
    3営業日までのズレは連休・売買停止の類とみなして起点違いにはしない。 */
 function pgCompute(si, ei) {
-  const V = PV.grp, bc = (V.data.bench["0010"] || {}).c;
+  const V = PV[pgSet], bc = (V.data.bench["0010"] || {}).c;
   const rows = [];
   for (const [code, s] of Object.entries(V.data.stocks)) {
     let i0 = -1;
@@ -4001,7 +4023,7 @@ function pgMedian(vals) {
 }
 
 function pgStats(rows) {
-  const names = PV.grp.data.groups;
+  const names = PV[pgSet].data.groups;
   const out = names.map(n => ({ name: n, n: 0, late: 0, mean: null, median: null,
                                 top20: null, up: 0, down: 0, flat: 0 }));
   const buckets = names.map(() => []);
@@ -4061,7 +4083,7 @@ function pgBuildHead() {
   tr.innerHTML = "";
   for (const c of colVisible("pg", PG_COLS)) {
     const th = document.createElement("th");
-    th.textContent = c.label;
+    th.textContent = (c.key === "g" && pgSet === "sec") ? "業種" : c.label;
     if (c.left) th.classList.add("tl");
     if (c.key === pgSort) {
       const a = document.createElement("span");
