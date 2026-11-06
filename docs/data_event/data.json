@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06",
+ "updated": "2026-11-07",
  "events": [
   {
    "date": "2021-01-28",
@@ -1280,6 +1280,15 @@
    "url": "https://www.bls.gov/schedule/news_release/ppi.htm"
   },
   {
+   "date": "2026-11-13",
+   "time": "決算発表",
+   "name": "決算 ウェルネス・コミュニケーションズ",
+   "country": "JP",
+   "note": "366A・3月期第２",
+   "source": "kessan",
+   "url": "https://kabutan.jp/stock/?code=366A"
+  },
+  {
    "date": "2026-11-18",
    "time": "06:00頃",
    "name": "決算 エヌビディア",
@@ -1359,6 +1368,15 @@
    "note": "November 2026分",
    "source": "us_empsit",
    "url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+  },
+  {
+   "date": "2026-12-09",
+   "time": "上場日",
+   "name": "IPO ＮＯＴＡ（株）",
+   "country": "JP",
+   "note": "673A・上場承認 2026/11/06",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
    "date": "2026-12-10",
