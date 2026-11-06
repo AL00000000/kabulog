@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-06",
+  "as_of": "2026-11-06 16:00",
+  "updated": "2026-11-06",
+  "generated": "2026-11-06T16:45:37+09:00",
+  "min_value": 1000,
+  "window_days": 365,
+  "ma_days": 5,
+  "counts": {
+    "scanned": 800,
+    "universe": 748,
+    "hit": 1,
+    "day_low": 1,
+    "ma_low": 0,
+    "watch": 0,
+    "failed": 0,
+    "stale": 0,
+    "skipped": 4
+  },
+  "failed": [],
+  "stocks": [
+    {
+      "rank": 752,
+      "code": "8918",
+      "name": "ランド",
+      "market": "東Ｓ",
+      "close": 9.0,
+      "change_pct": 0.0,
+      "value": 1221.0,
+      "watch": null,
+      "volume": 135705400.0,
+      "prev_min": 141117800.0,
+      "ma": 234037640,
+      "ma_prev_min": 168352720,
+      "is_low": true,
+      "ma_low": false,
+      "avg52": 247251095,
+      "vs_avg_pct": 54.9,
+      "prev_date": "2026-02-03",
+      "gap": 184,
+      "hist_days": 243,
+      "short_hist": false
+    }
+  ]
+}
