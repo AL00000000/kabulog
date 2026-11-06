@@ -1280,15 +1280,6 @@
    "url": "https://www.bls.gov/schedule/news_release/ppi.htm"
   },
   {
-   "date": "2026-11-13",
-   "time": "決算発表",
-   "name": "決算 ウェルネス・コミュニケーションズ",
-   "country": "JP",
-   "note": "366A・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=366A"
-  },
-  {
    "date": "2026-11-18",
    "time": "06:00頃",
    "name": "決算 エヌビディア",
@@ -1530,6 +1521,15 @@
    "note": null,
    "source": "jp_empsit",
    "url": "https://www.stat.go.jp/data/roudou/pdf/kohyo26.pdf"
+  },
+  {
+   "date": "2027-02-04",
+   "time": "06:00頃",
+   "name": "決算 アーム・ホールディングス",
+   "country": "US",
+   "note": "ARM・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/ARM/"
   },
   {
    "date": "2027-02-05",
