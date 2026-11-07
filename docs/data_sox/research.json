@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-10-31",
+  "researched_at": "2026-11-07",
   "scope": "終値・日中高値の連続更新の始点118日を対象に、直前1〜14暦日のニュース候補を調査。67対象月の検索と企業・政府の発表照合。月単位の検索は全日付の記事精査や網羅を意味しない。",
   "searches": [
     {
@@ -449,7 +449,7 @@
       ]
     }
   ],
-  "drop_research_scope": "187急落日は全件計算。2026/10/22・10/30は直近追加分として、近接する決算・企業資料と当日報道を照合。全187日の引き金を確定したものではない。",
+  "drop_research_scope": "188急落日は全件計算。2026/11/5の急落について、選挙後のAI投資懸念・Micron工事停止報道に加え、Qualcomm・AMD・Armの決算を照合。全188日の引き金や個別要因の寄与率を確定したものではない。",
   "deepseek_scope": "2025年1月27日の急落、2025年2月27日のNVIDIA決算後下落、複数モデル発表を区別。ショックの回数は未確定。",
   "weekly_updates": [
     {
@@ -472,6 +472,32 @@
         "amazon-2026q3"
       ],
       "conclusion": "新しい最高値更新は終値・日中高値ともなし。2急落日に近接する発表を収録。10/22の全要因の寄与率は未確定。既存の期間仮説を変更する直接的な新証拠は今回の照合では得ていない。"
+    },
+    {
+      "checked_at": "2026-11-07",
+      "period_start": "2026-11-02",
+      "period_end": "2026-11-06",
+      "price_rows_added": 1,
+      "previous_price_end": "2026-11-05",
+      "new_record_dates": [],
+      "drop_dates": [
+        "2026-11-05"
+      ],
+      "new_drop_dates": [],
+      "event_ids": [
+        "amd-2026q3",
+        "qualcomm-2026q4",
+        "arm-2027q2"
+      ],
+      "reviewed_event_ids": [
+        "midterm-democrats-2026",
+        "micron-taoyuan-halt-2026"
+      ],
+      "conclusion": "11/6の確定日足1日を追加し全8184日。既存の11/5急落（-12.2461%）を再確認し、近接する決算3件を追加。11/6は+4.2071%の反発、新高値・新規急落日なし。12/8〜1/29の機関投資家の認知仮説を変更する直接的な新証拠は今回の調査では得ていない。",
+      "market_review_source": {
+        "label": "Cboe 11/6：半導体株の反発",
+        "url": "https://www.cboe.com/insights/posts/tech-stocks-rebound-but-nasdaq-is-still-in-correction-territory"
+      }
     }
   ]
 }

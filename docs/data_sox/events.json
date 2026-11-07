@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-11-06",
+  "researched_at": "2026-11-07",
   "scope": "半導体史の主要事象と、高値更新直前1〜14暦日のニュース候補。原因や網羅性を保証しない。",
   "pending": [
     {
@@ -1903,7 +1903,7 @@
       "kind": "macro",
       "requested": true,
       "evidence": "選挙結果・市場反応とも当日の報道で確認（名称はユーザー指定）",
-      "note": "11月3日投票の米中間選挙。CBSは米東部時間3日22時29分に民主党の下院過半数を予測し、4日夜時点で上院も民主党が過半数（一部議席は未確定）と報道。結果判明後の最初の取引日である11月4日に対応。同日はダウ+3.03％など株式全体は上昇した一方、SOXは-3.13％（収録終値で確認）。報道は民主党議会でのAI・データセンター規制強化、データセンター建設反対の住民投票（39件中38件で開発制限）への警戒を半導体売りの背景に挙げた。翌5日も半導体売りが続いた（同日のMicron台湾工場の工事停止報道と重なる）。規制は選挙時点で未実施で、下落の単独原因・寄与率は未確定。「民主党ショック」はユーザー指定の呼称で、報道で一般化した名称かは未確認。",
+      "note": "11月3日投票の米中間選挙。CBSは米東部時間3日22時29分に民主党の下院過半数を予測し、4日夜時点で上院も民主党が過半数（一部議席は未確定）と報道。結果判明後の最初の取引日である11月4日に対応。同日はダウ+3.03％など株式全体は上昇した一方、SOXは-3.13％（収録終値で確認）。報道は民主党議会でのAI・データセンター規制強化、データセンター建設反対の住民投票（39件中38件で開発制限）への警戒を半導体売りの背景に挙げた。翌5日も半導体売りが続いた（同日のMicron台湾工場の工事停止報道と重なる）。規制は選挙時点で未実施で、下落の単独原因・寄与率は未確定。「民主党ショック」はユーザー指定の呼称で、報道で一般化した名称かは未確認。 追記（11/7照合）：Reutersの11月5日引け後の市況も、選挙結果を受けたAIデータセンター投資の見直しを株売りの背景として報道。同日のQualcomm決算への失望も重なるため、選挙だけへの因果帰属はしない。",
       "sources": [
         {
           "label": "CBS News：下院の結果速報（3日22:29に民主党過半数を予測）",
@@ -1920,9 +1920,88 @@
         {
           "label": "亜洲日報 11/4：日本の半導体株急落（AI規制懸念）",
           "url": "https://japan.ajunews.com/view/20261104174870145"
+        },
+        {
+          "label": "Reuters 11/5引け後：選挙後のAI投資見直しと半導体急落",
+          "url": "https://www.investing.com/news/economy-news/trading-day-a-november-5-market-bonfire-5005919"
         }
       ],
-      "checked_at": "2026-11-06"
+      "checked_at": "2026-11-07"
+    },
+    {
+      "id": "amd-2026q3",
+      "date": "2026-11-03",
+      "market_date": "2026-11-04",
+      "title": "AMD決算・データセンター売上97％増",
+      "short": "AMD決算・データセンター売上拡大",
+      "kind": "industry",
+      "evidence": "公式確認（株価下落との因果は未判定）",
+      "note": "第3四半期売上は約134億ドル、前年同期比45％増。データセンター部門は97％増。米国引け後の発表を翌4日に対応。業績・AI需要の公表内容であり、同週の半導体株安の原因と断定しない。",
+      "sources": [
+        {
+          "label": "AMD公式：第3四半期決算",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1303/amd-reports-third-quarter-2026-financial-results"
+        },
+        {
+          "label": "AMD公式スライド：発表日",
+          "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/attachments/AMD_Q3_2026_Earnings_Slides_FINAL.pdf"
+        },
+        {
+          "label": "AMD公式：11/3引け後の発表日程",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1300/amd-to-report-fiscal-third-quarter-2026-financial-results"
+        }
+      ],
+      "checked_at": "2026-11-07"
+    },
+    {
+      "id": "qualcomm-2026q4",
+      "date": "2026-11-04",
+      "market_date": "2026-11-05",
+      "title": "Qualcomm決算・翌四半期見通しとコスト上昇",
+      "short": "Qualcomm決算・翌四半期見通し",
+      "kind": "industry",
+      "evidence": "公式確認・市場反応は当日の報道で確認",
+      "note": "4日の米国引け後に決算公表。翌四半期売上見通しは104億〜112億ドル。半導体製造・先端パッケージ・メモリーなどのコスト上昇と価格への転嫁策を説明。5日のReutersはQualcommの決算への失望と、選挙後のAI設備投資への懸念を半導体株売りの背景として報道。SOX急落の単独原因・寄与率は未確定。",
+      "sources": [
+        {
+          "label": "Qualcomm公式：決算と見通し",
+          "url": "https://investor.qualcomm.com/files/content_files/FY2026-4th-Quarter-Earnings-Release.pdf"
+        },
+        {
+          "label": "Qualcomm公式：引け後発表の日程",
+          "url": "https://investor.qualcomm.com/news-events/press-releases/news-details/2026/Qualcomm-Schedules-Fourth-Quarter-and-Fiscal-2026-Earnings-Release-and-Conference-Call/default.aspx"
+        },
+        {
+          "label": "Reuters 11/5：半導体株売り（Euronext配信）",
+          "url": "https://live.euronext.com/en/financial-news/deep-chip-selloff-drags-global-stocks-lower-ai-spending-concerns"
+        }
+      ],
+      "checked_at": "2026-11-07"
+    },
+    {
+      "id": "arm-2027q2",
+      "date": "2026-11-04",
+      "market_date": "2026-11-05",
+      "title": "Arm決算・AI計算需要とデータセンターの拡大",
+      "short": "Arm決算・AI計算需要",
+      "kind": "industry",
+      "evidence": "公式確認（株価下落との因果は未判定）",
+      "note": "2027年度第2四半期（9月末まで）の売上は約14.4億ドル、前年同期比27％増。データセンター向けロイヤルティは倍増と会社が説明。4日17時（米東部時間）の決算説明会に対応させ翌5日へプロットする。好調な業績の発表と市場の急落が同時期でも、業績が悪化したと読み替えず、原因も断定しない。",
+      "sources": [
+        {
+          "label": "Arm公式：第2四半期の概要",
+          "url": "https://newsroom.arm.com/news/arm-q2-fye27-results"
+        },
+        {
+          "label": "Arm公式：発表日と説明会時刻",
+          "url": "https://newsroom.arm.com/news/arm-holdings-plc-reports-results-for-the-second-quarter-of-the-fiscal-year-ending-2027"
+        },
+        {
+          "label": "公式株主書簡",
+          "url": "https://investors.arm.com/static-files/0b5baa2e-fc47-4d05-b724-e49de7bd4356"
+        }
+      ],
+      "checked_at": "2026-11-07"
     },
     {
       "id": "micron-taoyuan-halt-2026",
