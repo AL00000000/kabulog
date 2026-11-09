@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09",
+ "updated": "2026-11-10",
  "apps": {
   "1015521325": {
    "name": "Fate/Grand Order",
@@ -85,6 +85,11 @@
    "name": "ドラゴンボールZ ドッカンバトル",
    "release": "2015-02-18",
    "seller": "Bandai Namco Entertainment Inc."
+  },
+  "1094591345": {
+   "name": "Pokémon GO",
+   "release": "2016-07-22",
+   "seller": "Scopely Explore, Inc."
   }
  },
  "days": [
@@ -2316,23 +2321,52 @@
    "apps": {
     "6756641135": {
      "name": "ホロライブドリームス",
-     "last": 91,
+     "last": 118,
      "high": 82,
-     "low": 91,
-     "samples": 103
+     "low": 118,
+     "samples": 288
     },
     "951627670": {
      "name": "ドラゴンボールZ ドッカンバトル",
-     "last": 242,
-     "high": 239,
-     "low": 246,
-     "samples": 103
+     "last": 251,
+     "high": 233,
+     "low": 251,
+     "samples": 288
     }
    },
    "top1": {
     "name": "ChatGPT",
     "apid": "6448311069"
    }
+  },
+  {
+   "date": "2026-11-10",
+   "apps": {
+    "6756641135": {
+     "name": "ホロライブドリームス",
+     "last": 119,
+     "high": 118,
+     "low": 119,
+     "samples": 103
+    },
+    "951627670": {
+     "name": "ドラゴンボールZ ドッカンバトル",
+     "last": 243,
+     "high": 241,
+     "low": 251,
+     "samples": 103
+    }
+   },
+   "top1": {
+    "name": "ChatGPT",
+    "apid": "6448311069"
+   },
+   "top1_others": [
+    {
+     "name": "Pokémon GO",
+     "apid": "1094591345"
+    }
+   ]
   }
  ]
 }
