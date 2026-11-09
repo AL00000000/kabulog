@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09",
+ "updated": "2026-11-10",
  "events": [
   {
    "date": "2021-01-28",
@@ -1192,29 +1192,11 @@
   {
    "date": "2026-11-06",
    "time": "上場日",
-   "name": "IPO （株）estie",
+   "name": "IPO （株）estie代表者インタビュー",
    "country": "JP",
    "note": "658A・上場承認 2026/10/01",
    "source": "ipo",
    "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
-  },
-  {
-   "date": "2026-11-09",
-   "time": "決算発表",
-   "name": "決算 KOKUSAI ELECTRIC",
-   "country": "JP",
-   "note": "6525・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=6525"
-  },
-  {
-   "date": "2026-11-09",
-   "time": "決算発表",
-   "name": "決算 古河電気工業",
-   "country": "JP",
-   "note": "5801・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=5801"
   },
   {
    "date": "2026-11-10",
