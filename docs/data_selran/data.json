@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "apps": {
   "1015521325": {
    "name": "Fate/Grand Order",
@@ -15,6 +15,11 @@
    "name": "ピッコマ",
    "release": "2016-04-20",
    "seller": "Kakao piccoma Corp."
+  },
+  "1094591345": {
+   "name": "Pokémon GO",
+   "release": "2016-07-22",
+   "seller": "Scopely Explore, Inc."
   },
   "1117270703": {
    "name": "eFootball™",
@@ -85,11 +90,6 @@
    "name": "ドラゴンボールZ ドッカンバトル",
    "release": "2015-02-18",
    "seller": "Bandai Namco Entertainment Inc."
-  },
-  "1094591345": {
-   "name": "Pokémon GO",
-   "release": "2016-07-22",
-   "seller": "Scopely Explore, Inc."
   }
  },
  "days": [
@@ -2344,17 +2344,17 @@
    "apps": {
     "6756641135": {
      "name": "ホロライブドリームス",
-     "last": 119,
-     "high": 118,
-     "low": 119,
-     "samples": 103
+     "last": 136,
+     "high": 115,
+     "low": 136,
+     "samples": 288
     },
     "951627670": {
      "name": "ドラゴンボールZ ドッカンバトル",
-     "last": 243,
-     "high": 241,
+     "last": 236,
+     "high": 235,
      "low": 251,
-     "samples": 103
+     "samples": 288
     }
    },
    "top1": {
@@ -2367,6 +2367,29 @@
      "apid": "1094591345"
     }
    ]
+  },
+  {
+   "date": "2026-11-11",
+   "apps": {
+    "6756641135": {
+     "name": "ホロライブドリームス",
+     "last": 134,
+     "high": 132,
+     "low": 136,
+     "samples": 103
+    },
+    "951627670": {
+     "name": "ドラゴンボールZ ドッカンバトル",
+     "last": 226,
+     "high": 223,
+     "low": 236,
+     "samples": 103
+    }
+   },
+   "top1": {
+    "name": "ChatGPT",
+    "apid": "6448311069"
+   }
   }
  ]
 }
