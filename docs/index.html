@@ -390,6 +390,12 @@ footer a { color: var(--accent); }
       </div>
     </div>
     <div class="tabgroup">
+      <span class="tabgroup-label">取れたかもしれないトレード</span>
+      <div class="tabgroup-items">
+        <button class="tab" data-tab="missedjt" title="2026-11-10掲載・自動更新なし">JTのロシア事業一時管理</button>
+      </div>
+    </div>
+    <div class="tabgroup">
       <span class="tabgroup-label">個人的メモ</span>
       <div class="tabgroup-items">
         <button class="tab" data-tab="bottomup" title="個人的メモ・手動更新">注目銘柄</button>
@@ -1165,6 +1171,11 @@ footer a { color: var(--accent); }
   <div id="view-kenshotob" hidden>
     <div class="embed-note">「PBR1倍割れ是正要請で、評価されないくらいなら買収された方がいいと考える会社が増えたのでは」という仮説を、<b>2024年以降にTOBされた299社の公表直前PBR</b>で検証したレポート。普通の上場企業300社を対照群に置いた。TOB対象は市場平均より割安ではなく、仮説は否定 — <a href="./kensho_tob.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
     <iframe class="embed" title="TOBされる会社は安いのか — 仮説検証レポート" data-src="./kensho_tob.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-missedjt" hidden>
+    <div class="embed-note">2026年11月5・6日のプーチン大統領令でJTのロシア子会社7社が<b>一時管理</b>下に置かれ、JT株は2日連続ストップ安（11/5終値→11/10終値で−29.2%）。北海道新聞記者のユジノサハリンスクでの拘束（10/13）、テラドローンのウクライナ納入へのロシア外務省の「厳しい対抗措置」警告（10/21）、欧州企業の相次ぐ一時管理（9〜10月）など、予兆はいくつかあった。後知恵の注意つき — <a href="./missed_jt.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="JTのロシア事業一時管理 — 取れたかもしれないトレード" data-src="./missed_jt.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-kenshogmo" hidden>
@@ -4802,7 +4813,7 @@ const VIEW_ID = {
   selran: "view-selran", baibai: "view-baibai", search: "view-search",
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun", kenshokessan: "view-kenshokessan", kenshoshosha: "view-kenshoshosha",
   tsetop5: "view-tsetop5",
-  kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", kenshosize: "view-kenshosize", kenshogmo: "view-kenshogmo", congestion: "view-congestion", soxhistory: "view-soxhistory",
+  kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", kenshosize: "view-kenshosize", kenshogmo: "view-kenshogmo", missedjt: "view-missedjt", congestion: "view-congestion", soxhistory: "view-soxhistory",
   bottomup: "view-bottomup", itayose: "view-itayose",
 };
 function switchTab(name) {

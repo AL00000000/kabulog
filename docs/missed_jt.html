@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JTのロシア事業一時管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F6F6F2; --surface:#FFFFFF; --surface-2:#EFEFE9; --line:#DBDBD2; --line-soft:#E8E8E1;
+  --ink:#1B2026; --ink-2:#4E5560; --ink-3:#7C838D;
+  --brass:#9C6B18; --teal:#2F6A5C; --slate:#4E718D;
+  --pos:#2C6E4E; --neg:#A8443A; --band:#F2EDE0;
+  --shadow:0 1px 2px rgba(27,32,38,.05),0 6px 18px -10px rgba(27,32,38,.18);
+}
+:root[data-theme="dark"]{
+  --bg:#0a0f1c; --surface:#101830; --surface-2:#16203c; --line:#1e2a48; --line-soft:#17203a;
+  --ink:#dbe4f5; --ink-2:#9fb0cd; --ink-3:#7787a5;
+  --brass:#ffd166; --teal:#5fd3b4; --slate:#4da3ff;
+  --pos:#4da3ff; --neg:#ff5b6a; --band:#16203c;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 24px -12px rgba(0,0,0,.75);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:15px; line-height:1.85; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:100%;margin:0 auto;padding:0 4px 48px}
+h1,h2,h3{font-family:"Shippori Mincho B1",'Yu Mincho',serif;font-weight:700;text-wrap:balance;line-height:1.4;margin:0}
+header.top{border-bottom:1px solid var(--line);padding:20px 0 26px;margin-bottom:40px}
+.eyebrow{font-size:11.5px;letter-spacing:.18em;color:var(--brass);font-weight:700;font-family:"IBM Plex Mono",monospace;margin-bottom:16px}
+h1{font-size:clamp(28px,5.2vw,42px);letter-spacing:.01em}
+.sub{color:var(--ink-2);font-size:15px;margin-top:16px;max-width:62ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:34px 0 8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px 20px 18px;box-shadow:var(--shadow);border-top:3px solid var(--c,var(--slate))}
+.card .lbl{font-size:12px;color:var(--ink-2);line-height:1.55;min-height:3.1em}
+.card .big{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:31px;font-weight:600;color:var(--c,var(--ink));letter-spacing:-.02em;margin-top:10px}
+.card .foot{font-size:11.5px;color:var(--ink-3);margin-top:4px;font-family:"IBM Plex Mono",monospace}
+section{margin-top:56px}
+h2{font-size:22px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:8px;display:flex;align-items:baseline;gap:12px}
+h2 .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--brass);font-weight:600;letter-spacing:.08em}
+h3{font-size:16px;margin:30px 0 10px}
+p{margin:14px 0}
+.lead{color:var(--ink-2)}
+.small{font-size:13px;color:var(--ink-3);line-height:1.7}
+.scroll{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:9px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line-soft)}
+th{background:var(--surface-2);font-weight:700;font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);border-bottom:1px solid var(--line)}
+td:first-child,th:first-child{text-align:left;white-space:normal;min-width:190px}
+td.l,th.l{text-align:left}
+tbody tr:last-child td{border-bottom:none}
+tr.hl td{background:var(--band)}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;padding:2px 7px;border-radius:2px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);margin-right:8px;vertical-align:1px;white-space:nowrap}
+.badge.m{color:var(--teal);border-color:var(--teal)}
+.badge.i{color:var(--brass);border-color:var(--brass)}
+.badge.a{color:var(--slate);border-color:var(--slate)}
+ul{padding-left:1.15em;margin:12px 0}
+li{margin:7px 0;color:var(--ink-2);font-size:14px}
+li strong{color:var(--ink)}
+a{color:var(--brass);text-underline-offset:3px}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.8}
+.note{background:var(--band);border:1px solid var(--line);border-radius:3px;padding:14px 18px;font-size:13.5px;color:var(--ink-2);line-height:1.75;margin:18px 0}
+.note strong{color:var(--ink)}
+.caveats{margin-top:22px;display:grid;gap:2px}
+.cv{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--brass);border-radius:0 3px 3px 0;padding:16px 20px}
+.cv h4{margin:0 0 6px;font-size:14.5px;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700}
+.cv p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.75}
+@media (max-width:620px){ td:first-child,th:first-child{min-width:140px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">取れたかもしれないトレード ／ 2026-11-10時点 ／ 2914 JT</div>
+  <h1>JTのロシア事業、一時管理の予兆</h1>
+  <p class="sub">2026年11月5日、プーチン大統領がJTのロシア子会社を「一時管理」下に置く大統領令に署名し、翌6日に対象を広げました。JT株は2日連続のストップ安です。振り返ると、<strong>この1か月ほどの間に予兆と言える出来事がいくつかありました</strong>。ただし、これらは後から並べたもので、事前にこの結末を指していたと言えるかは別問題です（最後の節）。</p>
+
+  <div class="cards">
+    <div class="card" style="--c:var(--neg)"><div class="lbl">11/5終値→11/10終値</div><div class="big">−29.2%</div><div class="foot">7,769円→5,500円</div></div>
+    <div class="card" style="--c:var(--neg)"><div class="lbl">11/6・11/9<br>2日連続ストップ安</div><div class="big">5,269円</div><div class="foot">11/9終値（ザラ場で値付かず）</div></div>
+    <div class="card" style="--c:var(--brass)"><div class="lbl">ロシア事業の<br>調整後営業利益比率</div><div class="big">約1/4</div><div class="foot">報道ベースの推計・JTは単独開示なし</div></div>
+    <div class="card" style="--c:var(--slate)"><div class="lbl">ザハロワ警告の翌日10/22終値<br>から11/10終値</div><div class="big">−26.5%</div><div class="foot">7,481円→5,500円</div></div>
+  </div>
+</header>
+
+<section>
+  <h2><span class="n">01</span>何が起きたか</h2>
+  <ul>
+    <li><strong>11/5（木）</strong>：プーチン大統領が大統領令に署名し、JTI（JTの海外たばこ事業）のロシアの製造子会社4社（Donskoy Tabak、Pereslavl-Tabak、JTI Yelets、Kres Neva）を「JSCインダストリアル・アセッツ」の一時管理下に置いた。根拠は2023年4月の大統領令302号（非友好国の資産を一時管理できる仕組み）。署名は東証の引け後。</li>
+    <li><strong>11/6（金）</strong>：販売・統括関連の3社を追加し、計7社に。<span class="small">（追加3社の社名は報道間で一致しきっていない）</span></li>
+    <li><strong>所有権は移っていない</strong>：管理者は所有者の権限を行使できるが、売却などの処分権は除かれている。日本政府は抗議し、撤回を求めた。</li>
+    <li>JTIはロシアの販売数量で首位、シェアは約4割、従業員は約4,000人。</li>
+  </ul>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>日付</th><th>始値</th><th>高値</th><th>安値</th><th>終値</th><th>前日比</th><th>出来高</th></tr></thead>
+    <tbody>
+      <tr><td>10/13（記者拘束の発表日）</td><td class="n">7,235</td><td class="n">7,343</td><td class="n">7,215</td><td class="n">7,319</td><td class="n">+1.2%</td><td class="n">519万株</td></tr>
+      <tr><td>10/22（ザハロワ警告の翌日）</td><td class="n">7,537</td><td class="n">7,589</td><td class="n">7,476</td><td class="n">7,481</td><td class="n">−0.3%</td><td class="n">351万株</td></tr>
+      <tr><td>11/4</td><td class="n">7,423</td><td class="n">7,453</td><td class="n">7,337</td><td class="n">7,383</td><td class="n">+0.3%</td><td class="n">533万株</td></tr>
+      <tr><td>11/5（大統領令・引け後）</td><td class="n">7,639</td><td class="n">7,769</td><td class="n">7,618</td><td class="n">7,769</td><td class="n">+5.2%</td><td class="n">794万株</td></tr>
+      <tr class="hl"><td>11/6</td><td class="n">6,269</td><td class="n">6,269</td><td class="n">6,269</td><td class="n">6,269</td><td class="n">−19.3%</td><td class="n">279万株</td></tr>
+      <tr class="hl"><td>11/9</td><td class="n">5,269</td><td class="n">5,269</td><td class="n">5,269</td><td class="n">5,269</td><td class="n">−16.0%</td><td class="n">1,093万株</td></tr>
+      <tr><td>11/10</td><td class="n">5,269</td><td class="n">5,573</td><td class="n">5,200</td><td class="n">5,500</td><td class="n">+4.4%</td><td class="n">7,103万株</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">株価はYahoo!ファイナンスの日足（11/10 22時取得）。11/6と11/9は四本値が同じで、ストップ安の比例配分のみ。<span class="badge i">未確認</span>11/5の+5.2%の材料は見つけられていません（大統領令は引け後なので、これが理由ではない）。</p>
+</section>
+
+<section>
+  <h2><span class="n">02</span>予兆だった出来事</h2>
+  <p class="lead">日付順。<span class="badge m">報道</span>は報道で確認した事実、<span class="badge i">推論</span>は私の解釈です。</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>日付</th><th class="l">出来事</th><th class="l">なぜ予兆と言えるか</th></tr></thead>
+    <tbody>
+      <tr><td>2026年9月</td><td class="l"><span class="badge m">報道</span>欧州企業のロシア資産を一時管理下に置く新しい波。ネスレ、オーシャン、メトロ、FMロジスティックなど。</td><td class="l"><span class="badge i">推論</span>2023〜24年の散発的な接収（Danone、Carlsberg傘下Baltikaなど）から、まとめて取る段階に移っていた。</td></tr>
+      <tr><td>10/2</td><td class="l"><span class="badge m">報道</span>日本が対ロ制裁を追加（33団体・9個人の資産凍結、船舶35隻など）。</td><td class="l"><span class="badge i">推論</span>ロシア側から見た「非友好的行為」の積み上げの一つ。</td></tr>
+      <tr class="hl"><td>10/13</td><td class="l"><span class="badge m">報道</span>ロシアFSBが北海道新聞ユジノサハリンスク支局の日本人記者を「スパイ容疑」で拘束したと発表。出国予定日にユジノサハリンスク市内のホテルで拘束され、モスクワへ移送、2か月の勾留。日本政府は抗議。</td><td class="l"><span class="badge i">推論</span>日本人を対象にした強い措置で、日ロ関係の悪化が一段進んだサイン。</td></tr>
+      <tr><td>10/14</td><td class="l"><span class="badge m">報道</span>テラドローンが子会社を通じてウクライナ政府に小型迎撃ドローンを納入したと発表。</td><td class="l">次の行のロシア側の反応につながる。</td></tr>
+      <tr><td>10/15</td><td class="l"><span class="badge m">報道</span>Tarkett（仏）、Ontex（ベルギー）、Menshen（独）などのロシア資産を一時管理下に置く大統領令。</td><td class="l"><span class="badge i">推論</span>ウクライナを支援する国の企業を順番に取っている流れが続いていた。</td></tr>
+      <tr class="hl"><td>10/21</td><td class="l"><span class="badge m">報道</span>ロシア外務省のザハロワ報道官が、日本企業のウクライナへのドローン納入を「明らかな敵対行為」と非難し、日本に「厳しい対抗措置」を取ると警告。</td><td class="l"><span class="badge i">推論</span>欧州企業への措置と同じ論理（ウクライナ支援への報復）が日本に向いた。日本企業でロシアに最も大きな資産を持つのがJT。</td></tr>
+      <tr><td>11/5</td><td class="l"><span class="badge m">報道</span>JTのロシア子会社4社を一時管理下に。翌日3社を追加。</td><td class="l">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small">ロシア政府は今回の措置を、西側によるロシア資産の制裁・接収への対抗措置と説明しています。大統領令そのものは理由を書いていません。9月の欧州企業の波は主に海外の二次報道で、大統領令の原文は確認していません。</p>
+</section>
+
+<section>
+  <h2><span class="n">03</span>取れたかもしれないトレード</h2>
+  <ul>
+    <li><strong>10/21のザハロワ警告を受けて10/22終値（7,481円）で空売りし、11/10終値（5,500円）で買い戻せば −26.5%</strong>、つまり空売りで約26%の利益。</li>
+    <li>10/13の記者拘束の日の終値（7,319円）からでも −24.9%。</li>
+    <li>警告のあと株価はむしろ上がり、11/5には7,769円（期間の高値圏）まで買われていた。<span class="badge i">推論</span>市場はこの予兆をほとんど織り込んでいなかった。</li>
+    <li>ストップ安2日の間は売り気配で値が付かなかったので、<strong>発表後に空売りで入ることはできなかった</strong>。取れたのは事前に持っていた人だけ。</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="n">04</span>後知恵の注意</h2>
+  <div class="caveats">
+    <div class="cv"><h4>予兆は結果を見てから選んでいる</h4><p>記者拘束もザハロワ警告も、その時点では「JTのロシア事業が取られる」とまでは読めなかった。同じような警告が出ても何も起きなかった例を数えていないので、これらの出来事の的中率はわからない。</p></div>
+    <div class="cv"><h4>JTは2022年以降ずっとロシアに残っていた</h4><p>撤退しない日本企業として以前から名前が挙がっており、ロシア事業のリスクは昔からある論点だった。いつ起きるかを当てるのが難しかった。</p></div>
+    <div class="cv"><h4>「没収」ではなく「一時管理」</h4><p>現時点で所有権は移っていない。過去の例では、管理が短期で解除されたのは少数（Aristonは2025年3月に解除）で、長期化や不利な条件での売却に進むことが多いとされる。最終的な損失額はまだ決まっていない。</p></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="n">05</span>関連メモ</h2>
+  <ul>
+    <li>テラドローンは、6986 双葉電子工業の急騰（8/26のテラドローン報道の連想買い）のショート検討メモにも出てくる銘柄。今回はロシアの対日報復の引き金の一つになった。</li>
+  </ul>
+</section>
+
+<footer>
+  出典：Bloomberg（2026-11-05「プーチン氏、JTのロシア資産を管理下に」）、The Moscow Times（2026-11-05）、Nikkei Asia、TASS、NHK、時事通信（2026-10-14 道新記者拘束／2026-10-22 ロシア外務省がドローン納品を非難）、北海道新聞、ウクラインスカ・プラウダ（2026-10-16 Tarkett・Ontex等）、財務省・外務省（2026-10-02 対ロ措置）、宮野宏樹氏のnote（ロシア事業の利益比率の推計）。株価はYahoo!ファイナンス。2026-11-10時点のまとめで自動更新なし。
+</footer>
+
+</div>
+</body>
+</html>
