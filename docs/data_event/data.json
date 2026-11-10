@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10",
+ "updated": "2026-11-11",
  "events": [
   {
    "date": "2021-01-28",
@@ -1226,24 +1226,6 @@
    "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
-   "date": "2026-11-10",
-   "time": "決算発表",
-   "name": "決算 ソフトバンクグループ",
-   "country": "JP",
-   "note": "9984・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=9984"
-  },
-  {
-   "date": "2026-11-10",
-   "time": "決算発表",
-   "name": "決算 フジクラ",
-   "country": "JP",
-   "note": "5803・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=5803"
-  },
-  {
    "date": "2026-11-13",
    "time": "06:00頃",
    "name": "決算 アプライド・マテリアルズ",
@@ -1386,6 +1368,15 @@
    "note": "November 2026分",
    "source": "us_cpi",
    "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+  },
+  {
+   "date": "2026-12-11",
+   "time": "上場日",
+   "name": "IPO （株）Ｂｅｙｏｎｔ",
+   "country": "JP",
+   "note": "674A・上場承認 2026/11/10",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
    "date": "2026-12-15",
