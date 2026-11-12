@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12",
+ "updated": "2026-11-13",
  "events": [
   {
    "date": "2021-01-28",
@@ -1388,6 +1388,24 @@
    "url": "https://www.bls.gov/schedule/news_release/ppi.htm"
   },
   {
+   "date": "2026-12-15",
+   "time": "上場日",
+   "name": "IPO スマートニュース（株）",
+   "country": "JP",
+   "note": "676A・上場承認 2026/11/12",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
+   "date": "2026-12-17",
+   "time": "上場日",
+   "name": "IPO （株）FOLIOホールディングス",
+   "country": "JP",
+   "note": "677A・上場承認 2026/11/12",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
    "date": "2026-12-18",
    "time": "08:30",
    "name": "日本CPI(全国)",
@@ -1617,7 +1635,7 @@
    "time": "03:00",
    "name": "FOMC 政策金利発表",
    "country": "US",
-   "note": "March 16-17* の最終日 14:00 ET",
+   "note": "March 16-17 の最終日 14:00 ET",
    "source": "fomc",
    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
   },
@@ -1752,7 +1770,7 @@
    "time": "03:00",
    "name": "FOMC 政策金利発表",
    "country": "US",
-   "note": "June 8-9* の最終日 14:00 ET",
+   "note": "June 8-9 の最終日 14:00 ET",
    "source": "fomc",
    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
   },
@@ -1914,7 +1932,7 @@
    "time": "03:00",
    "name": "FOMC 政策金利発表",
    "country": "US",
-   "note": "September 14-15* の最終日 14:00 ET",
+   "note": "September 14-15 の最終日 14:00 ET",
    "source": "fomc",
    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
   },
@@ -2000,6 +2018,15 @@
    "url": "https://www.bls.gov/schedule/news_release/ppi.htm"
   },
   {
+   "date": "2027-11-18",
+   "time": "04:00",
+   "name": "FOMC 政策金利発表",
+   "country": "US",
+   "note": "November 16-17 の最終日 14:00 ET",
+   "source": "fomc",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
    "date": "2027-11-25",
    "time": "終日",
    "name": "米国市場 休場(Thanksgiving Day)",
@@ -2016,15 +2043,6 @@
    "note": "November 2027分",
    "source": "us_empsit",
    "url": "https://www.bls.gov/schedule/news_release/empsit.htm"
-  },
-  {
-   "date": "2027-12-09",
-   "time": "04:00",
-   "name": "FOMC 政策金利発表",
-   "country": "US",
-   "note": "December 7-8* の最終日 14:00 ET",
-   "source": "fomc",
-   "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
   },
   {
    "date": "2027-12-10",
