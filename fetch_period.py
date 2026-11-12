@@ -51,6 +51,7 @@ RAWCLOSE = BASE / "cache_period" / "raw_close.json"   # 未調整の最新終値
 
 OUT0901 = BASE / "docs" / "data_0901"
 TOPIX_SUMMARY = BASE / "docs" / "data_topix" / "summary.json"
+WATCHLIST = BASE / "docs" / "data_watch" / "watchlist.json"   # 監視銘柄リスト(AI関連グループの元)
 BOTTOMUP = BASE / "docs" / "data_personal" / "bottom-up.json"   # 「注目銘柄」タブのリスト
 START_0901 = "2026-08-31"  # 「9/1-」タブの起点。この日の終値を基準にするので9/1当日の値動きから乗る
 PASSIVE_0901 = 0.12        # パッシブ保有 ÷ 浮動株時価総額(TOPIXのウエイトは浮動株基準なので全銘柄共通)
@@ -176,23 +177,62 @@ def load_groups():
             if g and code:
                 groups.setdefault(g, []).append((code, (row.get("銘柄名") or "").strip()))
     groups.update(bottomup_group())
+    groups.update(watchlist_ai_group())
     return groups
+
+
+def watchlist_ai_group():
+    """監視銘柄リストの「AI半導体」フォルダ(配下フォルダも全部)を「AI関連」グループにする。
+
+    フォルダに銘柄を足せば翌日の定時実行で自動的にグループにも入る。
+    「AI日経」(日経225のうちウエートの大きいAI関連)は groups_623.csv に固定で持つ。"""
+    d = load_json(WATCHLIST, {}) or {}
+    root = next((x for x in d.get("lists", []) if x.get("id") == "ai_semi"), None)
+    if not root:
+        return {}
+    names = load_json(WATCHLIST.parent / "names.json", {}) or {}
+
+    def walk(node):
+        out = list(node.get("codes") or [])
+        for f in node.get("folders") or []:
+            out += walk(f)
+        return out
+
+    seen, out = set(), []
+    for code in walk(root):
+        code = str(code).strip().upper()
+        if re.fullmatch(r"\d[0-9A-Z]{3}", code) and code not in seen:
+            seen.add(code)
+            nm = names.get(code)
+            out.append((code, nm if isinstance(nm, str) else ""))
+    return {"AI関連": out} if out else {}
 
 
 def bottomup_group():
     """「注目銘柄」タブ(手動更新のメモ)の銘柄を1グループにする。
+    あわせてテーマが LLMO関連/AIO関連 の銘柄を「AIO関連」グループにする。
 
     メモを足せば翌日の定時実行で自動的にグループにも入る(CSVへの転記は要らない)。
     米国株などYahooの「.T」で引けないコードは除く。
     """
     items = (load_json(BOTTOMUP, {}) or {}).get("items") or []
-    seen, out = set(), []
+    seen, out, aio = set(), [], []
     for x in items:
         code = str(x.get("code") or "").strip().upper()
-        if re.fullmatch(r"\d[0-9A-Z]{3}", code) and code not in seen:
+        if not re.fullmatch(r"\d[0-9A-Z]{3}", code):
+            continue
+        if code not in seen:
             seen.add(code)
             out.append((code, x.get("name") or ""))
-    return {"注目銘柄": out} if out else {}
+        theme = (x.get("theme") or "").upper()
+        if ("LLMO" in theme or "AIO" in theme) and code not in {c for c, _ in aio}:
+            aio.append((code, x.get("name") or ""))
+    groups = {}
+    if out:
+        groups["注目銘柄"] = out
+    if aio:
+        groups["AIO関連"] = aio
+    return groups
 
 
 def topix_groups():
