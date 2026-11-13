@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13",
+ "updated": "2026-11-14",
  "events": [
   {
    "date": "2021-01-28",
@@ -1227,30 +1227,12 @@
   },
   {
    "date": "2026-11-13",
-   "time": "06:00頃",
-   "name": "決算 アプライド・マテリアルズ",
-   "country": "US",
-   "note": "AMAT・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/AMAT/"
-  },
-  {
-   "date": "2026-11-13",
    "time": "22:30",
    "name": "米PPI",
    "country": "US",
    "note": "October 2026分",
    "source": "us_ppi",
    "url": "https://www.bls.gov/schedule/news_release/ppi.htm"
-  },
-  {
-   "date": "2026-11-13",
-   "time": "決算発表",
-   "name": "決算 ウェルネス・コミュニケーションズ",
-   "country": "JP",
-   "note": "366A・3月期第２",
-   "source": "kessan",
-   "url": "https://kabutan.jp/stock/?code=366A"
   },
   {
    "date": "2026-11-18",
@@ -1397,6 +1379,15 @@
    "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
+   "date": "2026-12-15",
+   "time": "上場日",
+   "name": "IPO （株）WHIHoldings（※）",
+   "country": "JP",
+   "note": "679A・上場承認 2026/11/13",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
    "date": "2026-12-17",
    "time": "上場日",
    "name": "IPO （株）FOLIOホールディングス",
@@ -1413,6 +1404,15 @@
    "note": "11月分",
    "source": "jp_cpi",
    "url": "https://www.stat.go.jp/data/cpi/index.html"
+  },
+  {
+   "date": "2026-12-18",
+   "time": "上場日",
+   "name": "IPO （株）Ｂｅｒｒｙ",
+   "country": "JP",
+   "note": "681A・上場承認 2026/11/13",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
    "date": "2026-12-18",
