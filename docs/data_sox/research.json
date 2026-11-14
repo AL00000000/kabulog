@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-11-07",
+  "researched_at": "2026-11-14",
   "scope": "終値・日中高値の連続更新の始点118日を対象に、直前1〜14暦日のニュース候補を調査。67対象月の検索と企業・政府の発表照合。月単位の検索は全日付の記事精査や網羅を意味しない。",
   "searches": [
     {
@@ -498,6 +498,37 @@
         "label": "Cboe 11/6：半導体株の反発",
         "url": "https://www.cboe.com/insights/posts/tech-stocks-rebound-but-nasdaq-is-still-in-correction-territory"
       }
+    },
+    {
+      "checked_at": "2026-11-14",
+      "period_start": "2026-11-09",
+      "period_end": "2026-11-13",
+      "price_rows_added": 5,
+      "previous_price_end": "2026-11-06",
+      "new_record_dates": [],
+      "drop_dates": [],
+      "new_drop_dates": [],
+      "event_ids": [
+        "nvidia-investigation-2026",
+        "google-tpu8tx-amd-2026",
+        "tsmc-october-revenue-2026",
+        "amd-epyc6-availability-2026",
+        "nvidia-ceo-transition-2026",
+        "amat-2026q4"
+      ],
+      "reviewed_event_ids": [
+        "micron-taoyuan-halt-2026"
+      ],
+      "conclusion": "11/9〜11/13の確定日足5日を追加し全8189日。新高値・新たな-5%以下の急落なし（既存188日）。NVIDIA調査開始とCEO交代、Google/AMDのTPU関連、AMD EPYC、TSMC月次売上、AMAT決算の6件を追加。11/9 +6.8548%、11/11 +5.6587%、11/13 -3.4297%。Micron工事停止の検索では11/5報道の再掲が中心で、再開・正式撤回の新しい確認資料は得ていない。冬の認知仮説を裏付け・反証する直接資料は今回得ておらず維持。各ニュースとSOXの因果・寄与率は未判定。",
+      "searches": [
+        "Reuters November 9 2026 AMD Google EPYC semiconductor",
+        "Nvidia November 8 2026 investigation statement company Reuters",
+        "Reuters November 12 2026 Nvidia Huang Kress resigns",
+        "TSMC October revenue November 10 2026",
+        "Applied Materials November 12 2026 results",
+        "Micron November 2026 Fab 11E restart"
+      ],
+      "preservation_note": "再取得値では11/6の高値と始値に約0.002ポイントの精度差があったため、既存8184日をそのまま維持し追加5日のみ採用。"
     }
   ]
 }

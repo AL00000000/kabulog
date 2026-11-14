@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-11-07",
+  "researched_at": "2026-11-14",
   "scope": "半導体史の主要事象と、高値更新直前1〜14暦日のニュース候補。原因や網羅性を保証しない。",
   "pending": [
     {
@@ -2028,6 +2028,136 @@
         }
       ],
       "checked_at": "2026-11-06"
+    },
+    {
+      "id": "nvidia-investigation-2026",
+      "date": "2026-11-08",
+      "market_date": "2026-11-09",
+      "title": "NVIDIAがCEOを巡る報道について独立調査を開始",
+      "short": "NVIDIAの独立調査",
+      "kind": "industry",
+      "evidence": "会社声明を伝える当日のReuters・AP報道で確認",
+      "note": "日曜日、取締役会がJensen Huangを巡る報道を受け独立調査を開始すると表明。Reutersは、取締役会は国家安全保障や会社の機密が侵害されたと考える理由はないとも説明したと報道。疑惑そのものが立証されたとは扱わない。週末発表のため11/9に対応するが、同日のSOXは+6.8548%で、指数全体の下落要因とは認定しない。11/12公表のCEO交代とは段階を分ける。",
+      "sources": [
+        {
+          "label": "Reuters 11/8：会社声明・調査開始",
+          "url": "https://www.investing.com/news/stock-market-news/nvidia-launches-probe-after-report-ceo-huang-was-target-of-foreign-intelligence-5010307"
+        },
+        {
+          "label": "AP 11/8：取締役会と会社広報の声明",
+          "url": "https://apnews.com/article/68839e7ca6ba2b121529f7e475e501d6"
+        }
+      ],
+      "checked_at": "2026-11-14"
+    },
+    {
+      "id": "google-tpu8tx-amd-2026",
+      "date": "2026-11-09",
+      "title": "GoogleがTPU 8tx・8i Maxを発表、8txのホストCPUにAMD EPYC",
+      "short": "Google新TPU・AMD採用",
+      "kind": "industry",
+      "evidence": "Google・AMD公式発表と当日の報道を照合",
+      "note": "Googleは第8世代TPUの構成をTPU 8txとTPU 8i Maxへ拡張。AMDも第5世代EPYCが8txのホスト基盤を担うと同日発表。AMDのCPU採用であり、GoogleのTPUそのものをAMD製GPUと扱わない。同日のSOXは+6.8548%。同時期の反発に近い材料で、採用発表だけによる上昇とは確認できない。発表時刻を特定していないため日中の因果順序は未判定。",
+      "sources": [
+        {
+          "label": "Google 11/9：TPU 8tx・8i Max",
+          "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/tpu-8i-max-and-8tx/"
+        },
+        {
+          "label": "AMD 11/9：EPYCのGoogle TPUホスト採用",
+          "url": "https://newsroom.amd.com/news/amd-epyc-expands-leadership-foundation-ai/"
+        },
+        {
+          "label": "TestingCatalog 11/9：発表内容の当時報道",
+          "url": "https://www.testingcatalog.com/google-adds-new-tpu-8tx-and-tpu-8i-max-for-ai-workloads/"
+        }
+      ],
+      "checked_at": "2026-11-14"
+    },
+    {
+      "id": "tsmc-october-revenue-2026",
+      "date": "2026-11-10",
+      "title": "TSMCの10月売上高が前年同月比59.7%増",
+      "short": "TSMC月次売上+59.7%",
+      "kind": "industry",
+      "evidence": "会社公式月次発表と中央通訊社の当日報道を照合",
+      "note": "TSMCは10月の連結売上高を5,868億9,000万台湾ドル、前月比14.7%増、前年同月比59.7%増と発表。11/10に発表された10月実績であり、10月の日付へ遡って配置しない。AI関連半導体の需要を確認する資料だが、SOX同日騰落や高値更新の原因を立証するものではない。",
+      "sources": [
+        {
+          "label": "TSMC 11/10：10月売上公式発表",
+          "url": "https://pr.tsmc.com/english/news/3349"
+        },
+        {
+          "label": "中央通訊社 11/10：月次売上報道",
+          "url": "https://focustaiwan.tw/business/202611100014"
+        }
+      ],
+      "checked_at": "2026-11-14"
+    },
+    {
+      "id": "amd-epyc6-availability-2026",
+      "date": "2026-11-10",
+      "title": "AMDが第6世代EPYC（Zen 6）の一般提供を発表",
+      "short": "AMD第6世代EPYC提供",
+      "kind": "industry",
+      "evidence": "AMD公式発表で確認、翌日の関連報道も照合",
+      "note": "AMDはZen 6を採用した第6世代EPYC SP7の一般提供とサーバーベンダーからの出荷を発表。Microsoft Azure・OCIのクラウド提供は間もなくと説明しており、すべてのクラウドで既に提供済みとは扱わない。AIエージェントなどデータセンター用途のCPU材料として登録。11/11のSOX反発は+5.6587%だが、この発表への反応だけとする根拠はない。",
+      "sources": [
+        {
+          "label": "AMD 11/10：第6世代EPYC一般提供",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1305/amd-showcases-6th-gen-amd-epyc-processors-to-lead-next-era-of-ai-and-enterprise-computing"
+        },
+        {
+          "label": "聯合ニュース 11/11：同時期のEPYC Embedded・Samsung協業（関連製品）",
+          "url": "https://en.yna.co.kr/view/AEN20261111006700320"
+        }
+      ],
+      "checked_at": "2026-11-14"
+    },
+    {
+      "id": "nvidia-ceo-transition-2026",
+      "date": "2026-11-12",
+      "title": "NVIDIAがHuang退任とKress暫定CEO就任を公表",
+      "short": "NVIDIA CEO交代",
+      "kind": "industry",
+      "evidence": "会社の8-K添付発表と当日のReuters報道を照合",
+      "note": "11/12の会社発表でJensen HuangのCEO・取締役退任とCFO Colette Kressの暫定CEO就任を公表。8-K本文の取締役会受理日は11/11だが、年表は公表日の11/12に配置する。Reutersの初報は11/12米国寄り前。11/8の調査開始報道と正式な経営交代を区別する。収録日足のSOXは11/12 -0.5437%、11/13 -3.4297%で、いずれも-5%急落の閾値には達していない。指数の変動に対する個別要因の寄与は未確定。",
+      "sources": [
+        {
+          "label": "NVIDIA 8-K・11/12添付発表：CEO交代（受理日11/11）",
+          "url": "https://d18rn0p25nwr6d.cloudfront.net/CIK-0001045810/2bc9480b-60a6-4d8a-90cb-87190f804a3b.pdf"
+        },
+        {
+          "label": "Reuters 11/12：CEO退任・暫定後任",
+          "url": "https://www.investing.com/news/stock-market-news/nvidia-ceo-jensen-huang-to-step-down-in-blow-to-ai-boom-5021980"
+        }
+      ],
+      "checked_at": "2026-11-14"
+    },
+    {
+      "id": "amat-2026q4",
+      "date": "2026-11-12",
+      "market_date": "2026-11-13",
+      "title": "Applied Materialsが2026年度第4四半期決算を発表",
+      "short": "AMAT決算・AI設備需要",
+      "kind": "industry",
+      "evidence": "会社発表と当日のReuters決算報道・公表時刻を照合",
+      "note": "11/12米国引け後に公表。四半期売上高は104億1,000万ドル、前年同期比53%増。2027年度第1四半期の売上見通しは111億ドル±5億ドル。会社はAIが半導体需要を押し上げていると説明。翌11/13のSOXは-3.4297%だが、好決算の発表をそのまま下落原因と扱わない。NVIDIA経営交代などの併存材料もあり、要因別の寄与は未判定。",
+      "sources": [
+        {
+          "label": "AMAT 11/12：公式決算リリース",
+          "url": "https://www.globenewswire.com/news-release/2026/11/12/3402149/0/en/applied-materials-announces-fourth-quarter-and-fiscal-year-2026-results.html"
+        },
+        {
+          "label": "Reuters 11/12：AI需要と見通し",
+          "url": "https://wtbx.com/2026/11/12/applied-materials-forecasts-quarterly-revenue-above-estimates-on-strong-ai-chip-demand/"
+        },
+        {
+          "label": "StreetInsider 11/12：16:01公表時刻",
+          "url": "https://cast.streetinsider.com/dr/quote.php?q=AMAT"
+        }
+      ],
+      "checked_at": "2026-11-14"
     }
   ]
 }
