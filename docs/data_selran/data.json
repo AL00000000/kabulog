@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-14",
+ "updated": "2026-11-15",
  "apps": {
   "1015521325": {
    "name": "Fate/Grand Order",
@@ -2454,22 +2454,51 @@
    "apps": {
     "6756641135": {
      "name": "ホロライブドリームス",
-     "last": 116,
-     "high": 116,
+     "last": 8,
+     "high": 8,
      "low": 153,
+     "samples": 287
+    },
+    "951627670": {
+     "name": "ドラゴンボールZ ドッカンバトル",
+     "last": 59,
+     "high": 31,
+     "low": 59,
+     "samples": 287
+    }
+   },
+   "top1": {
+    "name": "Pokémon GO",
+    "apid": "1094591345"
+   },
+   "top1_others": [
+    {
+     "name": "eFootball™",
+     "apid": "1117270703"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-15",
+   "apps": {
+    "6756641135": {
+     "name": "ホロライブドリームス",
+     "last": 8,
+     "high": 6,
+     "low": 8,
      "samples": 103
     },
     "951627670": {
      "name": "ドラゴンボールZ ドッカンバトル",
-     "last": 36,
-     "high": 31,
-     "low": 36,
+     "last": 69,
+     "high": 59,
+     "low": 69,
      "samples": 103
     }
    },
    "top1": {
-    "name": "eFootball™",
-    "apid": "1117270703"
+    "name": "Pokémon GO",
+    "apid": "1094591345"
    }
   }
  ]
