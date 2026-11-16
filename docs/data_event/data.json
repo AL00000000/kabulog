@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-16",
+ "updated": "2026-11-17",
  "events": [
   {
    "date": "2021-01-28",
@@ -1411,6 +1411,24 @@
    "name": "IPO （株）Ｂｅｒｒｙ",
    "country": "JP",
    "note": "681A・上場承認 2026/11/13",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
+   "date": "2026-12-18",
+   "time": "上場日",
+   "name": "IPO （株）ＩＧホールディングス",
+   "country": "JP",
+   "note": "686A・上場承認 2026/11/16",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
+   "date": "2026-12-18",
+   "time": "上場日",
+   "name": "IPO （株）コネクティ",
+   "country": "JP",
+   "note": "688A・上場承認 2026/11/16",
    "source": "ipo",
    "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
