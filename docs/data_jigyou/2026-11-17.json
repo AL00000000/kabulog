@@ -1,0 +1,151 @@
+{
+ "date": "2026-11-17",
+ "as_of": "2026-11-17 20:30",
+ "counts": {
+  "all": 158,
+  "hit": 5,
+  "weak": 1
+ },
+ "items": [
+  {
+   "id": "140120261113579825",
+   "time": "17:00",
+   "code": "9941",
+   "name": "太洋物産",
+   "title": "営業外費用、特別利益及び特別損失の計上に関するお知らせ",
+   "url": "https://www.release.tdnet.info/inbs/140120261113579825.pdf",
+   "market": "東",
+   "cats": [
+    "損失計上"
+   ],
+   "pdf": {
+    "amounts": [
+     {
+      "k": "特別利益",
+      "v": "105,887千円"
+     },
+     {
+      "k": "売却益",
+      "v": "39,771千円"
+     },
+     {
+      "k": "減損損失",
+      "v": "35,955千円"
+     }
+    ],
+    "scale": [],
+    "impact": null,
+    "excerpt": null,
+    "chars": 812
+   },
+   "conf": "中",
+   "repeat": 2
+  },
+  {
+   "id": "140120261116581658",
+   "time": "16:00",
+   "code": "251A",
+   "name": "Ｐ－ニューロマジック",
+   "title": "海外連結子会社の解散および清算に関するお知らせ",
+   "url": "https://www.release.tdnet.info/inbs/140120261116581658.pdf",
+   "market": "東福",
+   "cats": [
+    "子会社整理"
+   ],
+   "pdf": {
+    "amounts": [],
+    "scale": [],
+    "impact": null,
+    "excerpt": null,
+    "chars": 5
+   },
+   "conf": "高",
+   "repeat": 1
+  },
+  {
+   "id": "140120261116581657",
+   "time": "16:00",
+   "code": "251A",
+   "name": "Ｐ－ニューロマジック",
+   "title": "特別損失の計上見込みに関するお知らせ",
+   "url": "https://www.release.tdnet.info/inbs/140120261116581657.pdf",
+   "market": "東福",
+   "cats": [
+    "損失計上"
+   ],
+   "pdf": {
+    "amounts": [],
+    "scale": [],
+    "impact": null,
+    "excerpt": null,
+    "chars": 2
+   },
+   "conf": "低",
+   "repeat": 1
+  },
+  {
+   "id": "140120261116581665",
+   "time": "15:30",
+   "code": "3690",
+   "name": "イルグルム",
+   "title": "（開示事項の経過）完全子会社の吸収合併に係る吸収合併契約締結に関するお知らせ",
+   "url": "https://www.release.tdnet.info/inbs/140120261116581665.pdf",
+   "market": "東",
+   "cats": [
+    "分割・再編"
+   ],
+   "pdf": {
+    "amounts": [
+     {
+      "k": "特別利益",
+      "v": "８百万円"
+     }
+    ],
+    "scale": [
+     {
+      "k": "純資産",
+      "v": "2,072百万円"
+     },
+     {
+      "k": "総資産",
+      "v": "1,410百万円"
+     },
+     {
+      "k": "売上高",
+      "v": "320.62円"
+     },
+     {
+      "k": "営業利益",
+      "v": "201,432,428円"
+     }
+    ],
+    "impact": "精査中",
+    "excerpt": "シルバーエッグ・テクノロジーは、AI技術をベースにしたレコメンドエンジンをはじめとするデジタルマ",
+    "chars": 3656
+   },
+   "conf": "高",
+   "repeat": 2
+  },
+  {
+   "id": "140120261113579767",
+   "time": "08:30",
+   "code": "9257",
+   "name": "Ｇ－ＹＣＰ",
+   "title": "当社子会社（孫会社）の株式等の譲渡及び特定子会社の異動に関するお知らせ",
+   "url": "https://www.release.tdnet.info/inbs/140120261113579767.pdf",
+   "market": "東",
+   "cats": [
+    "子会社整理"
+   ],
+   "pdf": {
+    "amounts": [],
+    "scale": [],
+    "impact": null,
+    "excerpt": "当社グループでは、 「Strive for Growth. Lead Asia. Impact the World」というビジョンの下、M&Aや企業",
+    "chars": 4186
+   },
+   "conf": "高",
+   "repeat": 1
+  }
+ ]
+}
