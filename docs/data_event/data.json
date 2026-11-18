@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18",
+ "updated": "2026-11-19",
  "events": [
   {
    "date": "2021-01-28",
@@ -1235,15 +1235,6 @@
    "url": "https://www.bls.gov/schedule/news_release/ppi.htm"
   },
   {
-   "date": "2026-11-18",
-   "time": "06:00頃",
-   "name": "決算 エヌビディア",
-   "country": "US",
-   "note": "NVDA・日程確定(Yahoo)",
-   "source": "kessan",
-   "url": "https://finance.yahoo.com/quote/NVDA/"
-  },
-  {
    "date": "2026-11-20",
    "time": "08:30",
    "name": "日本CPI(全国)",
@@ -1434,12 +1425,30 @@
   },
   {
    "date": "2026-12-18",
+   "time": "上場日",
+   "name": "IPO （株）GROWTHVERSE",
+   "country": "JP",
+   "note": "710A・上場承認 2026/11/18",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
+  },
+  {
+   "date": "2026-12-18",
    "time": "昼頃",
    "name": "日銀 金融政策決定会合",
    "country": "JP",
    "note": "12月17日（木）・18日（金） の2日目に結果公表",
    "source": "boj",
    "url": "https://www.boj.or.jp/mopo/mpmsche_minu/index.htm"
+  },
+  {
+   "date": "2026-12-22",
+   "time": "上場日",
+   "name": "IPO ユニテックフーズ（株）",
+   "country": "JP",
+   "note": "711A・上場承認 2026/11/18",
+   "source": "ipo",
+   "url": "https://www.jpx.co.jp/listing/stocks/new/index.html"
   },
   {
    "date": "2026-12-25",
