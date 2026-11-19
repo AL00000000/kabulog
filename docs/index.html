@@ -306,6 +306,17 @@ footer a { color: var(--accent); }
 #nhFollow th { color: var(--muted); font-weight: 600; font-size: .78rem; cursor: default; }
 #nhFollow th:first-child, #nhFollow td:first-child { text-align: left; color: var(--muted); }
 #nhFollow .thin { color: var(--new); }
+/* NISA買付ランキング */
+#nsTbl td, #nsTbl th { white-space: nowrap; }
+#nsTbl td.tl { min-width: 7.5em; }
+#nsTbl td.hit, #nsCountTbl tr.hit td { background: rgba(255, 209, 102, .18); }
+#nsTbl td.hit a { color: var(--new); font-weight: 700; }
+#nsTbl .nsSrc { font-size: .75em; color: var(--muted); }
+#nsTbl .nsOld { font-size: .75em; color: var(--new); }
+#nsFind { margin: 0 0 10px; }
+#nsFind table { width: auto; }
+#view-nisa tbody a { color: inherit; text-decoration: none; }
+#view-nisa tbody a:hover { color: var(--accent); text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -349,6 +360,7 @@ footer a { color: var(--accent); }
       <span class="tabgroup-label">週次更新</span>
       <div class="tabgroup-items">
         <button class="tab" data-tab="shinyo">信用評価損益率</button>
+        <button class="tab" data-tab="nisa">NISA買付ランキング</button>
         <button class="tab" data-tab="wk">週間騰落ログ</button>
       </div>
     </div>
@@ -1008,6 +1020,44 @@ footer a { color: var(--accent); }
       本サイトのデータの正確性は保証されません。投資判断はご自身の責任で行ってください。
     </footer>
   </div><!-- /view-search -->
+
+  <div id="view-nisa" hidden>
+    <div class="toolbar">
+      <span><label>種類</label><select id="nsKindSel">
+        <option value="buy">買付金額</option><option value="volume">出来高</option><option value="holding">保有残高</option>
+      </select></span>
+      <span><label>年</label><select id="nsYearSel"></select></span>
+      <input id="nsQ" type="search" placeholder="銘柄名・コードで探す(例: ニデック / 6594)">
+      <span class="stat" id="nsStat"></span>
+    </div>
+    <div class="banner" id="nsBanner">読み込み中…</div>
+    <div id="nsFind"></div>
+    <div class="hintRow">
+      <div class="hint"><b>SBI証券のNISA口座で買われた国内株式の週間ランキング</b>(買付金額・出来高・保有残高、各上位10位)を週ごとに並べたものです。2024年以降は成長投資枠、2023年以前は旧NISA(一般NISA)の集計です。<br>
+      SBIのページは<b>最新1週分しか表示されず、11位以下も出ません</b>。そのため、上位10位に入らなかった週の順位は分かりません。銘柄を探して「登場なし」と出ても、買われていなかったという意味ではありません。<br>
+      毎週の記録はSBIのページから自動で取得しています(2026年11月開始)。それ以前の週は2つの取得元で補っています。<b>アーカイブ</b>は Internet Archive に保存されていた同じページで、2015年から残っていますが、クロールされた週しか無いため飛び飛びです。<b>ザイ</b>はザイ・オンライン(ダイヤモンド社)の週次記事にSBIの表が転載されたもので、2025年秋以降はほぼ毎週あります。<br>
+      保有残高は「その週の最終日時点」の順位です。</div>
+    </div>
+    <div class="tablecard">
+      <table id="nsTbl">
+        <thead><tr><th class="tl">週</th><th>1位</th><th>2位</th><th>3位</th><th>4位</th><th>5位</th><th>6位</th><th>7位</th><th>8位</th><th>9位</th><th>10位</th></tr></thead>
+        <tbody id="nsBody"><tr><td class="loading" colspan="11">読み込み中…</td></tr></tbody>
+      </table>
+    </div>
+    <div class="hintRow"><div class="hint"><b>銘柄ごとの登場回数</b>(選んだ種類・年で集計)</div></div>
+    <div class="tablecard">
+      <table id="nsCountTbl">
+        <thead><tr><th>順</th><th class="tl">コード</th><th class="tl">銘柄名</th><th>登場週</th><th>1位</th><th>最高</th><th class="tl">最後に登場</th></tr></thead>
+        <tbody id="nsCountBody"></tbody>
+      </table>
+    </div>
+    <footer>
+      データ取得元: <a href="https://site1.sbisec.co.jp/ETGate/?_ControlID=WPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_DataStoreID=DSWPLETmgR001Control&_ActionID=DefaultAID&burl=iris_ranking&cat1=market&cat2=ranking&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&file=index.html&getFlg=on" target="_blank" rel="noopener">SBI証券 NISAランキング(国内株式)</a> /
+      <a href="https://web.archive.org/" target="_blank" rel="noopener">Internet Archive</a> /
+      <a href="https://www.diamond.co.jp/zai/category/nisa" target="_blank" rel="noopener">ダイヤモンドZAiオンラインα</a>。<br>
+      本サイトのデータの正確性は保証されません。投資判断はご自身の責任で行ってください。
+    </footer>
+  </div><!-- /view-nisa -->
 
   <div id="view-event" hidden>
     <div class="toolbar">
@@ -4802,7 +4852,123 @@ async function evInit() {
   }
 }
 
+// ===== NISA買付ランキング =====
+let nsData = null, nsInited = false;
+const NS_SRC = { sbi: "SBI", wayback: "アーカイブ", zai: "ザイ" };
+const nsEsc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+// 全角英数を半角に、空白と「・」を除いて照合する(ＮＴＴ / NTT のような表記揺れ対策)
+const nsNorm = t => String(t).replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0))
+  .replace(/[\s・･]/g, "").toLowerCase();
+const nsYmd = ymd => ymd.replace(/-/g, "/").replace(/\/0/g, "/");
+
+function nsWeeks() {
+  const y = document.getElementById("nsYearSel").value;
+  return nsData.weeks.filter(w => !y || w.week_start.slice(0, 4) === y);
+}
+
+function nsMatch(r, q) {
+  if (!q) return false;
+  return nsNorm(r.code) === q || nsNorm(r.name).includes(q);
+}
+
+function nsRender() {
+  const kind = document.getElementById("nsKindSel").value;
+  const q = nsNorm(document.getElementById("nsQ").value.trim());
+  const weeks = nsWeeks();
+  const body = weeks.slice().reverse().map(w => {
+    const rows = (w.rankings || {})[kind] || [];
+    const by = {};
+    for (const r of rows) by[r.rank] = r;
+    const src = '<a class="nsSrc" href="' + nsEsc(w.url || "#") + '" target="_blank" rel="noopener">' +
+      (NS_SRC[w.src] || w.src) + "</a>";
+    const old = w.scheme === "旧NISA" ? ' <span class="nsOld">旧NISA</span>' : "";
+    const head = '<td class="tl">' + nsYmd(w.week_start) + "〜" + nsYmd(w.week_end).slice(5) + "<br>" + src + old + "</td>";
+    if (!rows.length) return "<tr>" + head + '<td class="loading" colspan="10">この種類の記録なし</td></tr>';
+    return "<tr>" + head + [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
+      const r = by[n];
+      if (!r) return "<td>—</td>";
+      const chg = r.chg === "NEW" ? "NEW" : r.chg || "";
+      return '<td class="tl' + (nsMatch(r, q) ? " hit" : "") + '"><a href="https://kabutan.jp/stock/?code=' + r.code +
+        '" target="_blank" rel="noopener">' + nsEsc(r.name) + '</a><br><span class="tvsub">' + r.code +
+        (chg ? " " + nsEsc(chg) : "") + "</span></td>";
+    }).join("") + "</tr>";
+  }).join("");
+  document.getElementById("nsBody").innerHTML = body ||
+    '<tr><td class="loading" colspan="11">この年の記録はありません</td></tr>';
+
+  // 登場回数
+  const cnt = new Map();
+  for (const w of weeks) for (const r of ((w.rankings || {})[kind] || [])) {
+    const c = cnt.get(r.code) || { code: r.code, name: r.name, n: 0, top1: 0, best: 99, last: "" };
+    c.n++; if (r.rank === 1) c.top1++; c.best = Math.min(c.best, r.rank);
+    if (w.week_start >= c.last) { c.last = w.week_start; c.name = r.name; }
+    cnt.set(r.code, c);
+  }
+  const list = [...cnt.values()].sort((a, b) => b.n - a.n || b.top1 - a.top1 || a.best - b.best);
+  document.getElementById("nsCountBody").innerHTML = list.map((c, i) =>
+    '<tr class="' + (nsMatch(c, q) ? "hit" : "") + '"><td>' + (i + 1) + '</td><td class="tl"><a href="https://kabutan.jp/stock/?code=' + c.code +
+    '" target="_blank" rel="noopener">' + c.code + '</a></td><td class="tl">' + nsEsc(c.name) + "</td><td><b>" + c.n +
+    "</b></td><td>" + c.top1 + "</td><td>" + c.best + '位</td><td class="tl">' + nsYmd(c.last) + "週</td></tr>").join("") ||
+    '<tr><td class="loading" colspan="7">データがありません</td></tr>';
+
+  const srcN = {};
+  for (const w of weeks) srcN[w.src] = (srcN[w.src] || 0) + 1;
+  document.getElementById("nsStat").textContent = "表示 " + weeks.length + " 週(" +
+    Object.entries(srcN).map(([k, v]) => (NS_SRC[k] || k) + " " + v).join(" / ") + ")";
+  nsRenderFind(q);
+}
+
+// 銘柄を探したときは、全期間・3種類での登場を一覧にする(年や種類の選択とは無関係)
+function nsRenderFind(q) {
+  const box = document.getElementById("nsFind");
+  if (!q) { box.innerHTML = ""; return; }
+  const kinds = [["buy", "買付金額"], ["volume", "出来高"], ["holding", "保有残高"]];
+  const hits = [];
+  for (const w of nsData.weeks) for (const [k, ja] of kinds)
+    for (const r of ((w.rankings || {})[k] || [])) if (nsMatch(r, q)) hits.push({ w, k, ja, r });
+  const total = nsData.weeks.length;
+  if (!hits.length) {
+    box.innerHTML = '<div class="hint">「' + nsEsc(document.getElementById("nsQ").value.trim()) +
+      "」は記録した " + total + " 週のどのランキング(各10位まで)にも登場しません。11位以下の順位は取得元が公開していないため分かりません。</div>";
+    return;
+  }
+  const byKind = kinds.map(([k, ja]) => {
+    const h = hits.filter(x => x.k === k);
+    if (!h.length) return "<tr><td class=\"tl\">" + ja + '</td><td>0</td><td>—</td><td class="tl">—</td></tr>';
+    const best = Math.min(...h.map(x => x.r.rank));
+    const recent = h.slice(-6).reverse().map(x => nsYmd(x.w.week_start) + "週 " + x.r.rank + "位").join(" / ");
+    return "<tr><td class=\"tl\">" + ja + "</td><td><b>" + h.length + "</b></td><td>" + best + '位</td><td class="tl">' + recent + "</td></tr>";
+  }).join("");
+  const names = [...new Set(hits.map(x => x.r.name + "(" + x.r.code + ")"))].join("、");
+  box.innerHTML = '<div class="hint"><b>' + nsEsc(names) + "</b> の登場(記録した全 " + total + " 週)</div>" +
+    '<div class="tablecard"><table><thead><tr><th class="tl">種類</th><th>登場週</th><th>最高</th><th class="tl">直近の登場(新しい順・最大6件)</th></tr></thead><tbody>' +
+    byKind + "</tbody></table></div>";
+}
+
+async function nsInit() {
+  try {
+    const res = await fetch("data_nisa/data.json", { cache: "no-cache" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    nsData = await res.json();
+    if (!nsData.weeks || !nsData.weeks.length) throw new Error("データが空です");
+    const years = [...new Set(nsData.weeks.map(w => w.week_start.slice(0, 4)))].sort().reverse();
+    const ysel = document.getElementById("nsYearSel");
+    ysel.innerHTML = '<option value="">すべて</option>' + years.map(y => '<option value="' + y + '">' + y + "年</option>").join("");
+    const last = nsData.weeks[nsData.weeks.length - 1];
+    document.getElementById("nsBanner").innerHTML = "最新: <b>" + nsYmd(last.week_start) + "〜" + nsYmd(last.week_end).slice(5) +
+      "</b>週 / 記録 <b>" + nsData.weeks.length + "</b> 週(最古 " + nsYmd(nsData.weeks[0].week_start) + "週)";
+    let t = null;
+    document.getElementById("nsKindSel").onchange = nsRender;
+    ysel.onchange = nsRender;
+    document.getElementById("nsQ").oninput = () => { clearTimeout(t); t = setTimeout(nsRender, 150); };
+    nsRender();
+  } catch (e) {
+    document.getElementById("nsBanner").innerHTML = '<span class="err">読み込みエラー: ' + e + "</span>";
+  }
+}
+
 const VIEW_ID = {
+  nisa: "view-nisa",
   ranking: "view-ranking", intraday: "view-intraday", split: "view-split",
   yori: "view-yori", minute: "view-minute", min5: "view-min5", sector: "view-sector",
   stop: "view-stop", stoplow: "view-stoplow", streaks: "view-streaks",
@@ -4836,6 +5002,7 @@ function switchTab(name) {
   if (name === "event" && !evInited) { evInited = true; evInit(); }
   if (name === "period" && !pdInited) { pdInited = true; pdInit(); }
   if (name === "wk" && !wkInited) { wkInited = true; wkInit(); }
+  if (name === "nisa" && !nsInited) { nsInited = true; nsInit(); }
   const jv = JK_VIEWS[name];
   if (jv && !jv.inited) { jv.inited = true; jv.init(); }
   // 外部サイトのiframeは初回表示時に遅延読み込み
@@ -4893,6 +5060,7 @@ const FEEDS = {
   streaks:  { kind: "field", url: "./data_streaks/data.json", field: "updated", freq: "daily" },
   pts:      { kind: "index", url: "/buffett-code-pts-ranking/data/index.json", freq: "daily" },
   shinyo:   { kind: "index", url: "./data_shinyo/index.json", freq: "weekly" },
+  nisa:     { kind: "field", url: "./data_nisa/index.json", field: "updated", freq: "weekly" },
   split:    { kind: "field", url: "./data_split/analysis.json", field: "generated", freq: "ended" },
   jukyu:    { kind: "field", url: "./data_jukyu/analysis.json", field: "generated", freq: "ended" },
   uchu:     { kind: "field", url: "./data_uchu/analysis.json", field: "generated", freq: "ended" },
