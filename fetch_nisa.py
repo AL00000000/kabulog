@@ -339,14 +339,21 @@ KIND_LABEL = {"buy": "買付金額", "volume": "出来高", "holding": "保有�
 
 
 def mark_first(rows):
+    """first: そのランキングに初めて入った / first_top3: そのランキングで初めて3位以内に入った(判定期間は同じ)"""
     seen = {k: set() for k in KINDS}
+    seen3 = {k: set() for k in KINDS}
     for w in rows:
         for k, lst in (w.get("rankings") or {}).items():
             for r in lst:
                 r.pop("first", None)
-                if r["code"] not in seen[k] and w["week_start"] >= FIRST_FROM:
-                    r["first"] = True
+                r.pop("first_top3", None)
+                if w["week_start"] >= FIRST_FROM:
+                    if r["code"] not in seen[k]:
+                        r["first"] = True
+                    if r["rank"] <= 3 and r["code"] not in seen3[k]:
+                        r["first_top3"] = True
             seen[k].update(r["code"] for r in lst)
+            seen3[k].update(r["code"] for r in lst if r["rank"] <= 3)
 
 
 def notify_first(data, force_week=None):
@@ -359,22 +366,28 @@ def notify_first(data, force_week=None):
     if w["week_start"] in state["notified"] and not force_week:
         print("通知: 通知済みの週", w["week_start"])
         return
-    hits = [(k, r) for k in KINDS for r in (w["rankings"].get(k) or []) if r.get("first")]
+    hits = [(k, r) for k in KINDS for r in (w["rankings"].get(k) or []) if r.get("first") or r.get("first_top3")]
     period = f"{int(w['week_start'][5:7])}/{int(w['week_start'][8:])}〜{int(w['week_end'][5:7])}/{int(w['week_end'][8:])}"
     if hits:
-        names = "、".join(dict.fromkeys(r["name"] for _, r in hits))
+        def tag(r):
+            return "・".join(t for t, f in (("初登場", r.get("first")), ("初TOP3", r.get("first_top3"))) if f)
+        firsts = list(dict.fromkeys(r["name"] for _, r in hits if r.get("first")))
+        top3s = list(dict.fromkeys(r["name"] for _, r in hits if r.get("first_top3")))
+        head = " / ".join(s for s in (firsts and "初登場: " + "、".join(firsts),
+                                      top3s and "初TOP3: " + "、".join(top3s)) if s)
         fields = []
         for k in KINDS:
             lst = [r for kk, r in hits if kk == k]
             if lst:
                 fields.append({"name": f"{KIND_LABEL[k]}ランキング", "inline": False,
-                               "value": "\n".join(f"**{r['rank']}位** {r['name']}（{r['code']}）" for r in lst)})
+                               "value": "\n".join(f"**{r['rank']}位** {r['name']}（{r['code']}）〔{tag(r)}〕" for r in lst)})
         payload = {
-            "content": f"NISA初登場: {names}",     # プッシュ通知に出る1行
-            "embeds": [{"title": f"SBI証券 NISAランキング 初登場（{period}週）", "url": SITE,
+            "content": f"NISA {head}",     # プッシュ通知に出る1行
+            "embeds": [{"title": f"SBI証券 NISAランキング 初登場・初TOP3（{period}週）", "url": SITE,
                         "color": 0xffd166, "fields": fields,
-                        "footer": {"text": "成長投資枠・国内株式。2024年4月以降の記録で初めて上位10位に入った銘柄"}}],
+                        "footer": {"text": "成長投資枠・国内株式。2024年4月以降の記録で、初めて上位10位(初登場)/3位以内(初TOP3)に入った銘柄"}}],
         }
+        names = head
         sys.path.insert(0, str(BASE))
         from webhook_config import get_webhook
         req = urllib.request.Request(get_webhook(WEBHOOK_KEY), data=json.dumps(payload).encode("utf-8"),
@@ -382,7 +395,7 @@ def notify_first(data, force_week=None):
         with urllib.request.urlopen(req, timeout=30) as r:
             print("通知: 送信", r.status, names)
     else:
-        print("通知: 初登場なし", w["week_start"])
+        print("通知: 初登場・初TOP3なし", w["week_start"])
     if w["week_start"] not in state["notified"]:
         state["notified"].append(w["week_start"])
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
