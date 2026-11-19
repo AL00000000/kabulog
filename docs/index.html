@@ -315,6 +315,10 @@ footer a { color: var(--accent); }
 #nsTbl td.first { background: rgba(57, 197, 207, .16); box-shadow: inset 3px 0 0 var(--accent); }
 #nsTbl .nsFirst, #view-nisa .nsFirstLegend { font-size: .72em; font-weight: 700; color: var(--accent); }
 #nsTbl .nsSrc { font-size: .75em; color: var(--muted); }
+#view-nisa .nsRet { font-size: .75em; }
+#view-nisa .up { color: var(--up); }
+#view-nisa .down { color: var(--down); }
+#view-nisa .nsRet.pend { color: var(--muted); }
 #nsTbl .nsOld { font-size: .75em; color: var(--new); }
 #nsFind { margin: 0 0 10px; }
 #nsFind table { width: auto; }
@@ -1034,13 +1038,15 @@ footer a { color: var(--accent); }
       <span class="stat" id="nsStat"></span>
     </div>
     <div class="banner" id="nsBanner">読み込み中…</div>
+    <div class="banner" id="nsRetSum"></div>
     <div id="nsFind"></div>
     <div class="hintRow">
       <div class="hint"><b>SBI証券のNISA口座で買われた国内株式の週間ランキング</b>(買付金額・出来高・保有残高、各上位10位)を週ごとに並べたものです。2024年以降は成長投資枠、2023年以前は旧NISA(一般NISA)の集計です。<br>
       SBIのページは<b>最新1週分しか表示されず、11位以下も出ません</b>。そのため、上位10位に入らなかった週の順位は分かりません。銘柄を探して「登場なし」と出ても、買われていなかったという意味ではありません。<br>
       毎週の記録はSBIのページから自動で取得しています(2026年11月開始)。それ以前の週は2つの取得元で補っています。<b>アーカイブ</b>は Internet Archive に保存されていた同じページで、2018年から残っていますが、クロールされた週しか無いため飛び飛びです(それより古い2015〜16年の保存はページ形式が違い読めませんでした)。<b>ザイ</b>はザイ・オンライン(ダイヤモンド社)の週次記事にSBIの表が転載されたもので、2025年秋以降はほぼ毎週あります。<br>
       保有残高は「その週の最終日時点」の順位です。<br>
-      <span class="nsFirstLegend">初登場</span>(水色の枠)は、<b>そのランキング(買付金額・出来高・保有残高のそれぞれ)に記録上はじめて入った銘柄</b>です。判定は記録がほぼ毎週そろう2024年4月15日週以降だけで行い、それ以前の飛び飛びの週は「過去に出たことがあるか」の照合にだけ使っています。初登場が出た週は Discord に通知しています。</div>
+      <span class="nsFirstLegend">初登場</span>(水色の枠)は、<b>そのランキング(買付金額・出来高・保有残高のそれぞれ)に記録上はじめて入った銘柄</b>です。判定は記録がほぼ毎週そろう2024年4月15日週以降だけで行い、それ以前の飛び飛びの週は「過去に出たことがあるか」の照合にだけ使っています。初登場が出た週は Discord に通知しています。<br>
+      各銘柄の下の<b>「1か月後」は登場後1か月の騰落率</b>です。起点は集計週の最終営業日の終値(ランキングが確定した時点)、終点は起点から暦で1か月後の日(休場ならその前の営業日)の終値です。株価は Yahoo ファイナンスの分割調整済み日足で、配当は含みません。まだ1か月たっていない週は「集計中」、上場廃止や償還で株価が取れない銘柄は「—」です。</div>
     </div>
     <div class="tablecard">
       <table id="nsTbl">
@@ -1051,7 +1057,7 @@ footer a { color: var(--accent); }
     <div class="hintRow"><div class="hint"><b>銘柄ごとの登場回数</b>(選んだ種類・年で集計)</div></div>
     <div class="tablecard">
       <table id="nsCountTbl">
-        <thead><tr><th>順</th><th class="tl">コード</th><th class="tl">銘柄名</th><th>登場週</th><th>1位</th><th>最高</th><th class="tl">最後に登場</th></tr></thead>
+        <thead><tr><th>順</th><th class="tl">コード</th><th class="tl">銘柄名</th><th>登場週</th><th>1位</th><th>最高</th><th>1か月後 平均</th><th>(件)</th><th class="tl">最後に登場</th></tr></thead>
         <tbody id="nsCountBody"></tbody>
       </table>
     </div>
@@ -4865,6 +4871,17 @@ const nsNorm = t => String(t).replace(/[Ａ-Ｚａ-ｚ０-９]/g, c => String.fr
   .replace(/[\s・･]/g, "").toLowerCase();
 const nsYmd = ymd => ymd.replace(/-/g, "/").replace(/\/0/g, "/");
 
+// 登場後1か月の騰落率(集計週の最終営業日の終値 → 暦で1か月後の終値)
+function nsRet(r) {
+  if (r.r1m_pending) return '<span class="nsRet pend">1か月後 集計中</span>';
+  if (r.r1m == null) return '<span class="nsRet pend">1か月後 —</span>';
+  const v = r.r1m;
+  return '<span class="nsRet ' + (v > 0 ? "up" : v < 0 ? "down" : "") + '">1か月後 ' + (v > 0 ? "+" : "") + v.toFixed(1) + "%</span>";
+}
+const nsPct = v => v == null || isNaN(v) ? "—" : '<span class="' + (v > 0 ? "up" : v < 0 ? "down" : "") + '">' + (v > 0 ? "+" : "") + v.toFixed(1) + "%</span>";
+const nsMean = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : null;
+const nsMedian = a => { if (!a.length) return null; const b = a.slice().sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+
 function nsWeeks() {
   const y = document.getElementById("nsYearSel").value;
   return nsData.weeks.filter(w => !y || w.week_start.slice(0, 4) === y);
@@ -4895,7 +4912,8 @@ function nsRender() {
       return '<td class="tl' + (r.first ? " first" : "") + (nsMatch(r, q) ? " hit" : "") +
         '"><a href="https://kabutan.jp/stock/?code=' + r.code +
         '" target="_blank" rel="noopener">' + nsEsc(r.name) + '</a><br><span class="tvsub">' + r.code +
-        (chg ? " " + nsEsc(chg) : "") + "</span>" + (r.first ? ' <span class="nsFirst">初登場</span>' : "") + "</td>";
+        (chg ? " " + nsEsc(chg) : "") + "</span>" + (r.first ? ' <span class="nsFirst">初登場</span>' : "") +
+        "<br>" + nsRet(r) + "</td>";
     }).join("") + "</tr>";
   }).join("");
   document.getElementById("nsBody").innerHTML = body ||
@@ -4904,8 +4922,9 @@ function nsRender() {
   // 登場回数
   const cnt = new Map();
   for (const w of weeks) for (const r of ((w.rankings || {})[kind] || [])) {
-    const c = cnt.get(r.code) || { code: r.code, name: r.name, n: 0, top1: 0, best: 99, last: "" };
+    const c = cnt.get(r.code) || { code: r.code, name: r.name, n: 0, top1: 0, best: 99, last: "", rets: [] };
     c.n++; if (r.rank === 1) c.top1++; c.best = Math.min(c.best, r.rank);
+    if (r.r1m != null) c.rets.push(r.r1m);
     if (w.week_start >= c.last) { c.last = w.week_start; c.name = r.name; }
     cnt.set(r.code, c);
   }
@@ -4913,13 +4932,24 @@ function nsRender() {
   document.getElementById("nsCountBody").innerHTML = list.map((c, i) =>
     '<tr class="' + (nsMatch(c, q) ? "hit" : "") + '"><td>' + (i + 1) + '</td><td class="tl"><a href="https://kabutan.jp/stock/?code=' + c.code +
     '" target="_blank" rel="noopener">' + c.code + '</a></td><td class="tl">' + nsEsc(c.name) + "</td><td><b>" + c.n +
-    "</b></td><td>" + c.top1 + "</td><td>" + c.best + '位</td><td class="tl">' + nsYmd(c.last) + "週</td></tr>").join("") ||
-    '<tr><td class="loading" colspan="7">データがありません</td></tr>';
+    "</b></td><td>" + c.top1 + "</td><td>" + c.best + '位</td><td>' + nsPct(nsMean(c.rets)) + "</td><td>" + c.rets.length +
+    '</td><td class="tl">' + nsYmd(c.last) + "週</td></tr>").join("") ||
+    '<tr><td class="loading" colspan="9">データがありません</td></tr>';
 
   const srcN = {};
   for (const w of weeks) srcN[w.src] = (srcN[w.src] || 0) + 1;
   document.getElementById("nsStat").textContent = "表示 " + weeks.length + " 週(" +
     Object.entries(srcN).map(([k, v]) => (NS_SRC[k] || k) + " " + v).join(" / ") + ")";
+
+  // 表示中(種類・年)の全登場について、1か月後騰落率の要約。初登場だけの集計も並べる
+  const all = [], firsts = [];
+  for (const w of weeks) for (const r of ((w.rankings || {})[kind] || [])) if (r.r1m != null) {
+    all.push(r.r1m); if (r.first) firsts.push(r.r1m);
+  }
+  const line = (lab, a) => lab + " " + a.length + "件: 平均 " + nsPct(nsMean(a)) + " / 中央値 " + nsPct(nsMedian(a)) +
+    " / 上昇 " + (a.length ? Math.round(a.filter(x => x > 0).length / a.length * 100) + "%" : "—");
+  document.getElementById("nsRetSum").innerHTML = "<b>登場後1か月の騰落率</b>(表示中の種類・年) — " +
+    line("全登場", all) + (firsts.length ? "<br>　　うち初登場 " + line("", firsts) : "");
   nsRenderFind(q);
 }
 
@@ -4939,14 +4969,17 @@ function nsRenderFind(q) {
   }
   const byKind = kinds.map(([k, ja]) => {
     const h = hits.filter(x => x.k === k);
-    if (!h.length) return "<tr><td class=\"tl\">" + ja + '</td><td>0</td><td>—</td><td class="tl">—</td></tr>';
+    if (!h.length) return "<tr><td class=\"tl\">" + ja + '</td><td>0</td><td>—</td><td>—</td><td class="tl">—</td></tr>';
     const best = Math.min(...h.map(x => x.r.rank));
-    const recent = h.slice(-6).reverse().map(x => nsYmd(x.w.week_start) + "週 " + x.r.rank + "位").join(" / ");
-    return "<tr><td class=\"tl\">" + ja + "</td><td><b>" + h.length + "</b></td><td>" + best + '位</td><td class="tl">' + recent + "</td></tr>";
+    const recent = h.slice(-6).reverse().map(x => nsYmd(x.w.week_start) + "週 " + x.r.rank + "位(" +
+      (x.r.r1m_pending ? "集計中" : nsPct(x.r.r1m)) + ")").join(" / ");
+    const avg = nsMean(h.map(x => x.r.r1m).filter(v => v != null));
+    return "<tr><td class=\"tl\">" + ja + "</td><td><b>" + h.length + "</b></td><td>" + best + "位</td><td>" + nsPct(avg) +
+      '</td><td class="tl">' + recent + "</td></tr>";
   }).join("");
   const names = [...new Set(hits.map(x => x.r.name + "(" + x.r.code + ")"))].join("、");
   box.innerHTML = '<div class="hint"><b>' + nsEsc(names) + "</b> の登場(記録した全 " + total + " 週)</div>" +
-    '<div class="tablecard"><table><thead><tr><th class="tl">種類</th><th>登場週</th><th>最高</th><th class="tl">直近の登場(新しい順・最大6件)</th></tr></thead><tbody>' +
+    '<div class="tablecard"><table><thead><tr><th class="tl">種類</th><th>登場週</th><th>最高</th><th>1か月後 平均</th><th class="tl">直近の登場(新しい順・最大6件、カッコ内は1か月後の騰落率)</th></tr></thead><tbody>' +
     byKind + "</tbody></table></div>";
 }
 

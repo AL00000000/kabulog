@@ -388,8 +388,108 @@ def notify_first(data, force_week=None):
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
+# ---------------------------------------------------------------- 登場後1か月の騰落率
+# 起点 = 集計週の最終日以前で最後の営業日の終値(ランキングが確定した時点)
+# 1か月後 = 起点日から暦で1か月後の日以前で最後の営業日の終値
+# 株価は Yahoo の日足(分割調整済み)。系列ごとに1回で取り直すので、取得時期で分割調整がずれることはない
+# (既存の cache_bars_* は取得時期ごとに調整状態が違い、混ぜると壊れる)。
+BARS = BASE / "cache_nisa_bars"
+YAHOO = "https://query1.finance.yahoo.com/v8/finance/chart/{sym}.T?period1={p1}&period2={p2}&interval=1d"
+BARS_FROM = "2018-08-01"
+REFRESH_DAYS = 45          # 起点がこれより新しい週の銘柄は毎回取り直す(1か月後の値がまだ確定していない)
+
+
+def add_month(d):
+    y, m = (d.year + (d.month == 12), d.month % 12 + 1)
+    for day in (d.day, 30, 29, 28):
+        try:
+            return date(y, m, day)
+        except ValueError:
+            continue
+
+
+def fetch_bars(code):
+    import calendar
+    p1 = calendar.timegm(date.fromisoformat(BARS_FROM).timetuple())
+    p2 = calendar.timegm(date.today().timetuple()) + 86400 * 2
+    b, st = fetch(YAHOO.format(sym=code, p1=p1, p2=p2), timeout=40, retries=3)
+    if not b:
+        return None
+    j = json.loads(b)
+    res = (j.get("chart") or {}).get("result") or []
+    if not res or not res[0].get("timestamp"):
+        return None
+    r = res[0]
+    closes = r["indicators"]["quote"][0].get("close") or []
+    out = []
+    from datetime import datetime, timedelta, timezone
+    jst = timezone(timedelta(hours=9))
+    for ts, c in zip(r["timestamp"], closes):
+        if c is not None:
+            out.append([datetime.fromtimestamp(ts, jst).date().isoformat(), round(c, 2)])
+    return out
+
+
+def load_bars(codes_refresh, codes_all):
+    BARS.mkdir(exist_ok=True)
+    bars = {}
+    for code in sorted(codes_all):
+        p = BARS / f"{code}.json"
+        if code in codes_refresh or not p.is_file():
+            try:
+                rows = fetch_bars(code)
+            except RuntimeError as e:
+                print("  株価取得失敗", code, e)
+                rows = None
+            p.write_text(json.dumps({"code": code, "fetched": date.today().isoformat(), "bars": rows or []}), encoding="utf-8")
+            time.sleep(0.4)
+        bars[code] = json.loads(p.read_text(encoding="utf-8"))["bars"]
+    return bars
+
+
+def close_on_or_before(series, d):
+    import bisect
+    i = bisect.bisect_right(series, [d, float("inf")]) - 1
+    return series[i] if i >= 0 else None
+
+
+def add_returns(rows, fetch_prices=True):
+    codes_all = {r["code"] for w in rows for v in w["rankings"].values() for r in v}
+    cutoff = date.fromordinal(date.today().toordinal() - REFRESH_DAYS).isoformat()
+    codes_refresh = {r["code"] for w in rows if w["week_end"] >= cutoff
+                     for v in w["rankings"].values() for r in v} if fetch_prices else set()
+    bars = load_bars(codes_refresh, codes_all) if fetch_prices else {
+        c: json.loads((BARS / f"{c}.json").read_text(encoding="utf-8"))["bars"]
+        for c in codes_all if (BARS / f"{c}.json").is_file()}
+    last_day = max((s[-1][0] for s in bars.values() if s), default="")
+    n_ok = n_pend = n_na = 0
+    for w in rows:
+        for v in w["rankings"].values():
+            for r in v:
+                for k in ("r1m", "r1m_pending"):
+                    r.pop(k, None)
+                s = bars.get(r["code"]) or []
+                base = close_on_or_before(s, w["week_end"])
+                # 起点が集計週から離れすぎている(上場前・データ欠け)ものは使わない
+                if not base or (date.fromisoformat(w["week_end"]) - date.fromisoformat(base[0])).days > 6:
+                    n_na += 1
+                    continue
+                tgt_day = add_month(date.fromisoformat(base[0])).isoformat()
+                if tgt_day > last_day:
+                    r["r1m_pending"] = True
+                    n_pend += 1
+                    continue
+                tgt = close_on_or_before(s, tgt_day)
+                if not tgt or tgt[0] <= base[0]:
+                    n_na += 1
+                    continue
+                r["r1m"] = round((tgt[1] / base[1] - 1) * 100, 2)
+                n_ok += 1
+    print(f"1か月騰落率: 算出 {n_ok} / 集計中 {n_pend} / 株価なし {n_na}(株価は {last_day} まで)")
+
+
 # ---------------------------------------------------------------- ビルド
-def build():
+def build(fetch_prices=True):
     weeks = {}
     for src in SRC_ORDER:
         for p in sorted((RAW / src).glob("*.json")) if (RAW / src).is_dir() else []:
@@ -408,6 +508,7 @@ def build():
         rows.append({k: r[k] for k in ("week_start", "week_end", "scheme", "src", "url", "rankings",
                                         "holding_asof", "archived", "fetched", "title", "also") if k in r})
     mark_first(rows)
+    add_returns(rows, fetch_prices)
     latest = rows[-1]["week_start"] if rows else None
     # 反映日は「新しい週が増えたときだけ」進める(NEWバッジの誤爆防止、信用評価損益率タブと同じ)
     updated = date.today().isoformat()
