@@ -307,9 +307,15 @@ footer a { color: var(--accent); }
 #nhFollow th:first-child, #nhFollow td:first-child { text-align: left; color: var(--muted); }
 #nhFollow .thin { color: var(--new); }
 /* NISA買付ランキング */
-#nsTbl { width: auto; }
-#nsTbl td, #nsTbl th { white-space: nowrap; text-align: left; padding-right: 14px; }
-#nsTbl td.tl { min-width: 7.5em; }
+/* 10位まで1画面に収める: 列幅を均等に固定し、長い銘柄名(ETFなど)は省略して title で全名を出す */
+#nsTbl { width: 100%; min-width: 960px; table-layout: fixed; font-size: .78rem; }
+#nsTbl th, #nsTbl td { white-space: nowrap; text-align: left; padding: 5px 6px; overflow: hidden; text-overflow: ellipsis; }
+#nsTbl th:first-child { width: 6.6em; }
+#nsTbl .nsName { display: block; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+#nsTbl .nsSub { display: block; overflow: hidden; text-overflow: ellipsis; font-size: .85em; color: var(--muted); }
+#nsTbl .nsLine { display: flex; gap: 4px; font-size: .85em; color: var(--muted); }
+#nsTbl .nsLine .nsCode { overflow: hidden; text-overflow: ellipsis; }
+#nsTbl .nsLine .nsRet { margin-left: auto; font-size: 1em; flex: none; font-weight: 600; }
 #nsTbl td.hit, #nsCountTbl tr.hit td { background: rgba(255, 209, 102, .18); }
 #nsTbl td.hit a { color: var(--new); font-weight: 700; }
 #nsTbl td.first { background: rgba(57, 197, 207, .16); box-shadow: inset 3px 0 0 var(--accent); }
@@ -1050,7 +1056,7 @@ footer a { color: var(--accent); }
       保有残高は「その週の最終日時点」の順位です。<br>
       <span class="nsFirstLegend">初登場</span>(水色の枠)は、<b>そのランキング(買付金額・出来高・保有残高のそれぞれ)に記録上はじめて入った銘柄</b>です。判定は記録がほぼ毎週そろう2024年4月15日週以降だけで行い、それ以前の飛び飛びの週は「過去に出たことがあるか」の照合にだけ使っています。初登場が出た週は Discord に通知しています。<br>
       <span class="nsTop3Legend">初TOP3</span>(金色の枠)は、<b>そのランキングで記録上はじめて3位以内に入った銘柄</b>です(判定期間は初登場と同じ)。初登場でいきなり3位以内に入ったセルは金色の枠にして、ラベルは両方付けています。<br>
-      各銘柄の下の<b>「1か月後」は登場後1か月の騰落率</b>です。起点は集計週の最終営業日の終値(ランキングが確定した時点)、終点は起点から暦で1か月後の日(休場ならその前の営業日)の終値です。株価は Yahoo ファイナンスの分割調整済み日足で、配当は含みません。まだ1か月たっていない週は「集計中」、上場廃止や償還で株価が取れない銘柄は「—」です。</div>
+      各銘柄の下の段の右端(赤・青の%)は<b>登場後1か月の騰落率</b>です。起点は集計週の最終営業日の終値(ランキングが確定した時点)、終点は起点から暦で1か月後の日(休場ならその前の営業日)の終値です。株価は Yahoo ファイナンスの分割調整済み日足で、配当は含みません。まだ1か月たっていない週は「集計中」、上場廃止や償還で株価が取れない銘柄は「—」です。</div>
     </div>
     <div class="tablecard">
       <table id="nsTbl">
@@ -4877,10 +4883,10 @@ const nsYmd = ymd => ymd.replace(/-/g, "/").replace(/\/0/g, "/");
 
 // 登場後1か月の騰落率(集計週の最終営業日の終値 → 暦で1か月後の終値)
 function nsRet(r) {
-  if (r.r1m_pending) return '<span class="nsRet pend">1か月後 集計中</span>';
-  if (r.r1m == null) return '<span class="nsRet pend">1か月後 —</span>';
+  if (r.r1m_pending) return '<span class="nsRet pend">集計中</span>';
+  if (r.r1m == null) return '<span class="nsRet pend">—</span>';
   const v = r.r1m;
-  return '<span class="nsRet ' + (v > 0 ? "up" : v < 0 ? "down" : "") + '">1か月後 ' + (v > 0 ? "+" : "") + v.toFixed(1) + "%</span>";
+  return '<span class="nsRet ' + (v > 0 ? "up" : v < 0 ? "down" : "") + '">' + (v > 0 ? "+" : "") + v.toFixed(1) + "%</span>";
 }
 const nsPct = v => v == null || isNaN(v) ? "—" : '<span class="' + (v > 0 ? "up" : v < 0 ? "down" : "") + '">' + (v > 0 ? "+" : "") + v.toFixed(1) + "%</span>";
 const nsMean = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : null;
@@ -4907,17 +4913,19 @@ function nsRender() {
     const src = '<a class="nsSrc" href="' + nsEsc(w.url || "#") + '" target="_blank" rel="noopener">' +
       (NS_SRC[w.src] || w.src) + "</a>";
     const old = w.scheme === "旧NISA" ? ' <span class="nsOld">旧NISA</span>' : "";
-    const head = '<td class="tl">' + nsYmd(w.week_start) + "〜" + nsYmd(w.week_end).slice(5) + "<br>" + src + old + "</td>";
+    const head = '<td class="tl"><span class="nsName">' + nsYmd(w.week_start) + '</span><span class="nsSub">〜' +
+      nsYmd(w.week_end).slice(5) + " " + src + old + "</span></td>";
     if (!rows.length) return "<tr>" + head + '<td class="loading" colspan="10">この種類の記録なし</td></tr>';
     return "<tr>" + head + [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
       const r = by[n];
       if (!r) return "<td>—</td>";
       const chg = r.chg === "NEW" ? "NEW" : r.chg || "";
       return '<td class="tl' + (r.first ? " first" : "") + (r.first_top3 ? " top3" : "") + (nsMatch(r, q) ? " hit" : "") +
-        '"><a href="https://kabutan.jp/stock/?code=' + r.code +
-        '" target="_blank" rel="noopener">' + nsEsc(r.name) + '</a><br><span class="tvsub">' + r.code +
-        (chg ? " " + nsEsc(chg) : "") + "</span>" + (r.first ? ' <span class="nsFirst">初登場</span>' : "") +
-        (r.first_top3 ? ' <span class="nsTop3">初TOP3</span>' : "") + "<br>" + nsRet(r) + "</td>";
+        '" title="' + nsEsc(r.name + "(" + r.code + ")") + '"><a class="nsName" href="https://kabutan.jp/stock/?code=' + r.code +
+        '" target="_blank" rel="noopener">' + nsEsc(r.name) + '</a><span class="nsLine"><span class="nsCode">' + r.code +
+        (chg ? " " + nsEsc(chg) : "") + "</span>" + nsRet(r) + "</span>" +
+        (r.first || r.first_top3 ? '<span class="nsSub">' + (r.first ? '<span class="nsFirst">初登場</span> ' : "") +
+          (r.first_top3 ? '<span class="nsTop3">初TOP3</span>' : "") + "</span>" : "") + "</td>";
     }).join("") + "</tr>";
   }).join("");
   document.getElementById("nsBody").innerHTML = body ||
