@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "4502",
+    "name": "武田薬品工業",
+    "chg": "NEW"
+   },
+   {
+    "rank": 4,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "2503",
+    "name": "キリンホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "↓"
+   },
+   {
+    "rank": 8,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "5938",
+    "name": "ＬＩＸＩＬ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "9201",
+    "name": "日本航空",
+    "chg": "↓"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "4564",
+    "name": "オンコセラピー・サイエンス",
+    "chg": "↑"
+   },
+   {
+    "rank": 3,
+    "code": "3823",
+    "name": "ＴＨＥ　ＷＨＹ　ＨＯＷ　ＤＯ　ＣＯＭＰＡＮＹ",
+    "chg": "↑"
+   },
+   {
+    "rank": 4,
+    "code": "6740",
+    "name": "ジャパンディスプレイ",
+    "chg": "↓"
+   },
+   {
+    "rank": 5,
+    "code": "3350",
+    "name": "メタプラネット",
+    "chg": "↓"
+   },
+   {
+    "rank": 6,
+    "code": "2134",
+    "name": "燦キャピタルマネージメント",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "6659",
+    "name": "メディアリンクス",
+    "chg": "↑"
+   },
+   {
+    "rank": 8,
+    "code": "4592",
+    "name": "サンバイオ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "9973",
+    "name": "小僧寿し",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "→"
+   },
+   {
+    "rank": 6,
+    "code": "4503",
+    "name": "アステラス製薬",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "4502",
+    "name": "武田薬品工業",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "4661",
+    "name": "オリエンタルランド",
+    "chg": "→"
+   },
+   {
+    "rank": 10,
+    "code": "7011",
+    "name": "三菱重工業",
+    "chg": "NEW"
+   }
+  ]
+ },
+ "holding_asof": "2024-06-21",
+ "week_start": "2024-06-17",
+ "week_end": "2024-06-21",
+ "scheme": "成長投資枠",
+ "src": "wayback",
+ "archived": "2024-06-22 18:43",
+ "url": "https://web.archive.org/web/20240622184332/https://www.sbisec.co.jp/ETGate/?_ControlID=WPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_DataStoreID=DSWPLETmgR001Control&_ActionID=DefaultAID&burl=iris_ranking&cat1=market&cat2=ranking&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&file=index.html&getFlg=on"
+}

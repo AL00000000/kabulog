@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "9104",
+    "name": "商船三井",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 3,
+    "code": "8473",
+    "name": "ＳＢＩホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 4,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 5,
+    "code": "1357",
+    "name": "ＮＥＸＴ　ＦＵＮＤＳ　日経平均ダブルインバース・インデックス連動型上場投信",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "1605",
+    "name": "ＩＮＰＥＸ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 8,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "↑"
+   },
+   {
+    "rank": 9,
+    "code": "4755",
+    "name": "楽天グループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 10,
+    "code": "7164",
+    "name": "全国保証",
+    "chg": "NEW"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "9973",
+    "name": "小僧寿し",
+    "chg": "NEW"
+   },
+   {
+    "rank": 2,
+    "code": "3053",
+    "name": "ペッパーフードサービス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 3,
+    "code": "1357",
+    "name": "ＮＥＸＴ　ＦＵＮＤＳ　日経平均ダブルインバース・インデックス連動型上場投信",
+    "chg": "NEW"
+   },
+   {
+    "rank": 4,
+    "code": "9318",
+    "name": "アジア開発キャピタル",
+    "chg": "NEW"
+   },
+   {
+    "rank": 5,
+    "code": "7647",
+    "name": "音通",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 8,
+    "code": "9831",
+    "name": "ヤマダホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "8909",
+    "name": "シノケングループ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "2191",
+    "name": "テラ",
+    "chg": "NEW"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   },
+   {
+    "rank": 6,
+    "code": "4502",
+    "name": "武田薬品工業",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "8316",
+    "name": "三井住友フィナンシャルグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "9202",
+    "name": "ＡＮＡホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 10,
+    "code": "4661",
+    "name": "オリエンタルランド",
+    "chg": "→"
+   }
+  ]
+ },
+ "holding_asof": "2022-08-19",
+ "week_start": "2022-08-15",
+ "week_end": "2022-08-19",
+ "scheme": "旧NISA",
+ "src": "wayback",
+ "archived": "2022-08-20 07:28",
+ "url": "https://web.archive.org/web/20220820072857/https://www.sbisec.co.jp/ETGate/?_ControlID=WPLETmgR001Control&_DataStoreID=DSWPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_ActionID=DefaultAID&getFlg=on&burl=iris_ranking&cat1=market&cat2=ranking&file=index.html&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&OutSide=on"
+}

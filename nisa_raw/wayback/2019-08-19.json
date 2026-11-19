@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "↓"
+   },
+   {
+    "rank": 3,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "3397",
+    "name": "トリドールホールディングス",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "3048",
+    "name": "ビックカメラ",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "4502",
+    "name": "武田薬品工業",
+    "chg": "NEW"
+   },
+   {
+    "rank": 8,
+    "code": "4568",
+    "name": "第一三共",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "9984",
+    "name": "ソフトバンクグループ",
+    "chg": "↑"
+   },
+   {
+    "rank": 10,
+    "code": "7201",
+    "name": "日産自動車",
+    "chg": "↓"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "8918",
+    "name": "ランド",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "8411",
+    "name": "みずほフィナンシャルグループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 3,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "NEW"
+   },
+   {
+    "rank": 5,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "2928",
+    "name": "ＲＩＺＡＰグループ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 8,
+    "code": "4689",
+    "name": "ヤフー",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "9831",
+    "name": "ヤマダ電機",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "7161",
+    "name": "じもとホールディングス",
+    "chg": "NEW"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "↑"
+   },
+   {
+    "rank": 3,
+    "code": "4661",
+    "name": "オリエンタルランド",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "8411",
+    "name": "みずほフィナンシャルグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 6,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "7201",
+    "name": "日産自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "3387",
+    "name": "クリエイト・レストランツ・ホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 10,
+    "code": "9861",
+    "name": "吉野家ホールディングス",
+    "chg": "→"
+   }
+  ]
+ },
+ "holding_asof": "2019-08-23",
+ "week_start": "2019-08-19",
+ "week_end": "2019-08-23",
+ "scheme": "旧NISA",
+ "src": "wayback",
+ "archived": "2019-08-24 20:17",
+ "url": "https://web.archive.org/web/20190824201752/https://www.sbisec.co.jp/ETGate/?OutSide=on&_ControlID=WPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_DataStoreID=DSWPLETmgR001Control&_ActionID=DefaultAID&burl=iris_ranking&cat1=market&cat2=ranking&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&file=index.html&getFlg=on"
+}

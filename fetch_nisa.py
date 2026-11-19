@@ -176,11 +176,22 @@ CDX = ("https://web.archive.org/cdx/search/cdx?url={host}/ETGate&matchType=prefi
        "&filter=original:.*tl2-nisa.*tl3-stock.*&fl=timestamp,statuscode,digest,original&limit=2000")
 
 
-def cmd_wayback():
+def cmd_wayback(cdx_file=None):
+    """cdx_file: CDX の応答(timestamp statuscode digest original)を保存したファイル。
+    www.sbisec.co.jp の CDX は件数が多く 504 で落ちやすいので、curl 等で取れたものを渡せるようにしてある。"""
     snaps = {}
-    for host in ("site1.sbisec.co.jp", "www.sbisec.co.jp"):
-        b, _ = fetch(CDX.format(host=host), timeout=120, retries=5)
-        for line in b.decode("utf-8", "replace").splitlines():
+    texts = []
+    if cdx_file:
+        texts.append(Path(cdx_file).read_text(encoding="utf-8", errors="replace"))
+    else:
+        for host in ("site1.sbisec.co.jp", "www.sbisec.co.jp"):
+            try:
+                b, _ = fetch(CDX.format(host=host), timeout=180, retries=5)
+                texts.append(b.decode("utf-8", "replace"))
+            except RuntimeError as e:
+                print("  CDX取得失敗(このホストは飛ばす):", host, e)
+    for text in texts:
+        for line in text.splitlines():
             p = line.split(" ")
             if len(p) != 4 or p[1] != "200":
                 continue  # CDX の statuscode フィルタは効かないことがあるので手元で絞る
@@ -227,9 +238,14 @@ def parse_zai(html, aid):
     title = clean(ZAI_TITLE_RE.search(html).group(1)) if ZAI_TITLE_RE.search(html) else ""
     if not is_zai_nisa_stock(title):
         return None
-    per = ZAI_PERIOD_RE.search(re.sub(r"<[^>]+>", "", html))
-    if not per:
+    # 本文冒頭の期間が前週のまま直っていない記事がある(4/20週の記事に「4/13～4/17」)。
+    # 題名の「M/D～M/D」と一致する期間を優先し、無ければ最初に出てくる期間を使う
+    text = re.sub(r"<[^>]+>", "", html)
+    pers = list(ZAI_PERIOD_RE.finditer(text))
+    if not pers:
         return None
+    tm = re.search(r"(\d{1,2})/(\d{1,2})\s*[～〜~]", title)
+    per = next((p for p in pers if tm and (int(p.group(2)), int(p.group(3))) == (int(tm.group(1)), int(tm.group(2)))), pers[0])
     rec = {"week_start": ymd(*per.groups()[:3]), "week_end": ymd(*per.groups()[3:]),
            "scheme": "成長投資枠", "rankings": {}}
     for tb in ZAI_TABLE_RE.findall(html):
@@ -241,12 +257,19 @@ def parse_zai(html, aid):
         if not kind or "日本株" not in ht:
             continue
         rows = []
-        for rank, chg, cell in ZAI_ROW_RE.findall(tb):
-            nm = ZAI_NAME_RE.match(clean(cell))
-            if not nm:
+        # 記事によって「(前週比)」の入れ子が違う(</font>の前後など)ので、行ごとにセルを分けて読む
+        for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", tb, re.S):
+            tds = re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S)
+            if len(tds) < 2:
                 continue
-            c = clean(chg)
-            rows.append({"rank": int(rank), "code": nm.group(2), "name": nm.group(1).strip(),
+            head = clean(tds[0])
+            rk = re.match(r"\s*(\d+)位", head)
+            nm = ZAI_NAME_RE.match(clean(tds[1]))
+            if not (rk and nm):
+                continue
+            ch = re.search(r"\((.*?)\)", head, re.S)
+            c = ch.group(1).strip() if ch else ""
+            rows.append({"rank": int(rk.group(1)), "code": nm.group(2), "name": nm.group(1).strip(),
                          "chg": "NEW" if "NEW" in c.upper() or "初" in c else c})
         if rows:
             rec["rankings"][kind] = rows
@@ -304,6 +327,67 @@ def cmd_zai(start=1, end=None):
     idx_p.write_text(json.dumps(idx, ensure_ascii=False, indent=0), encoding="utf-8")
 
 
+# ---------------------------------------------------------------- 初登場
+# 「初登場」は種類(買付金額/出来高/保有残高)ごとに、記録した全週でその銘柄が初めて現れた週。
+# 2024-04-08週より前は Wayback の飛び飛びしか無いので、そこでの「初」は判定しない(履歴としてだけ使う)。
+# それ以降はほぼ毎週そろっている(欠けは数週)ので、欠けた週に出ていた銘柄を初登場と誤判定する余地は小さい。
+FIRST_FROM = "2024-04-15"
+STATE = BASE / "state_nisa.json"
+WEBHOOK_KEY = "nisa_ranking"      # 実体は automation/webhooks.json(git管理外)
+SITE = "https://al00000000.github.io/kabulog/#nisa"
+KIND_LABEL = {"buy": "買付金額", "volume": "出来高", "holding": "保有残高"}
+
+
+def mark_first(rows):
+    seen = {k: set() for k in KINDS}
+    for w in rows:
+        for k, lst in (w.get("rankings") or {}).items():
+            for r in lst:
+                r.pop("first", None)
+                if r["code"] not in seen[k] and w["week_start"] >= FIRST_FROM:
+                    r["first"] = True
+            seen[k].update(r["code"] for r in lst)
+
+
+def notify_first(data, force_week=None):
+    """最新週に初登場があれば Discord に1回だけ通知する(通知済みの週は state_nisa.json に残す)。"""
+    weeks = data.get("weeks") or []
+    if not weeks:
+        return
+    w = weeks[-1] if not force_week else next(x for x in weeks if x["week_start"] == force_week)
+    state = json.loads(STATE.read_text(encoding="utf-8")) if STATE.is_file() else {"notified": []}
+    if w["week_start"] in state["notified"] and not force_week:
+        print("通知: 通知済みの週", w["week_start"])
+        return
+    hits = [(k, r) for k in KINDS for r in (w["rankings"].get(k) or []) if r.get("first")]
+    period = f"{int(w['week_start'][5:7])}/{int(w['week_start'][8:])}〜{int(w['week_end'][5:7])}/{int(w['week_end'][8:])}"
+    if hits:
+        names = "、".join(dict.fromkeys(r["name"] for _, r in hits))
+        fields = []
+        for k in KINDS:
+            lst = [r for kk, r in hits if kk == k]
+            if lst:
+                fields.append({"name": f"{KIND_LABEL[k]}ランキング", "inline": False,
+                               "value": "\n".join(f"**{r['rank']}位** {r['name']}（{r['code']}）" for r in lst)})
+        payload = {
+            "content": f"NISA初登場: {names}",     # プッシュ通知に出る1行
+            "embeds": [{"title": f"SBI証券 NISAランキング 初登場（{period}週）", "url": SITE,
+                        "color": 0xffd166, "fields": fields,
+                        "footer": {"text": "成長投資枠・国内株式。2024年4月以降の記録で初めて上位10位に入った銘柄"}}],
+        }
+        sys.path.insert(0, str(BASE))
+        from webhook_config import get_webhook
+        req = urllib.request.Request(get_webhook(WEBHOOK_KEY), data=json.dumps(payload).encode("utf-8"),
+                                     headers={"Content-Type": "application/json", "User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            print("通知: 送信", r.status, names)
+    else:
+        print("通知: 初登場なし", w["week_start"])
+    if w["week_start"] not in state["notified"]:
+        state["notified"].append(w["week_start"])
+    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 # ---------------------------------------------------------------- ビルド
 def build():
     weeks = {}
@@ -323,6 +407,7 @@ def build():
         r = weeks[ws]
         rows.append({k: r[k] for k in ("week_start", "week_end", "scheme", "src", "url", "rankings",
                                         "holding_asof", "archived", "fetched", "title", "also") if k in r})
+    mark_first(rows)
     latest = rows[-1]["week_start"] if rows else None
     # 反映日は「新しい週が増えたときだけ」進める(NEWバッジの誤爆防止、信用評価損益率タブと同じ)
     updated = date.today().isoformat()
@@ -343,18 +428,21 @@ def build():
     for r in rows:
         by[r["src"]] = by.get(r["src"], 0) + 1
     print(f"ビルド: {len(rows)} 週 {by} 最新 {latest} updated {updated}")
+    return data
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--wayback", action="store_true")
+    ap.add_argument("--cdx-file", help="--wayback で使う CDX 応答の保存ファイル")
     ap.add_argument("--zai", action="store_true")
     ap.add_argument("--zai-start", type=int, default=1)
     ap.add_argument("--build", action="store_true")
+    ap.add_argument("--notify-week", help="指定した週(開始日)の初登場を手動で通知する(動作確認用)")
     a = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     if a.wayback:
-        cmd_wayback()
+        cmd_wayback(a.cdx_file)
     elif a.zai:
         cmd_zai(a.zai_start)
     elif not a.build:
@@ -367,7 +455,11 @@ def main():
                 cmd_zai(max(int(k) for k in idx) + 1)
         except Exception as e:  # noqa: BLE001
             print("ザイの追加取得に失敗(続行):", e)
-    build()
+        notify_first(build())   # 定時実行のときだけ通知する(過去分の取り込みでは鳴らさない)
+        return
+    data = build()
+    if a.notify_week:
+        notify_first(data, force_week=a.notify_week)
 
 
 if __name__ == "__main__":

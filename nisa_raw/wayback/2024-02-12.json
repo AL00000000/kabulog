@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "↓"
+   },
+   {
+    "rank": 3,
+    "code": "5401",
+    "name": "日本製鉄",
+    "chg": "NEW"
+   },
+   {
+    "rank": 4,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "↓"
+   },
+   {
+    "rank": 5,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "1605",
+    "name": "ＩＮＰＥＸ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "↑"
+   },
+   {
+    "rank": 8,
+    "code": "5406",
+    "name": "神戸製鋼所",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 10,
+    "code": "5595",
+    "name": "ＱＰＳ研究所",
+    "chg": "NEW"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "4005",
+    "name": "住友化学",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "9399",
+    "name": "ビート・ホールディングス・リミテッド",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "7201",
+    "name": "日産自動車",
+    "chg": "↑"
+   },
+   {
+    "rank": 5,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "4755",
+    "name": "楽天グループ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "8410",
+    "name": "セブン銀行",
+    "chg": "↑"
+   },
+   {
+    "rank": 8,
+    "code": "2928",
+    "name": "ＲＩＺＡＰグループ",
+    "chg": "↑"
+   },
+   {
+    "rank": 9,
+    "code": "2330",
+    "name": "フォーサイド",
+    "chg": "↓"
+   },
+   {
+    "rank": 10,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↓"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "4503",
+    "name": "アステラス製薬",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "4502",
+    "name": "武田薬品工業",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "5401",
+    "name": "日本製鉄",
+    "chg": "↑"
+   },
+   {
+    "rank": 10,
+    "code": "8316",
+    "name": "三井住友フィナンシャルグループ",
+    "chg": "↓"
+   }
+  ]
+ },
+ "holding_asof": "2024-02-16",
+ "week_start": "2024-02-12",
+ "week_end": "2024-02-16",
+ "scheme": "成長投資枠",
+ "src": "wayback",
+ "archived": "2024-02-21 10:51",
+ "url": "https://web.archive.org/web/20240221105134/https://site1.sbisec.co.jp/ETGate/?_ControlID=WPLETmgR001Control&_DataStoreID=DSWPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_ActionID=DefaultAID&getFlg=on&OutSide=on&burl=iris_ranking&cat1=market&cat2=ranking&file=index.html&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock"
+}

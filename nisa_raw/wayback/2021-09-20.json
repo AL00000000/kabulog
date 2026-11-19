@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "8316",
+    "name": "三井住友フィナンシャルグループ",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "↑"
+   },
+   {
+    "rank": 3,
+    "code": "9831",
+    "name": "ヤマダホールディングス",
+    "chg": "↑"
+   },
+   {
+    "rank": 4,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "↓"
+   },
+   {
+    "rank": 5,
+    "code": "4502",
+    "name": "武田薬品工業",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "9984",
+    "name": "ソフトバンクグループ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "9470",
+    "name": "学研ホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 8,
+    "code": "5411",
+    "name": "ジェイ　エフ　イー　ホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "↓"
+   },
+   {
+    "rank": 10,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↓"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "9831",
+    "name": "ヤマダホールディングス",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "1699",
+    "name": "ＮＥＸＴ　ＦＵＮＤＳ　ＮＯＭＵＲＡ原油インデックス連動型上場投信",
+    "chg": "NEW"
+   },
+   {
+    "rank": 4,
+    "code": "5020",
+    "name": "ＥＮＥＯＳホールディングス",
+    "chg": "↑"
+   },
+   {
+    "rank": 5,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "6494",
+    "name": "ＮＦＫホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "1671",
+    "name": "ＷＴＩ原油価格連動型上場投信",
+    "chg": "NEW"
+   },
+   {
+    "rank": 8,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "↓"
+   },
+   {
+    "rank": 9,
+    "code": "8593",
+    "name": "三菱ＨＣキャピタル",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "9978",
+    "name": "文教堂グループホールディングス",
+    "chg": "NEW"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "4661",
+    "name": "オリエンタルランド",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "8411",
+    "name": "みずほフィナンシャルグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "9202",
+    "name": "ＡＮＡホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 10,
+    "code": "9201",
+    "name": "日本航空",
+    "chg": "→"
+   }
+  ]
+ },
+ "holding_asof": "2021-09-24",
+ "week_start": "2021-09-20",
+ "week_end": "2021-09-24",
+ "scheme": "旧NISA",
+ "src": "wayback",
+ "archived": "2021-09-27 19:20",
+ "url": "https://web.archive.org/web/20210927192008/https://www.sbisec.co.jp/ETGate/?_ControlID=WPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_DataStoreID=DSWPLETmgR001Control&_ActionID=DefaultAID&burl=iris_ranking&cat1=market&cat2=ranking&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&file=index.html&getFlg=on&OutSide=on"
+}

@@ -1,0 +1,197 @@
+{
+ "week_start": "2026-04-13",
+ "week_end": "2026-04-17",
+ "scheme": "成長投資枠",
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "5803",
+    "name": "フジクラ",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "7974",
+    "name": "任天堂",
+    "chg": "↓"
+   },
+   {
+    "rank": 3,
+    "code": "9432",
+    "name": "NTT",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "8001",
+    "name": "伊藤忠商事",
+    "chg": "NEW"
+   },
+   {
+    "rank": 5,
+    "code": "8267",
+    "name": "イオン",
+    "chg": "↓"
+   },
+   {
+    "rank": 6,
+    "code": "5016",
+    "name": "JX金属",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "NEW"
+   },
+   {
+    "rank": 8,
+    "code": "7011",
+    "name": "三菱重工業",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "5938",
+    "name": "LIXIL",
+    "chg": "NEW"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "NTT",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "6740",
+    "name": "ジャパンディスプレイ",
+    "chg": "↑"
+   },
+   {
+    "rank": 3,
+    "code": "8729",
+    "name": "ソニーフィナンシャルグループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "2134",
+    "name": "北浜キャピタルパートナーズ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "4564",
+    "name": "オンコセラピー・サイエンス",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "5401",
+    "name": "日本製鉄",
+    "chg": "↑"
+   },
+   {
+    "rank": 8,
+    "code": "5856",
+    "name": "エルアイイーエイチ",
+    "chg": "↓"
+   },
+   {
+    "rank": 9,
+    "code": "3823",
+    "name": "THE WHY HOW DO COMPANY",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "3350",
+    "name": "メタプラネット",
+    "chg": "→"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "NTT",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↑"
+   },
+   {
+    "rank": 3,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "1605",
+    "name": "INPEX",
+    "chg": "→"
+   },
+   {
+    "rank": 6,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "8316",
+    "name": "三井住友フィナンシャルグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "7011",
+    "name": "三菱重工業",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "↑"
+   },
+   {
+    "rank": 10,
+    "code": "8593",
+    "name": "三菱HCキャピタル",
+    "chg": "↓"
+   }
+  ]
+ },
+ "holding_asof": "2026-04-17",
+ "src": "zai",
+ "title": "【NISA】日本株（国内株式）の「人気ランキング」！4/13～4/17にSBI証券の｢NISA口座｣でみんなが買った｢日本株｣の買付金額ランキングのTOP10を公開！",
+ "url": "https://www.diamond.co.jp/zai/articles/-/669"
+}

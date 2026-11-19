@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "7201",
+    "name": "日産自動車",
+    "chg": "↑"
+   },
+   {
+    "rank": 3,
+    "code": "9861",
+    "name": "吉野家ホールディングス",
+    "chg": "↑"
+   },
+   {
+    "rank": 4,
+    "code": "3048",
+    "name": "ビックカメラ",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "3387",
+    "name": "クリエイト・レストランツ・ホールディングス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 7,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "↑"
+   },
+   {
+    "rank": 8,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "↓"
+   },
+   {
+    "rank": 9,
+    "code": "9437",
+    "name": "ＮＴＴドコモ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "8358",
+    "name": "スルガ銀行",
+    "chg": "NEW"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "8918",
+    "name": "ランド",
+    "chg": "NEW"
+   },
+   {
+    "rank": 2,
+    "code": "3350",
+    "name": "レッド・プラネット・ジャパン",
+    "chg": "NEW"
+   },
+   {
+    "rank": 3,
+    "code": "8411",
+    "name": "みずほフィナンシャルグループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "7201",
+    "name": "日産自動車",
+    "chg": "NEW"
+   },
+   {
+    "rank": 5,
+    "code": "8358",
+    "name": "スルガ銀行",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "2928",
+    "name": "ＲＩＺＡＰグループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "3673",
+    "name": "ブロードリーフ",
+    "chg": "↓"
+   },
+   {
+    "rank": 9,
+    "code": "9318",
+    "name": "アジア開発キャピタル",
+    "chg": "↓"
+   },
+   {
+    "rank": 10,
+    "code": "3048",
+    "name": "ビックカメラ",
+    "chg": "↓"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "3197",
+    "name": "すかいらーくホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "4661",
+    "name": "オリエンタルランド",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "8411",
+    "name": "みずほフィナンシャルグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "7201",
+    "name": "日産自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 6,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "3387",
+    "name": "クリエイト・レストランツ・ホールディングス",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "2928",
+    "name": "ＲＩＺＡＰグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 10,
+    "code": "3048",
+    "name": "ビックカメラ",
+    "chg": "NEW"
+   }
+  ]
+ },
+ "holding_asof": "2018-08-24",
+ "week_start": "2018-08-20",
+ "week_end": "2018-08-24",
+ "scheme": "旧NISA",
+ "src": "wayback",
+ "archived": "2018-08-25 04:30",
+ "url": "https://web.archive.org/web/20180825043020/https://www.sbisec.co.jp/ETGate/?OutSide=on&_ControlID=WPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_DataStoreID=DSWPLETmgR001Control&_ActionID=DefaultAID&burl=iris_ranking&cat1=market&cat2=ranking&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&file=index.html&getFlg=on"
+}

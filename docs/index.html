@@ -307,10 +307,13 @@ footer a { color: var(--accent); }
 #nhFollow th:first-child, #nhFollow td:first-child { text-align: left; color: var(--muted); }
 #nhFollow .thin { color: var(--new); }
 /* NISA買付ランキング */
-#nsTbl td, #nsTbl th { white-space: nowrap; }
+#nsTbl { width: auto; }
+#nsTbl td, #nsTbl th { white-space: nowrap; text-align: left; padding-right: 14px; }
 #nsTbl td.tl { min-width: 7.5em; }
 #nsTbl td.hit, #nsCountTbl tr.hit td { background: rgba(255, 209, 102, .18); }
 #nsTbl td.hit a { color: var(--new); font-weight: 700; }
+#nsTbl td.first { background: rgba(57, 197, 207, .16); box-shadow: inset 3px 0 0 var(--accent); }
+#nsTbl .nsFirst, #view-nisa .nsFirstLegend { font-size: .72em; font-weight: 700; color: var(--accent); }
 #nsTbl .nsSrc { font-size: .75em; color: var(--muted); }
 #nsTbl .nsOld { font-size: .75em; color: var(--new); }
 #nsFind { margin: 0 0 10px; }
@@ -1035,8 +1038,9 @@ footer a { color: var(--accent); }
     <div class="hintRow">
       <div class="hint"><b>SBI証券のNISA口座で買われた国内株式の週間ランキング</b>(買付金額・出来高・保有残高、各上位10位)を週ごとに並べたものです。2024年以降は成長投資枠、2023年以前は旧NISA(一般NISA)の集計です。<br>
       SBIのページは<b>最新1週分しか表示されず、11位以下も出ません</b>。そのため、上位10位に入らなかった週の順位は分かりません。銘柄を探して「登場なし」と出ても、買われていなかったという意味ではありません。<br>
-      毎週の記録はSBIのページから自動で取得しています(2026年11月開始)。それ以前の週は2つの取得元で補っています。<b>アーカイブ</b>は Internet Archive に保存されていた同じページで、2015年から残っていますが、クロールされた週しか無いため飛び飛びです。<b>ザイ</b>はザイ・オンライン(ダイヤモンド社)の週次記事にSBIの表が転載されたもので、2025年秋以降はほぼ毎週あります。<br>
-      保有残高は「その週の最終日時点」の順位です。</div>
+      毎週の記録はSBIのページから自動で取得しています(2026年11月開始)。それ以前の週は2つの取得元で補っています。<b>アーカイブ</b>は Internet Archive に保存されていた同じページで、2018年から残っていますが、クロールされた週しか無いため飛び飛びです(それより古い2015〜16年の保存はページ形式が違い読めませんでした)。<b>ザイ</b>はザイ・オンライン(ダイヤモンド社)の週次記事にSBIの表が転載されたもので、2025年秋以降はほぼ毎週あります。<br>
+      保有残高は「その週の最終日時点」の順位です。<br>
+      <span class="nsFirstLegend">初登場</span>(水色の枠)は、<b>そのランキング(買付金額・出来高・保有残高のそれぞれ)に記録上はじめて入った銘柄</b>です。判定は記録がほぼ毎週そろう2024年4月15日週以降だけで行い、それ以前の飛び飛びの週は「過去に出たことがあるか」の照合にだけ使っています。初登場が出た週は Discord に通知しています。</div>
     </div>
     <div class="tablecard">
       <table id="nsTbl">
@@ -4888,9 +4892,10 @@ function nsRender() {
       const r = by[n];
       if (!r) return "<td>—</td>";
       const chg = r.chg === "NEW" ? "NEW" : r.chg || "";
-      return '<td class="tl' + (nsMatch(r, q) ? " hit" : "") + '"><a href="https://kabutan.jp/stock/?code=' + r.code +
+      return '<td class="tl' + (r.first ? " first" : "") + (nsMatch(r, q) ? " hit" : "") +
+        '"><a href="https://kabutan.jp/stock/?code=' + r.code +
         '" target="_blank" rel="noopener">' + nsEsc(r.name) + '</a><br><span class="tvsub">' + r.code +
-        (chg ? " " + nsEsc(chg) : "") + "</span></td>";
+        (chg ? " " + nsEsc(chg) : "") + "</span>" + (r.first ? ' <span class="nsFirst">初登場</span>' : "") + "</td>";
     }).join("") + "</tr>";
   }).join("");
   document.getElementById("nsBody").innerHTML = body ||

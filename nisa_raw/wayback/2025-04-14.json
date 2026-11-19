@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "1605",
+    "name": "ＩＮＰＥＸ",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "↑"
+   },
+   {
+    "rank": 4,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "↓"
+   },
+   {
+    "rank": 5,
+    "code": "9104",
+    "name": "商船三井",
+    "chg": "↑"
+   },
+   {
+    "rank": 6,
+    "code": "8316",
+    "name": "三井住友フィナンシャルグループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "8593",
+    "name": "三菱ＨＣキャピタル",
+    "chg": "↑"
+   },
+   {
+    "rank": 8,
+    "code": "9101",
+    "name": "日本郵船",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "8591",
+    "name": "オリックス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "↓"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "2134",
+    "name": "北浜キャピタルパートナーズ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 2,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "↓"
+   },
+   {
+    "rank": 3,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "3823",
+    "name": "ＴＨＥ　ＷＨＹ　ＨＯＷ　ＤＯ　ＣＯＭＰＡＮＹ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 5,
+    "code": "5721",
+    "name": "エス・サイエンス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "3350",
+    "name": "メタプラネット",
+    "chg": "↓"
+   },
+   {
+    "rank": 8,
+    "code": "9704",
+    "name": "アゴーラ　ホスピタリティー　グループ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "4584",
+    "name": "キッズウェル・バイオ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "7201",
+    "name": "日産自動車",
+    "chg": "→"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 6,
+    "code": "8316",
+    "name": "三井住友フィナンシャルグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "1605",
+    "name": "ＩＮＰＥＸ",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "→"
+   },
+   {
+    "rank": 9,
+    "code": "9433",
+    "name": "ＫＤＤＩ",
+    "chg": "→"
+   },
+   {
+    "rank": 10,
+    "code": "7011",
+    "name": "三菱重工業",
+    "chg": "NEW"
+   }
+  ]
+ },
+ "holding_asof": "2025-04-18",
+ "week_start": "2025-04-14",
+ "week_end": "2025-04-18",
+ "scheme": "成長投資枠",
+ "src": "wayback",
+ "archived": "2025-04-18 23:04",
+ "url": "https://web.archive.org/web/20250418230429/https://www.sbisec.co.jp/ETGate/?OutSide=on&_ControlID=WPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_DataStoreID=DSWPLETmgR001Control&_ActionID=DefaultAID&burl=iris_ranking&cat1=market&cat2=ranking&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&file=index.html&getFlg=on"
+}

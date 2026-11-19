@@ -1,0 +1,197 @@
+{
+ "rankings": {
+  "buy": [
+   {
+    "rank": 1,
+    "code": "3350",
+    "name": "メタプラネット",
+    "chg": "↑"
+   },
+   {
+    "rank": 2,
+    "code": "4661",
+    "name": "オリエンタルランド",
+    "chg": "NEW"
+   },
+   {
+    "rank": 3,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "↑"
+   },
+   {
+    "rank": 5,
+    "code": "3825",
+    "name": "リミックスポイント",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "1605",
+    "name": "ＩＮＰＥＸ",
+    "chg": "↑"
+   },
+   {
+    "rank": 7,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "↓"
+   },
+   {
+    "rank": 8,
+    "code": "5401",
+    "name": "日本製鉄",
+    "chg": "↓"
+   },
+   {
+    "rank": 9,
+    "code": "7011",
+    "name": "三菱重工業",
+    "chg": "NEW"
+   },
+   {
+    "rank": 10,
+    "code": "7272",
+    "name": "ヤマハ発動機",
+    "chg": "↓"
+   }
+  ],
+  "volume": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "3350",
+    "name": "メタプラネット",
+    "chg": "↑"
+   },
+   {
+    "rank": 3,
+    "code": "2134",
+    "name": "北浜キャピタルパートナーズ",
+    "chg": "↓"
+   },
+   {
+    "rank": 4,
+    "code": "3825",
+    "name": "リミックスポイント",
+    "chg": "NEW"
+   },
+   {
+    "rank": 5,
+    "code": "5721",
+    "name": "エス・サイエンス",
+    "chg": "NEW"
+   },
+   {
+    "rank": 6,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "↓"
+   },
+   {
+    "rank": 7,
+    "code": "9704",
+    "name": "アゴーラ　ホスピタリティー　グループ",
+    "chg": "↓"
+   },
+   {
+    "rank": 8,
+    "code": "3823",
+    "name": "ＴＨＥ　ＷＨＹ　ＨＯＷ　ＤＯ　ＣＯＭＰＡＮＹ",
+    "chg": "NEW"
+   },
+   {
+    "rank": 9,
+    "code": "1491",
+    "name": "中外鉱業",
+    "chg": "↓"
+   },
+   {
+    "rank": 10,
+    "code": "6740",
+    "name": "ジャパンディスプレイ",
+    "chg": "↓"
+   }
+  ],
+  "holding": [
+   {
+    "rank": 1,
+    "code": "9432",
+    "name": "日本電信電話",
+    "chg": "→"
+   },
+   {
+    "rank": 2,
+    "code": "8058",
+    "name": "三菱商事",
+    "chg": "→"
+   },
+   {
+    "rank": 3,
+    "code": "8306",
+    "name": "三菱ＵＦＪフィナンシャル・グループ",
+    "chg": "→"
+   },
+   {
+    "rank": 4,
+    "code": "2914",
+    "name": "日本たばこ産業",
+    "chg": "→"
+   },
+   {
+    "rank": 5,
+    "code": "7203",
+    "name": "トヨタ自動車",
+    "chg": "→"
+   },
+   {
+    "rank": 6,
+    "code": "8316",
+    "name": "三井住友フィナンシャルグループ",
+    "chg": "→"
+   },
+   {
+    "rank": 7,
+    "code": "1605",
+    "name": "ＩＮＰＥＸ",
+    "chg": "→"
+   },
+   {
+    "rank": 8,
+    "code": "7011",
+    "name": "三菱重工業",
+    "chg": "↑"
+   },
+   {
+    "rank": 9,
+    "code": "4661",
+    "name": "オリエンタルランド",
+    "chg": "↓"
+   },
+   {
+    "rank": 10,
+    "code": "9434",
+    "name": "ソフトバンク",
+    "chg": "↓"
+   }
+  ]
+ },
+ "holding_asof": "2025-05-23",
+ "week_start": "2025-05-19",
+ "week_end": "2025-05-23",
+ "scheme": "成長投資枠",
+ "src": "wayback",
+ "archived": "2025-05-30 13:24",
+ "url": "https://web.archive.org/web/20250530132451/https://www.sbisec.co.jp/ETGate/?_DataStoreID=DSWPLETmgR001Control&_PageID=WPLETmgR001Mdtl20&_ActionID=DefaultAID&cat2=ranking&burl=iris_ranking&cat1=market&file=index.html&dir=tl1-rnk%7Ctl2-nisa%7Ctl3-stock&OutSide=on&getFlg=on&_ControlID=WPLETmgR001Control"
+}
