@@ -308,9 +308,13 @@ footer a { color: var(--accent); }
 #nhFollow .thin { color: var(--new); }
 /* NISA買付ランキング */
 /* 10位まで1画面に収める: 列幅を均等に固定し、長い銘柄名(ETFなど)は省略して title で全名を出す */
-#nsTbl { width: 100%; min-width: 960px; table-layout: fixed; font-size: .78rem; }
+#nsTbl { width: 100%; min-width: 1000px; table-layout: fixed; font-size: .78rem; }
 #nsTbl th, #nsTbl td { white-space: nowrap; text-align: left; padding: 5px 6px; overflow: hidden; text-overflow: ellipsis; }
 #nsTbl th:first-child { width: 6.6em; }
+#nsTbl th.nsStatCol { width: 6.4em; white-space: normal; line-height: 1.2; }
+#nsTbl td.nsStat { background: rgba(57, 197, 207, .05); border-left: 1px solid var(--border); }
+#nsTbl td.nsStat .nsLine span:last-child { margin-left: auto; font-weight: 600; }
+#nsTbl tfoot td, #nsTbl tfoot td.nsStat { position: sticky; bottom: 0; z-index: 1; background: #16223f; border-top: 1px solid var(--border); padding: 6px; }
 #nsTbl .nsName { display: block; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
 #nsTbl .nsSub { display: block; overflow: hidden; text-overflow: ellipsis; font-size: .85em; color: var(--muted); }
 #nsTbl .nsLine { display: flex; gap: 4px; font-size: .85em; color: var(--muted); }
@@ -1060,8 +1064,9 @@ footer a { color: var(--accent); }
     </div>
     <div class="tablecard">
       <table id="nsTbl">
-        <thead><tr><th class="tl">週</th><th>1位</th><th>2位</th><th>3位</th><th>4位</th><th>5位</th><th>6位</th><th>7位</th><th>8位</th><th>9位</th><th>10位</th></tr></thead>
-        <tbody id="nsBody"><tr><td class="loading" colspan="11">読み込み中…</td></tr></tbody>
+        <thead><tr><th class="tl">週</th><th>1位</th><th>2位</th><th>3位</th><th>4位</th><th>5位</th><th>6位</th><th>7位</th><th>8位</th><th>9位</th><th>10位</th><th class="nsStatCol">週の平均<br>中央値</th></tr></thead>
+        <tbody id="nsBody"><tr><td class="loading" colspan="12">読み込み中…</td></tr></tbody>
+        <tfoot id="nsFoot"></tfoot>
       </table>
     </div>
     <div class="hintRow"><div class="hint"><b>銘柄ごとの登場回数</b>(選んだ種類・年で集計)</div></div>
@@ -4892,6 +4897,14 @@ const nsPct = v => v == null || isNaN(v) ? "—" : '<span class="' + (v > 0 ? "u
 const nsMean = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : null;
 const nsMedian = a => { if (!a.length) return null; const b = a.slice().sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
 
+// 平均と中央値を2段で出すセル。件数が足りないときは件数も添える
+function nsStatCell(a, total) {
+  if (!a.length) return '<td class="nsStat"><span class="nsSub">' + (total ? "集計中" : "—") + "</span></td>";
+  const n = total && a.length < total ? '<span class="nsSub">' + a.length + "/" + total + "件</span>" : '<span class="nsSub">' + a.length + "件</span>";
+  return '<td class="nsStat"><span class="nsLine"><span>平均</span>' + nsPct(nsMean(a)) +
+    '</span><span class="nsLine"><span>中央</span>' + nsPct(nsMedian(a)) + "</span>" + n + "</td>";
+}
+
 function nsWeeks() {
   const y = document.getElementById("nsYearSel").value;
   return nsData.weeks.filter(w => !y || w.week_start.slice(0, 4) === y);
@@ -4915,7 +4928,7 @@ function nsRender() {
     const old = w.scheme === "旧NISA" ? ' <span class="nsOld">旧NISA</span>' : "";
     const head = '<td class="tl"><span class="nsName">' + nsYmd(w.week_start) + '</span><span class="nsSub">〜' +
       nsYmd(w.week_end).slice(5) + " " + src + old + "</span></td>";
-    if (!rows.length) return "<tr>" + head + '<td class="loading" colspan="10">この種類の記録なし</td></tr>';
+    if (!rows.length) return "<tr>" + head + '<td class="loading" colspan="11">この種類の記録なし</td></tr>';
     return "<tr>" + head + [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => {
       const r = by[n];
       if (!r) return "<td>—</td>";
@@ -4926,10 +4939,17 @@ function nsRender() {
         (chg ? " " + nsEsc(chg) : "") + "</span>" + nsRet(r) + "</span>" +
         (r.first || r.first_top3 ? '<span class="nsSub">' + (r.first ? '<span class="nsFirst">初登場</span> ' : "") +
           (r.first_top3 ? '<span class="nsTop3">初TOP3</span>' : "") + "</span>" : "") + "</td>";
-    }).join("") + "</tr>";
+    }).join("") + nsStatCell(rows.map(r => r.r1m).filter(v => v != null), rows.length) + "</tr>";
   }).join("");
   document.getElementById("nsBody").innerHTML = body ||
-    '<tr><td class="loading" colspan="11">この年の記録はありません</td></tr>';
+    '<tr><td class="loading" colspan="12">この年の記録はありません</td></tr>';
+
+  // 表の最下段: 順位ごと(1位〜10位)と全体の平均・中央値
+  const byRank = Array.from({ length: 10 }, () => []), allR = [];
+  for (const w of weeks) for (const r of ((w.rankings || {})[kind] || []))
+    if (r.r1m != null && r.rank >= 1 && r.rank <= 10) { byRank[r.rank - 1].push(r.r1m); allR.push(r.r1m); }
+  document.getElementById("nsFoot").innerHTML = '<tr><td class="tl"><span class="nsName">順位別</span>' +
+    '<span class="nsSub">表示中の全週</span></td>' + byRank.map(a => nsStatCell(a)).join("") + nsStatCell(allR) + "</tr>";
 
   // 登場回数
   const cnt = new Map();
