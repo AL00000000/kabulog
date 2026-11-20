@@ -1389,6 +1389,15 @@
   },
   {
    "date": "2026-12-18",
+   "time": "06:00頃",
+   "name": "決算 マイクロン・テクノロジー",
+   "country": "US",
+   "note": "MU・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/MU/"
+  },
+  {
+   "date": "2026-12-18",
    "time": "08:30",
    "name": "日本CPI(全国)",
    "country": "JP",
