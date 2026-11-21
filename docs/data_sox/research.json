@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-11-14",
+  "researched_at": "2026-11-21",
   "scope": "終値・日中高値の連続更新の始点118日を対象に、直前1〜14暦日のニュース候補を調査。67対象月の検索と企業・政府の発表照合。月単位の検索は全日付の記事精査や網羅を意味しない。",
   "searches": [
     {
@@ -449,7 +449,7 @@
       ]
     }
   ],
-  "drop_research_scope": "188急落日は全件計算。2026/11/5の急落について、選挙後のAI投資懸念・Micron工事停止報道に加え、Qualcomm・AMD・Armの決算を照合。全188日の引き金や個別要因の寄与率を確定したものではない。",
+  "drop_research_scope": "190急落日を全履歴から計算。直近は2026/11/16と11/20を追加し、BIS規則・NVIDIA経営交代と決算・調査報道・Anthropic IPOの時系列を照合。近接する好決算や製品発表も機械的な候補に含まれるため、候補への対応は悪材料や原因の認定ではない。全190日の引き金や個別要因の寄与率を確定したものではない。",
   "deepseek_scope": "2025年1月27日の急落、2025年2月27日のNVIDIA決算後下落、複数モデル発表を区別。ショックの回数は未確定。",
   "weekly_updates": [
     {
@@ -529,6 +529,43 @@
         "Micron November 2026 Fab 11E restart"
       ],
       "preservation_note": "再取得値では11/6の高値と始値に約0.002ポイントの精度差があったため、既存8184日をそのまま維持し追加5日のみ採用。"
+    },
+    {
+      "checked_at": "2026-11-21",
+      "period_start": "2026-11-16",
+      "period_end": "2026-11-20",
+      "price_rows_added": 5,
+      "previous_price_end": "2026-11-13",
+      "new_record_dates": [],
+      "drop_dates": [
+        "2026-11-16",
+        "2026-11-20"
+      ],
+      "new_drop_dates": [
+        "2026-11-16",
+        "2026-11-20"
+      ],
+      "event_ids": [
+        "bis-remote-access-rule-2026nov",
+        "nvidia-2027q3",
+        "nvidia-sec-inquiry-report-2026",
+        "anthropic-ipo-pricing-2026",
+        "california-nvidia-subpoena-2026",
+        "nvidia-sec-accounting-report-2026"
+      ],
+      "reviewed_event_ids": [
+        "nvidia-ceo-transition-2026"
+      ],
+      "conclusion": "11/16〜11/20の確定日足5日を追加し全8194日。終値・日中高値の新高値なし。11/16 -5.2795%、11/20 -10.7342%を追加し急落計190日。6事象を追加、年表計128件。BIS・企業・州司法長官・SEC提出資料と当時報道を照合。SEC個別調査は公式発表を確認できず関係者報道として扱い、存在の初期報道11/17と会計面の追加報道11/20を区別。好決算を急落原因とみなさない。冬の認知仮説に対する直接的な新しい裏付け・反証は今回得ていない。",
+      "preservation_note": "再取得で11/6・11/13に約0.002〜0.003ポイントの精度差があった。既存8189日を維持し、新規5日だけ採用。",
+      "searches": [
+        "Reuters November 16 2026 stocks chips Nvidia semiconductor",
+        "Reuters November 20 2026 Nvidia SEC accounting investigation",
+        "site.bis.gov November 2026 advanced computing November 16 China rule",
+        "site.oag.ca.gov November 19 2026 Nvidia Bonta",
+        "Reuters November 17 2026 Nvidia 115.8 revenue",
+        "site.anthropic.com November 2026 IPO November 19"
+      ]
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-11-14",
+  "researched_at": "2026-11-21",
   "scope": "半導体史の主要事象と、高値更新直前1〜14暦日のニュース候補。原因や網羅性を保証しない。",
   "pending": [
     {
@@ -2158,6 +2158,137 @@
         }
       ],
       "checked_at": "2026-11-14"
+    },
+    {
+      "id": "bis-remote-access-rule-2026nov",
+      "date": "2026-11-16",
+      "title": "米BISが第三国経由の先端AI計算資源へのリモートアクセス規制を発表",
+      "short": "米AIリモートアクセス規制",
+      "kind": "macro",
+      "evidence": "BIS一次発表とAP・Reutersの当日報道を照合",
+      "note": "BISは、第三国のデータセンター経由の遠隔利用で先端チップ・サーバーの既存規制が迂回されないようにする暫定最終規則を公表。物理的な輸出管理とリモート利用の管理を整合させる趣旨と説明。APも同日報道。11/16のSOXは終値で-5.2795%。ReutersはHuang退任の余波やNVIDIA決算・Anthropic上場前のAI投資懸念も挙げており、規則だけが急落の原因とは確認できない。公表時刻と全売買の順序は未確定。",
+      "sources": [
+        {
+          "label": "BIS 11/16：公式発表",
+          "url": "https://www.bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology"
+        },
+        {
+          "label": "BIS公式発表本文PDF",
+          "url": "https://media.bis.gov/sites/default/files/documents/BIS%20Issues%20Rule%20Addressing%20Remote%20Access%20to%20American%20Super%20Intelligence%20Technology.pdf"
+        },
+        {
+          "label": "AP 11/16：リモート利用制限の当日報道",
+          "url": "https://apnews.com/article/60f868d3bb430b85a8657b27d421096e"
+        },
+        {
+          "label": "Reuters 11/16引け後：半導体売りと併存材料",
+          "url": "https://www.marketscreener.com/news/wall-street-slumps-on-ai-jitters-ahead-of-nvidia-results-anthropic-ipo-ce785edfdd8ef425"
+        }
+      ],
+      "checked_at": "2026-11-21"
+    },
+    {
+      "id": "nvidia-2027q3",
+      "date": "2026-11-17",
+      "market_date": "2026-11-18",
+      "title": "NVIDIAが2027年度第3四半期決算、売上倍増と次四半期見通しを発表",
+      "short": "NVIDIA決算・売上倍増",
+      "kind": "industry",
+      "evidence": "会社公式発表と当日のReuters報道を照合",
+      "note": "11/17米国引け後の発表。四半期売上高は1,158億ドル（前年同期比103%増）、データセンター売上高は1,076億ドル（110%増）。次四半期売上見通しは1,300億ドル±3%で、中国向けデータセンター計算製品の売上を見込まない前提。11/18のSOXは+0.1029%。11/20の急落にも近い決算だが、好業績を悪材料とみなしたり、決算だけで後日の下落を説明したりしない。",
+      "sources": [
+        {
+          "label": "NVIDIA 11/17：公式決算・見通し",
+          "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx"
+        },
+        {
+          "label": "Reuters 11/17引け後：決算と経営交代後の論点",
+          "url": "https://www.investing.com/news/stock-market-news/nvidia-forecasts-quarterly-revenue-above-estimates-in-first-report-since-huangs-exit-as-ceo-5034097"
+        }
+      ],
+      "checked_at": "2026-11-21"
+    },
+    {
+      "id": "nvidia-sec-inquiry-report-2026",
+      "date": "2026-11-17",
+      "market_date": "2026-11-18",
+      "title": "NVIDIAへのSEC調査をWSJが報道、Reutersも追報",
+      "short": "NVIDIA・SEC調査の報道",
+      "kind": "industry",
+      "evidence": "当時の報道で確認、SECの個別調査の公式発表は確認できず",
+      "note": "11/17のWSJ調査報道をReutersが同日追報（確認できた配信は米国引け後）。11/20のReuters記事も、調査の存在の報道は火曜日に先行していたと明記。調査開始日そのものや、この段階での具体的な会計論点は確定できない。11/20の会計面の追加報道とは日付を分け、後日の詳細を11/17時点の既知情報として扱わない。調査は違法行為の認定ではない。",
+      "sources": [
+        {
+          "label": "Reuters 11/17：WSJの調査報道を追報",
+          "url": "https://ca.finance.yahoo.com/news/nvidia-facing-sec-probe-huangs-210842945.html"
+        },
+        {
+          "label": "Reuters 11/20：11/17先行報道と追加情報を区別",
+          "url": "https://www.investing.com/news/economy-news/exclusiveus-secs-nvidia-probe-is-examining-potential-accounting-issues-sources-say-5042460"
+        }
+      ],
+      "checked_at": "2026-11-21"
+    },
+    {
+      "id": "anthropic-ipo-pricing-2026",
+      "date": "2026-11-18",
+      "market_date": "2026-11-19",
+      "title": "AnthropicがIPO価格83ドルを決定、翌19日に取引開始",
+      "short": "Anthropic IPO価格決定",
+      "kind": "industry",
+      "evidence": "11/18付SEC提出価格資料と当時報道を照合",
+      "note": "11/18夕方の価格決定を独立した節目として登録。SEC提出資料は公募価格83ドル、基本募集9億8,000万株、取引開始11/19・受渡11/20と明記。これはIPO構想や申請の第一報ではなく、公募条件の確定段階。受渡完了日へ一括配置しない。半導体の顧客・AI投資資金の動向に近い出来事として収録し、11/20のSOX急落の原因とは断定しない。",
+      "sources": [
+        {
+          "label": "SEC 11/18付：Anthropic価格決定資料",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026074937/anthropicpbc-fwppricing.htm"
+        },
+        {
+          "label": "Le Monde 11/19：前夜の価格決定を報道",
+          "url": "https://www.lemonde.fr/en/economy/article/2026/11/19/anthropic-prices-shares-at-83-valuing-the-ai-firm-at-1-5-trillion-on-the-eve-of-its-ipo_6783988_19.html"
+        }
+      ],
+      "checked_at": "2026-11-21"
+    },
+    {
+      "id": "california-nvidia-subpoena-2026",
+      "date": "2026-11-19",
+      "title": "カリフォルニア州司法長官がNVIDIAへ調査召喚状",
+      "short": "NVIDIAに州の調査召喚状",
+      "kind": "macro",
+      "evidence": "州司法長官の一次発表とAP報道を照合",
+      "note": "州司法長官は、先端チップや機密情報が中国へ渡った可能性と、投資家・公衆への説明を調べるため、NVIDIAに調査召喚状を送付したと発表。法令違反を認定したものではない。SEC調査とは別当局による別の手続き。発表日は11/19だが時刻は特定できず、同日の値動きとの因果順序は未判定。翌11/20の急落に近い候補として扱う。",
+      "sources": [
+        {
+          "label": "州司法長官 11/19：調査召喚状の公式発表",
+          "url": "https://www.oag.ca.gov/news/press-releases/attorney-general-bonta-serves-investigative-subpoena-nvidia"
+        },
+        {
+          "label": "AP 11/19米国夜：州の調査を報道",
+          "url": "https://apnews.com/article/94c179f5aed88c49b7f77670eae40013"
+        }
+      ],
+      "checked_at": "2026-11-21"
+    },
+    {
+      "id": "nvidia-sec-accounting-report-2026",
+      "date": "2026-11-20",
+      "title": "ReutersがNVIDIAへのSEC調査に会計上の論点と報道",
+      "short": "NVIDIA会計調査の追加報道",
+      "kind": "industry",
+      "evidence": "Reutersの関係者取材による報道、公式な違反認定・会計修正は未確認",
+      "note": "Reutersは11/20米国14:16配信の記事で、SEC調査が潜在的な会計上の問題を調べていると関係者2人の話として報道。SECはコメントを控え、NVIDIAは直ちに返答せず。Reutersは調査開始日や具体的会計論点を確認できていないと明記。11/17の調査存在の先行報道とは区別する。同記事はNVDAの下落が報道前の6%超から約13%へ拡大したと記録しており、当日の悪材料候補。SOX確定終値は-10.7342%だが、報道だけによる下落や不正会計の事実認定とはしない。",
+      "sources": [
+        {
+          "label": "Reuters 11/20：会計面の取材結果・報道前後の株価",
+          "url": "https://www.investing.com/news/economy-news/exclusiveus-secs-nvidia-probe-is-examining-potential-accounting-issues-sources-say-5042460"
+        },
+        {
+          "label": "AP 11/20引け後：SOX約10.7%安とAI関連売り",
+          "url": "https://apnews.com/article/c4c3f4878b12989347f8a930ed813dad"
+        }
+      ],
+      "checked_at": "2026-11-21"
     }
   ]
 }
