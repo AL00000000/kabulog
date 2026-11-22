@@ -145,9 +145,16 @@ td.smemo-host{overflow:visible!important}
     t = (t || "").trim();
     if (!t || t.length > 40 || CODE_RE.test(t)) return false;
     if (/^[\d\s,.\-+%:\/()年月日円株億万倍]+$/.test(t)) return false;
+    if (/\d[\d,]*\.\d/.test(t) || /^\d{4}[-\/]\d/.test(t)) return false;   // 小数・日付を含むセル(例 "11.4欠7週")は名前ではない
     return /[A-Za-zＡ-Ｚａ-ｚ぀-ヿ一-鿿]/.test(t);
   };
   const ownText = el => (el ? el.textContent : "").replace(/\s+/g, " ").trim();
+  // セルの先頭の文字列だけ(下に日付などの補足が付くセルで名前を取り出す)
+  const firstText = el => {
+    const w = el.ownerDocument.createTreeWalker(el, 4);
+    for (let n = w.nextNode(); n; n = w.nextNode()) { const t = n.nodeValue.trim(); if (t) return t; }
+    return ownText(el);
+  };
 
   function makeDot(doc, code, name) {
     const b = doc.createElement("button");
@@ -177,7 +184,7 @@ td.smemo-host{overflow:visible!important}
         const nx = cell.nextElementSibling, pv = cell.previousElementSibling;
         const pick = nameLike(ownText(nx)) ? nx : (nameLike(ownText(pv)) && pv && pv.tagName === cell.tagName ? pv : null);
         if (!pick) continue;
-        target = pick; name = ownText(pick);
+        target = pick; name = firstText(pick);
         mode = /^(TD|TH|LI)$/.test(pick.tagName) ? "append" : "after";
       }
       const holder = mode === "append" ? target : target.parentElement;
