@@ -26,6 +26,7 @@ article h3 .code{color:#95a9bf;font-size:12px;font-weight:normal}
 .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
 input{background:#152235;border:1px solid #3c5068;border-radius:8px;color:inherit;padding:8px 12px;font:inherit}
 button.add{background:#1d3a55;color:#e2ebf5;border:1px solid #3c5068;border-radius:8px;padding:8px 14px;cursor:pointer;font:inherit}
+.doc{margin:6px 0;font-size:13px;color:#d2deeb}.doc summary{cursor:pointer;color:#68d8d5}.doc p{margin:3px 0}.doc ul,.doc ol{margin:3px 0;padding-left:20px}.doc .md-h{font-weight:bold;color:#ffca89;margin:8px 0 2px}
 .how{border:1px solid #2c3c50;border-radius:10px;padding:12px 16px;margin-top:30px;font-size:13px;color:#a9bbce}
 .how code{background:#152235;padding:1px 5px;border-radius:4px}
 @media(max-width:640px){body{padding:18px 12px}}
@@ -41,7 +42,7 @@ button.add{background:#1d3a55;color:#e2ebf5;border:1px solid #3c5068;border-radi
 
 <div class="toolbar">
   <input id="q" type="search" placeholder="銘柄名・コード・メモで検索" style="width:min(100%,320px)">
-  <input id="newCode" placeholder="コード(例 7203)" style="width:130px" maxlength="4">
+  <input id="newCode" placeholder="コード(例 7203 / ANT)" style="width:170px" maxlength="7">
   <input id="newName" placeholder="銘柄名" style="width:160px">
   <button class="add" id="addBtn">銘柄を追加してメモ</button>
   <span id="stat" class="sub">読込中…</span>
@@ -55,6 +56,7 @@ button.add{background:#1d3a55;color:#e2ebf5;border:1px solid #3c5068;border-radi
   <b>メモの書き方</b><br>
   ・株ログのどのタブでも、銘柄名の右の小さな丸を押すと書けます(<span style="color:#e5484d">●</span> メモあり / <span style="color:#5b8def">●</span> なし)。<br>
   ・メモ画面で「不誠実・買う理由なし」「不誠実だが、それをしのぐ買う理由あり」を選ぶと、このタブのリストに入ります。<br>
+  ・notes の「投資/銘柄別」のメモ(フロントマターに <code>code:</code> があるもの)とは自動で同期します(30分ごと)。notes の本文は「notes のメモ」として表示され、●から書いたメモは notes の「株ログの●メモ」の節にも入ります。米国株はティッカー(例 ANT)で追加できます。<br>
   ・Claudeのチャットで「株ログの不誠実株に○○を追加して」と頼めば、Claudeが <code>memo.py</code> で追記して公開します。<br>
   ・ブラウザで書いたメモを全端末・Claudeと共有するには、メモ画面下の「GitHub連携」にトークンを一度入れてください。入れない場合はこの端末だけに保存されます。
 </div>
@@ -76,8 +78,10 @@ function card(code, s) {
     ? (s.reason ? '<div class="reason"><b>買う理由:</b> ' + linkify(s.reason) + "</div>" : '<div class="reason empty">買う理由: 未記入(「編集」から書けます)</div>')
     : "";
   return '<article><button class="edit" data-code="' + esc(code) + '" data-name="' + esc(s.name || "") + '">編集</button>' +
-    '<h3><a href="https://kabutan.jp/stock/?code=' + encodeURIComponent(code) + '" target="_blank" rel="noopener">' + esc(s.name || code) + "</a>" +
-    '<span class="code">' + esc(code) + "</span></h3>" + reason + notes + "</article>";
+    '<h3><a href="' + StockMemo.stockUrl(code) + '" target="_blank" rel="noopener">' + esc(s.name || code) + "</a>" +
+    '<span class="code">' + esc(code) + "</span></h3>" + reason +
+    (s.doc ? '<details class="doc"><summary>notes のメモを読む</summary>' + StockMemo.mdToHtml(s.doc) + "</details>" : "") +
+    notes + "</article>";
 }
 
 function render() {
@@ -103,7 +107,7 @@ document.addEventListener("click", e => {
 });
 document.getElementById("addBtn").onclick = () => {
   const c = document.getElementById("newCode").value.trim().toUpperCase().replace(/[０-９Ａ-Ｚ]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0));
-  if (!/^[0-9][0-9][0-9][0-9A-Z]$/.test(c)) { alert("証券コードは4桁で入れてください(例 7203, 285A)"); return; }
+  if (!/^([0-9]{3}[0-9A-Z]|[A-Z]{1,5}(\.[A-Z])?)$/.test(c)) { alert("証券コード4桁(例 7203, 285A)か米国株のティッカー(例 ANT)で入れてください"); return; }
   StockMemo.open(c, document.getElementById("newName").value.trim());
 };
 q.addEventListener("input", render);

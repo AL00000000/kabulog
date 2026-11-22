@@ -13,6 +13,7 @@ Claude のチャットから「○○にメモ追加」「不誠実株に入れ�
 import argparse
 import datetime as dt
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -37,7 +38,7 @@ def save(d, msg, push):
     d["updated"] = dt.datetime.now(JST).isoformat(timespec="seconds")
     d.setdefault("lists", LISTS)
     PATH.parent.mkdir(parents=True, exist_ok=True)
-    PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    PATH.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     if push:
         git("add", str(PATH.relative_to(ROOT)))
         git("commit", "-m", msg)
@@ -45,6 +46,8 @@ def save(d, msg, push):
             git("pull", "--rebase", "--autostash", check=False)
             if git("push", check=False).returncode == 0:
                 print("pushed")
+                # notes の銘柄別メモにも反映する
+                subprocess.run([sys.executable, str(ROOT / "memo_sync.py")], cwd=ROOT)
                 return
         sys.exit("push failed")
 
@@ -52,7 +55,7 @@ def save(d, msg, push):
 def norm_code(c):
     c = c.strip().upper().translate(str.maketrans("０１２３４５６７８９ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ",
                                                   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
-    if len(c) != 4 or not c[:3].isdigit():
+    if not re.match(r"^([0-9]{3}[0-9A-Z]|[A-Z]{1,5}(\.[A-Z])?)$", c):
         sys.exit(f"証券コードが不正: {c}")
     return c
 

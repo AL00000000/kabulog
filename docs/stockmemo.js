@@ -44,9 +44,31 @@
   function get(code) { return stocks()[code] || null; }
   function hasMemo(code) {
     const s = get(code);
-    return !!(s && ((s.notes && s.notes.length) || s.list || (s.reason && s.reason.trim())));
+    return !!(s && ((s.notes && s.notes.length) || s.list || (s.reason && s.reason.trim()) || (s.doc && s.doc.trim())));
   }
-  function isEmpty(s) { return !s || (!(s.notes && s.notes.length) && !s.list && !(s.reason && s.reason.trim())); }
+  function isEmpty(s) { return !s || (!(s.notes && s.notes.length) && !s.list && !(s.reason && s.reason.trim()) && !(s.doc && s.doc.trim())); }
+  // 日本株(4桁)は株探、それ以外(米国ティッカー)は米国株探
+  const stockUrl = code => /^[0-9]{3}[0-9A-Z]$/.test(code)
+    ? "https://kabutan.jp/stock/?code=" + encodeURIComponent(code)
+    : "https://us.kabutan.jp/stocks/" + encodeURIComponent(code);
+  // notes の md 本文(doc)を簡易表示する
+  function mdToHtml(src) {
+    const inline = t => esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\[\[(.+?)\]\]/g, "$1")
+      .replace(/https?:\/\/[^\s)）<]+/g, u => '<a href="' + u + '" target="_blank" rel="noopener">' + u + "</a>");
+    const out = []; let list = null;
+    const flush = () => { if (list) { out.push("</" + list + ">"); list = null; } };
+    for (const raw of String(src || "").split(/\r?\n/)) {
+      const ln = raw.replace(/\s+$/, "");
+      let m;
+      if ((m = ln.match(/^(#{1,6})\s+(.*)$/))) { flush(); out.push('<div class="md-h">' + inline(m[2]) + "</div>"); }
+      else if ((m = ln.match(/^\s*[-*]\s+(.*)$/))) { if (list !== "ul") { flush(); out.push("<ul>"); list = "ul"; } out.push("<li>" + inline(m[1]) + "</li>"); }
+      else if ((m = ln.match(/^\s*\d+\.\s+(.*)$/))) { if (list !== "ol") { flush(); out.push("<ol>"); list = "ol"; } out.push("<li>" + inline(m[1]) + "</li>"); }
+      else if (!ln.trim() || /^<!--.*-->$/.test(ln.trim())) { flush(); }
+      else { flush(); out.push("<p>" + inline(ln) + "</p>"); }
+    }
+    flush();
+    return out.join("");
+  }
 
   /* ---------- 読み込み ---------- */
   const b64dec = b => new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g, "")), c => c.charCodeAt(0)));
@@ -266,6 +288,10 @@ td.smemo-host{overflow:visible!important}
 #smemo-modal .status.err{color:#e5484d}
 #smemo-modal details{margin-top:12px;font-size:12px;color:#888}
 #smemo-modal details input{width:100%;box-sizing:border-box;font:inherit;padding:4px}
+#smemo-modal .doc{border:1px solid #2c3c50;border-radius:8px;padding:6px 10px;margin:8px 0;background:rgba(104,216,213,.05);max-height:45vh;overflow:auto}
+#smemo-modal .doc summary{cursor:pointer;color:#68d8d5;font-size:13px}
+#smemo-modal .doc p{margin:4px 0}#smemo-modal .doc ul,#smemo-modal .doc ol{margin:4px 0;padding-left:22px}
+#smemo-modal .doc .md-h{font-weight:bold;color:#ffca89;margin:10px 0 2px}
 #smemo-modal .x{float:right;border:0!important;background:none!important;font-size:20px;cursor:pointer;color:#888}
 `;
     document.head.appendChild(st);
@@ -304,10 +330,11 @@ td.smemo-host{overflow:visible!important}
     box.innerHTML =
       '<button class="x" title="閉じる">×</button>' +
       "<h3>" + esc(name) + ' <span class="sub">' + esc(cur.code) + "</span></h3>" +
-      '<div class="sub"><a href="https://kabutan.jp/stock/?code=' + encodeURIComponent(cur.code) + '" target="_blank" rel="noopener">株探で開く ↗</a></div>' +
+      '<div class="sub"><a href="' + stockUrl(cur.code) + '" target="_blank" rel="noopener">株探で開く ↗</a></div>' +
       '<div class="lists">' + ["", "avoid", "buy"].map(k =>
         '<label><input type="radio" name="smemo-list" value="' + k + '"' + ((s.list || "") === k ? " checked" : "") + "> " + LIST_LABEL[k] + "</label>").join("") + "</div>" +
       '<div class="reasonbox"' + (s.list === "buy" ? "" : " hidden") + '><div class="sub">買う理由</div><textarea class="reason" placeholder="不誠実さをしのぐ買う理由">' + esc(s.reason || "") + "</textarea></div>" +
+      (s.doc ? '<details class="doc" open><summary>notes のメモ(' + esc(s.doc_path || "") + ')— 編集は notes 側で。下の欄に書いたメモは notes にも入ります</summary>' + mdToHtml(s.doc) + "</details>" : "") +
       (notes.length ? notes.map((n, i) =>
         '<div class="note"><div class="meta">' + esc(n.date || "") + " " + esc(n.by || "") +
         ' <button data-del="' + i + '">削除</button></div>' + linkify(n.text) +
@@ -366,7 +393,7 @@ td.smemo-host{overflow:visible!important}
   }
 
   window.StockMemo = {
-    attach, open, get, stocks, hasMemo, put, sync, reload: load,
+    attach, open, get, stockUrl, mdToHtml, stocks, hasMemo, put, sync, reload: load,
     lists: () => repo.lists || {},
     isLoaded: () => loaded,
     onChange: f => { listeners.push(f); if (loaded) f(); },

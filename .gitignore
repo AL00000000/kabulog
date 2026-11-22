@@ -41,3 +41,6 @@ cache_bars_hist/
 cache_jpx/
 cache_bars_am/
 cache_nisa_bars/
+
+# 銘柄メモの notes 同期の前回状態(ローカル状態)
+memo_sync_state.json
