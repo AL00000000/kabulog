@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>不誠実株 | 株ログ</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,"Yu Gothic",sans-serif;background:#0c121c;color:#e2ebf5;line-height:1.75}
+*{box-sizing:border-box}body{margin:0;padding:28px}main{max-width:1100px;margin:auto}
+header{border-bottom:1px solid #2c3c50;padding-bottom:18px;margin-bottom:20px}
+.eyebrow{color:#68d8d5;font-size:13px;letter-spacing:.08em}h1{font-size:clamp(21px,4vw,30px);margin:8px 0}p{margin:6px 0;color:#a9bbce}
+a{color:#68d8d5}small,.sub{color:#95a9bf;font-size:12px}
+h2{font-size:18px;margin:28px 0 4px;display:flex;align-items:center;gap:10px}
+h2 .n{font-size:13px;color:#95a9bf;font-weight:normal}
+.sec-buy h2{color:#ffca89}.sec-avoid h2{color:#ff8a8f}.sec-other h2{color:#68d8d5}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;margin-top:10px}
+article{border:1px solid #2c3c50;background:#111d2c;border-radius:12px;padding:14px 16px}
+article h3{margin:0 0 6px;font-size:16px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+article h3 .code{color:#95a9bf;font-size:12px;font-weight:normal}
+.reason{background:rgba(255,202,137,.08);border-left:3px solid #ffca89;padding:4px 8px;margin:6px 0;border-radius:0 6px 6px 0;white-space:pre-wrap}
+.reason.empty{color:#95a9bf;border-left-color:#3c5068;background:none}
+.note{margin:6px 0;white-space:pre-wrap;overflow-wrap:anywhere;color:#d2deeb;font-size:14px}
+.note .by{display:inline-block;font-size:11px;padding:0 6px;border-radius:4px;margin-right:6px;background:#22364d;color:#9fc3e8}
+.note .by.self{background:#4a2a2e;color:#ffb3b6}
+.src{font-size:12px;color:#95a9bf}
+.edit{float:right;font-size:12px;background:#152235;color:#e2ebf5;border:1px solid #3c5068;border-radius:6px;padding:2px 10px;cursor:pointer}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0}
+input{background:#152235;border:1px solid #3c5068;border-radius:8px;color:inherit;padding:8px 12px;font:inherit}
+button.add{background:#1d3a55;color:#e2ebf5;border:1px solid #3c5068;border-radius:8px;padding:8px 14px;cursor:pointer;font:inherit}
+.how{border:1px solid #2c3c50;border-radius:10px;padding:12px 16px;margin-top:30px;font-size:13px;color:#a9bbce}
+.how code{background:#152235;padding:1px 5px;border-radius:4px}
+@media(max-width:640px){body{padding:18px 12px}}
+</style>
+<main>
+<header>
+  <div class="eyebrow">個人的メモ / 手動更新</div>
+  <h1>不誠実株</h1>
+  <p>「絶対に投資しない銘柄リスト」。とんでもないエクイティファイナンス、計画を大きく裏切った、株主を軽んじた — 会社の振る舞いで信用を失った銘柄を、なぜ買わないかのメモと一緒に残す。</p>
+  <p>ただし、その不誠実さをしのぐ買う理由がある銘柄は別枠にする。</p>
+  <small>「本人」は本人のメモの原文、「Claude」は裏取り・追加した内容。各銘柄の ● を押すと、どのタブからでもメモを書けます。公開ページです。</small>
+</header>
+
+<div class="toolbar">
+  <input id="q" type="search" placeholder="銘柄名・コード・メモで検索" style="width:min(100%,320px)">
+  <input id="newCode" placeholder="コード(例 7203)" style="width:130px" maxlength="4">
+  <input id="newName" placeholder="銘柄名" style="width:160px">
+  <button class="add" id="addBtn">銘柄を追加してメモ</button>
+  <span id="stat" class="sub">読込中…</span>
+</div>
+
+<section class="sec-buy"><h2>不誠実だが、それをしのぐ買う理由あり <span class="n" id="n-buy"></span></h2><div class="cards" id="list-buy"></div></section>
+<section class="sec-avoid"><h2>不誠実・買う理由なし <span class="n" id="n-avoid"></span></h2><div class="cards" id="list-avoid"></div></section>
+<section class="sec-other"><h2>その他のメモがある銘柄 <span class="n" id="n-other"></span></h2><p class="sub">リストには入れていないが、どこかのタブでメモを書いた銘柄。</p><div class="cards" id="list-other"></div></section>
+
+<div class="how">
+  <b>メモの書き方</b><br>
+  ・株ログのどのタブでも、銘柄名の右の小さな丸を押すと書けます(<span style="color:#e5484d">●</span> メモあり / <span style="color:#5b8def">●</span> なし)。<br>
+  ・メモ画面で「不誠実・買う理由なし」「不誠実だが、それをしのぐ買う理由あり」を選ぶと、このタブのリストに入ります。<br>
+  ・Claudeのチャットで「株ログの不誠実株に○○を追加して」と頼めば、Claudeが <code>memo.py</code> で追記して公開します。<br>
+  ・ブラウザで書いたメモを全端末・Claudeと共有するには、メモ画面下の「GitHub連携」にトークンを一度入れてください。入れない場合はこの端末だけに保存されます。
+</div>
+</main>
+<script src="./stockmemo.js"></script>
+<script>
+"use strict";
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const linkify = s => esc(s).replace(/https?:\/\/[^\s)）]+/g, u => '<a href="' + u + '" target="_blank" rel="noopener">' + u + "</a>");
+const q = document.getElementById("q");
+
+function card(code, s) {
+  const notes = (s.notes || []).map(n =>
+    '<div class="note"><span class="by' + (/^本人/.test(n.by || "") ? " self" : "") + '">' + esc(n.by || "") + "</span>" +
+    '<span class="sub">' + esc(n.date || "") + "</span><br>" + linkify(n.text) +
+    (n.src && n.src.length ? '<div class="src">出典: ' + n.src.map((u, i) => '<a href="' + esc(u) + '" target="_blank" rel="noopener">[' + (i + 1) + "] " + esc(u.replace(/^https?:\/\/(www\.)?/, "").split("/")[0]) + "</a>").join(" ") + "</div>" : "") +
+    "</div>").join("");
+  const reason = s.list === "buy"
+    ? (s.reason ? '<div class="reason"><b>買う理由:</b> ' + linkify(s.reason) + "</div>" : '<div class="reason empty">買う理由: 未記入(「編集」から書けます)</div>')
+    : "";
+  return '<article><button class="edit" data-code="' + esc(code) + '" data-name="' + esc(s.name || "") + '">編集</button>' +
+    '<h3><a href="https://kabutan.jp/stock/?code=' + encodeURIComponent(code) + '" target="_blank" rel="noopener">' + esc(s.name || code) + "</a>" +
+    '<span class="code">' + esc(code) + "</span></h3>" + reason + notes + "</article>";
+}
+
+function render() {
+  const all = StockMemo.stocks();
+  const kw = q.value.trim().toLowerCase();
+  const groups = { buy: [], avoid: [], other: [] };
+  for (const [code, s] of Object.entries(all)) {
+    if (kw && !(code + " " + JSON.stringify(s)).toLowerCase().includes(kw)) continue;
+    (groups[s.list] || groups.other).push([code, s]);
+  }
+  for (const [k, arr] of Object.entries(groups)) {
+    arr.sort((a, b) => (b[1].notes || []).length - (a[1].notes || []).length || a[0].localeCompare(b[0]));
+    document.getElementById("list-" + k).innerHTML = arr.length ? arr.map(([c, s]) => card(c, s)).join("") : '<p class="sub">該当なし</p>';
+    document.getElementById("n-" + k).textContent = arr.length + "銘柄";
+  }
+  const pend = StockMemo.pendingCount();
+  document.getElementById("stat").textContent = "登録 " + Object.keys(all).length + "銘柄" +
+    (pend ? " / 未同期 " + pend + "件" + (StockMemo.hasToken() ? "" : "(この端末のみ)") : "");
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest(".edit");
+  if (b) StockMemo.open(b.dataset.code, b.dataset.name);
+});
+document.getElementById("addBtn").onclick = () => {
+  const c = document.getElementById("newCode").value.trim().toUpperCase().replace(/[０-９Ａ-Ｚ]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0));
+  if (!/^[0-9][0-9][0-9][0-9A-Z]$/.test(c)) { alert("証券コードは4桁で入れてください(例 7203, 285A)"); return; }
+  StockMemo.open(c, document.getElementById("newName").value.trim());
+};
+q.addEventListener("input", render);
+StockMemo.onChange(render);
+</script>
+</html>

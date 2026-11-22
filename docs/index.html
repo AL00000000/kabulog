@@ -431,6 +431,7 @@ footer a { color: var(--accent); }
       <span class="tabgroup-label">個人的メモ</span>
       <div class="tabgroup-items">
         <button class="tab" data-tab="bottomup" title="個人的メモ・手動更新">注目銘柄</button>
+<button class="tab" data-tab="fusei" title="個人的メモ・手動更新">不誠実株</button>
       </div>
     </div>
   </nav>
@@ -1227,6 +1228,11 @@ footer a { color: var(--accent); }
   <div id="view-tsetop5" hidden>
     <div class="embed-note">東証全市場の個別株を横断した売買代金上位5銘柄の推移。<b>月次158か月・日次255営業日</b>の保存版（2026-10-21掲載、自動更新なし）。武田薬品・東京電力・アイフルの当時の背景を、事実・報道・解釈に分けて補足。月次は立会外を含み、日次は立会内実額 — <a href="./tse-top5/tse_top5_report.html" target="_blank" rel="noopener">別タブで開く ↗</a> ／ <a href="./tse-top5/tse_top5_complete.zip" download>一式ZIP</a></div>
     <iframe class="embed" title="東証売買代金TOP5の推移 — 保存版レポート" data-src="./tse-top5/tse_top5_report.html" loading="lazy"></iframe>
+  </div>
+
+  <div id="view-fusei" hidden>
+    <div class="embed-note">個人的メモ — 会社の振る舞いで信用を失った「絶対に投資しない銘柄」と、それでも不誠実さをしのぐ買う理由がある銘柄。全タブの銘柄名の右の丸（<span style="color:#e5484d">●</span>メモあり／<span style="color:#5b8def">●</span>なし）からメモを書けます — <a href="./fusei.html" target="_blank" rel="noopener">別タブで開く ↗</a></div>
+    <iframe class="embed" title="不誠実株" data-src="./fusei.html" loading="lazy"></iframe>
   </div>
 
   <div id="view-bottomup" hidden>
@@ -5051,7 +5057,7 @@ const VIEW_ID = {
   event: "view-event", kensho: "view-kensho", kenshopbr: "view-kenshopbr", kensho1up: "view-kensho1up", kenshokaiun: "view-kenshokaiun", kenshokessan: "view-kenshokessan", kenshoshosha: "view-kenshoshosha",
   tsetop5: "view-tsetop5",
   kenshotob: "view-kenshotob", kenshonewhigh: "view-kenshonewhigh", kenshosize: "view-kenshosize", kenshogmo: "view-kenshogmo", missedjt: "view-missedjt", congestion: "view-congestion", soxhistory: "view-soxhistory",
-  bottomup: "view-bottomup", itayose: "view-itayose",
+  bottomup: "view-bottomup", fusei: "view-fusei", itayose: "view-itayose",
 };
 function switchTab(name) {
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
@@ -5096,7 +5102,7 @@ document.getElementById("kenshoToggle").onclick = () => {
   kenshoToggleSync();
 };
 document.querySelectorAll(".tab").forEach(b => { b.onclick = () => switchTab(b.dataset.tab); });
-switchTab(location.hash === "#bottomup" ? "bottomup" : "period");
+switchTab(location.hash === "#bottomup" ? "bottomup" : location.hash === "#fusei" ? "fusei" : "period");
 
 /* ===== タブ別の最終更新日を取得して NEW バッジを出す =====
    各サイトは同一オリジン(al00000000.github.io)なので直接fetchできる。
@@ -5216,5 +5222,6 @@ markUpdates();
 <!-- 日付プルダウンに取得失敗日を赤く差し込む（売買代金ランキング / 15:24→引け分析） -->
 <script src="./fetchstatus.js" data-select="dateSel" defer></script>
 <script src="./fetchstatus.js" data-select="iaDateSel" defer></script>
+<script src="./stockmemo.js"></script>
 </body>
 </html>
