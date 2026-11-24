@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24",
+ "updated": "2026-11-25",
  "apps": {
   "1015521325": {
    "name": "Fate/Grand Order",
@@ -2731,29 +2731,52 @@
    "apps": {
     "6756641135": {
      "name": "ホロライブドリームス",
-     "last": 80,
+     "last": 94,
      "high": 79,
-     "low": 80,
-     "samples": 103
+     "low": 94,
+     "samples": 288
     },
     "951627670": {
      "name": "ドラゴンボールZ ドッカンバトル",
-     "last": 140,
+     "last": 174,
      "high": 132,
-     "low": 140,
+     "low": 174,
+     "samples": 288
+    }
+   },
+   "top1": {
+    "name": "ChatGPT",
+    "apid": "6448311069"
+   },
+   "top1_others": [
+    {
+     "name": "eFootball™",
+     "apid": "1117270703"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-25",
+   "apps": {
+    "6756641135": {
+     "name": "ホロライブドリームス",
+     "last": 91,
+     "high": 91,
+     "low": 94,
+     "samples": 102
+    },
+    "951627670": {
+     "name": "ドラゴンボールZ ドッカンバトル",
+     "last": 168,
+     "high": 168,
+     "low": 174,
      "samples": 102
     }
    },
    "top1": {
-    "name": "eFootball™",
-    "apid": "1117270703"
-   },
-   "top1_others": [
-    {
-     "name": "ChatGPT",
-     "apid": "6448311069"
-    }
-   ]
+    "name": "ChatGPT",
+    "apid": "6448311069"
+   }
   }
  ]
 }
