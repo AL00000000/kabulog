@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24",
+ "updated": "2026-11-25",
  "events": [
   {
    "date": "2021-01-28",
@@ -1246,7 +1246,7 @@
   {
    "date": "2026-11-20",
    "time": "上場日",
-   "name": "IPO HiJoJoPartners（株）",
+   "name": "IPO HiJoJoPartners（株）代表者インタビュー",
    "country": "JP",
    "note": "657A・上場承認 2026/10/26",
    "source": "ipo",
@@ -1550,6 +1550,15 @@
    "url": "https://finance.yahoo.com/quote/ASML/"
   },
   {
+   "date": "2027-01-27",
+   "time": "決算発表",
+   "name": "決算 サムスン電子",
+   "country": "KR",
+   "note": "005930.KS・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/005930.KS/"
+  },
+  {
    "date": "2027-01-28",
    "time": "04:00",
    "name": "FOMC 政策金利発表",
@@ -1557,6 +1566,15 @@
    "note": "January 26-27 の最終日 14:00 ET",
    "source": "fomc",
    "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "date": "2027-01-28",
+   "time": "06:00頃",
+   "name": "決算 ラムリサーチ",
+   "country": "US",
+   "note": "LRCX・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/LRCX/"
   },
   {
    "date": "2027-01-29",
@@ -1568,6 +1586,15 @@
    "url": "https://www.stat.go.jp/data/roudou/pdf/kohyo26.pdf"
   },
   {
+   "date": "2027-02-03",
+   "time": "06:00頃",
+   "name": "決算 AMD",
+   "country": "US",
+   "note": "AMD・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/AMD/"
+  },
+  {
    "date": "2027-02-04",
    "time": "06:00頃",
    "name": "決算 アーム・ホールディングス",
@@ -1575,6 +1602,15 @@
    "note": "ARM・日程確定(Yahoo)",
    "source": "kessan",
    "url": "https://finance.yahoo.com/quote/ARM/"
+  },
+  {
+   "date": "2027-02-04",
+   "time": "06:00頃",
+   "name": "決算 クアルコム",
+   "country": "US",
+   "note": "QCOM・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/QCOM/"
   },
   {
    "date": "2027-02-05",
@@ -1593,6 +1629,15 @@
    "note": "January 2027分",
    "source": "us_cpi",
    "url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+  },
+  {
+   "date": "2027-02-12",
+   "time": "06:00頃",
+   "name": "決算 アプライド・マテリアルズ",
+   "country": "US",
+   "note": "AMAT・日程確定(Yahoo)",
+   "source": "kessan",
+   "url": "https://finance.yahoo.com/quote/AMAT/"
   },
   {
    "date": "2027-02-12",
