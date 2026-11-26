@@ -45,6 +45,9 @@ CODES = ["285A", "2914", "6857", "9984", "8035", "6920", "1570", "6976", "5803",
 SPLIT_ADJ = {("285A", "2026-06"): 3, ("8035", "2026-06"): 5, ("278A", "2026-06"): 2}  # テラドローン6/1が8月値のちょうど2倍
 # ⑤の分母は現在の発行済株式数(分割後)。stocks.json は信用需給分析タブ(分割前データ)と共用なので書き換えず、ここで上書きする
 SHARES_NOW = {"278A": 21640000, "285A": 1646577342, "8035": 2340163665, "9984": 5711848120, "6976": 137564793}
+# 窓の期間に上場していなかった銘柄(表に「上場前」と出し、未取得扱いにしない)
+# ティアフォーは松井アプリの過去情報が 2026-07-22 で終わる(初日は空売り・新規売とも0)
+PRE_LISTING = {"593A": {"may_end": "上場前", "pre_0623": "上場前"}}
 SHARES_NOW_ASOF = "2026-11-26（株探）"
 
 SELECTION_NOTE = ("2026-11-19〜11-26(5営業日)の売買代金合計の上位10銘柄 + JT(ここまで売買代金順)、"
@@ -86,10 +89,12 @@ def main():
         e = {"code": code, "name": st["name"], "market": st["market"],
              "shares": shares, "shares_man": shares_man,
              "shares_asof": SHARES_NOW_ASOF if code in SHARES_NOW else st.get("shares_asof", master["shares_asof"]),
-             "w": {}}
+             "w": {}, "note": PRE_LISTING.get(code, {})}
         for w in WINDOWS:
             got = [rows[(code, dt)] for dt in w["dates"] if (code, dt) in rows]
             lack = [dt for dt in w["dates"] if (code, dt) not in rows]
+            if lack and w["key"] in PRE_LISTING.get(code, {}):
+                continue
             if lack:
                 missing.append(f"{code} {st['name']} {w['label']}: 未取得 {', '.join(lack)}")
             if not got:
