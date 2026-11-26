@@ -4206,9 +4206,15 @@ function pgRender(si, ei) {
   const q = document.getElementById("pdQ").value.trim().toLowerCase();
   const g = document.getElementById("pgGroupSel").value;
   const minTv = (parseFloat(document.getElementById("pdMinTv").value) || 0) * 100; // 億円→百万円
-  let rows = uni.rows.filter(r => (!g || r.g === g)
-    && !(minTv && r.tv < minTv)
-    && (!q || r.n.toLowerCase().includes(q) || r.code.toLowerCase().includes(q)));
+  // カードの銘柄数は売買代金で絞らずに数えているので、グループを選んだときの一覧もそれに合わせる。
+  // (小型株だけのグループは既定の30億円以上で全部消え、カードを押しても0件になっていた)
+  const tvHidden = new Set();
+  let rows = uni.rows.filter(r => {
+    if (g && r.g !== g) return false;
+    if (q && !(r.n.toLowerCase().includes(q) || r.code.toLowerCase().includes(q))) return false;
+    if (!g && minTv && r.tv < minTv) { tvHidden.add(r.code); return false; }
+    return true;
+  });
   if (!g) rows = pgMergeByStock(rows);
   const col = PG_COLS.find(c => c.key === pgSort) || PG_COLS[3];
   rows.sort((a, b) => {
@@ -4252,7 +4258,9 @@ function pgRender(si, ei) {
   tb.appendChild(frag);
   document.getElementById("pdStat").innerHTML =
     "表示 <b>" + rows.length + "</b> / " + total + " 件"
-    + (uni.unknown ? ' <span class="lateNote">(時価総額不明 ' + uni.unknown + "件を除外)</span>" : "");
+    + (uni.unknown ? ' <span class="lateNote">(時価総額不明 ' + uni.unknown + "件を除外)</span>" : "")
+    + (g && minTv ? ' <span class="lateNote">(グループを選んでいる間は平均売買代金で絞り込みません)</span>'
+       : tvHidden.size ? ' <span class="lateNote">(平均売買代金 ' + minTv / 100 + "億円未満 " + tvHidden.size + "件を非表示)</span>" : "");
 }
 
 /* ================= セルラン ================= */
