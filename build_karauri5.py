@@ -38,6 +38,13 @@ WINDOWS = [
 # 対象: 2026-11-19〜26 の売買代金(株探ランキング 15:24時点値)の5日合計 上位10 + JT
 CODES = ["285A", "2914", "6857", "9984", "8035", "6920", "1570", "6976", "5803", "4062", "6981"]
 
+# 松井アプリは過去の出来高を株式分割で遡って調整して表示する(2026-11-26確認: キオクシア6/23が8月読取値のちょうど3倍)。
+# 8月に読んだ raw(分割前)を今日読んだ値(分割調整済み)と揃えるための倍率。キーは (コード, 月ファイル)
+SPLIT_ADJ = {("285A", "2026-06"): 3, ("8035", "2026-06"): 5}
+# ⑤の分母は現在の発行済株式数(分割後)。stocks.json は信用需給分析タブ(分割前データ)と共用なので書き換えず、ここで上書きする
+SHARES_NOW = {"285A": 1646577342, "8035": 2340163665, "9984": 5711848120, "6976": 137564793}
+SHARES_NOW_ASOF = "2026-11-26（株探）"
+
 SELECTION_NOTE = ("2026-11-19〜11-26(5営業日)の売買代金合計の上位10銘柄 + JT。"
                   "売買代金は株探ランキング(15:24時点の値)を合計したもので、引け値ではない")
 
@@ -53,8 +60,12 @@ def main():
     for fn, d in bj.load_raw():
         if d["code"] not in CODES:
             continue
+        f = SPLIT_ADJ.get((d["code"], d["month"]), 1)
         for r in d["rows"]:
+            if f != 1:
+                r = {**r, **{k: r[k] * f for k in bj.FIELDS}}
             db, ds = bj.check_day(r)
+            db, ds = db / f, ds / f   # 丸め誤差は元の読み取り単位で判定する(倍率を掛けた分だけ膨らむため)
             if max(db, ds) > bj.TOL:
                 errors.append(f"{fn} {r['date']}: 検算不一致 買-出来高={db:+.1f} 売-出来高={ds:+.1f} 千株")
             elif max(db, ds) > 0.05:
@@ -67,10 +78,12 @@ def main():
         if st is None:
             missing.append(f"{code}: stocks.json に無い(発行済株式数を追加すること)")
             continue
-        shares_man = bj.r1(st["shares"] / 10000.0)
+        shares = SHARES_NOW.get(code, st["shares"])
+        shares_man = bj.r1(shares / 10000.0)
         e = {"code": code, "name": st["name"], "market": st["market"],
-             "shares": st["shares"], "shares_man": shares_man,
-             "shares_asof": st.get("shares_asof", master["shares_asof"]), "w": {}}
+             "shares": shares, "shares_man": shares_man,
+             "shares_asof": SHARES_NOW_ASOF if code in SHARES_NOW else st.get("shares_asof", master["shares_asof"]),
+             "w": {}}
         for w in WINDOWS:
             got = [rows[(code, dt)] for dt in w["dates"] if (code, dt) in rows]
             lack = [dt for dt in w["dates"] if (code, dt) not in rows]
