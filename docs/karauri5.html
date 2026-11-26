@@ -7,7 +7,7 @@
 :root{color-scheme:dark;--bg:#0c1420;--panel:#141f30;--line:#2c3c50;--muted:#a4b6ca;--accent:#6bd3ef;--text:#eef4fa;--up:#ff9a8b;--down:#7fc4ff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:24px}h1{font-size:23px;margin:0 0 6px}h2{font-size:17px;margin:22px 0 8px}p{margin:6px 0}.muted{color:var(--muted);font-size:13px}.notice{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:13px}.notice ul{margin:4px 0;padding-left:18px}
 .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}select{font:inherit;color:var(--text);background:#1a2a3e;border:1px solid #46617b;border-radius:6px;padding:6px 10px}
-.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;background:var(--panel);font-size:14px;white-space:nowrap}th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:right;vertical-align:top}th{background:#1a2a3e;font-weight:600;font-size:13px}th small{display:block;color:var(--muted);font-weight:400}tr:last-child td{border-bottom:0}td:first-child,th:first-child{text-align:left}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;background:var(--panel);font-size:14px;white-space:nowrap}th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:right;vertical-align:top}th{background:#1a2a3e;font-weight:600;font-size:13px}th small{display:block;color:var(--muted);font-weight:400}th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--accent)}th.sorted{color:var(--accent)}tr:last-child td{border-bottom:0}td:first-child,th:first-child{text-align:left}
 .name{display:block;font-size:12px;color:var(--muted)}.val{font-weight:600;font-variant-numeric:tabular-nums}.sub{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.up{color:var(--up)}.down{color:var(--down)}.none{color:var(--muted);font-size:13px}.part{color:#ffcc72}.err{color:#ffb5a1}
 @media(max-width:780px){main{padding:12px 16px}h1{font-size:20px}th,td{padding:7px 9px}}
 </style>
@@ -26,45 +26,49 @@
 </ul>
 </div>
 <h2>⑤ 売残ネット ÷ 発行済(%)</h2>
+<p class="muted">期間の見出しをクリックすると、その期間の値で降順 → 昇順 → 元の順(売買代金順)と切り替わります。</p>
 <div class="scroll"><table><thead id="head"></thead><tbody id="body"></tbody></table></div>
-<h2>内訳(万株)</h2>
-<div class="controls"><label>期間 <select id="winSel"></select></label></div>
-<div class="scroll"><table><thead><tr><th>銘柄</th><th>空売り</th><th>新規売</th><th>返済買</th><th>売残ネット</th><th>⑤ %</th><th>出来高</th><th>空売り比率<small>空売り÷出来高</small></th><th>発行済<small>万株</small></th></tr></thead><tbody id="detail"></tbody></table></div>
 <p class="muted">生データ: <a href="./data_karauri5/analysis.json" target="_blank" rel="noopener" style="color:var(--accent)">analysis.json</a>(信用需給分析タブと共通の日次データから集計)</p>
 </main>
 <script>
 const fmt = (v, d = 1) => v == null ? "—" : v.toLocaleString("ja-JP", { minimumFractionDigits: d, maximumFractionDigits: d });
 const sign = v => v == null ? "" : v > 0 ? "up" : v < 0 ? "down" : "";
-let D;
+let D, sortKey = null, sortDir = 0;   // sortDir: 1=降順, -1=昇順, 0=元の順
 fetch("./data_karauri5/analysis.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
   D = d;
   document.getElementById("updated").textContent = "最終更新: " + (d.generated || "—");
   document.getElementById("selNote").textContent = "対象銘柄: " + d.selection;
-  const win = d.windows;
+  render();
+}).catch(e => { document.getElementById("updated").innerHTML = '<span class="err">読み込みエラー: ' + e + "</span>"; });
+function clickHead(k) {
+  if (sortKey !== k) { sortKey = k; sortDir = 1; }
+  else sortDir = sortDir === 1 ? -1 : sortDir === -1 ? 0 : 1;
+  if (sortDir === 0) sortKey = null;
+  render();
+}
+function render() {
+  const win = D.windows;
+  const arrow = k => sortKey === k ? (sortDir === 1 ? " ▼" : " ▲") : "";
   document.getElementById("head").innerHTML = "<tr><th>銘柄</th>" + win.map(w =>
-    `<th>${w.label}<small>${w.dates[0].slice(5).replace("-", "/")}〜${w.dates.at(-1).slice(5).replace("-", "/")}</small></th>`).join("") + "</tr>";
-  document.getElementById("body").innerHTML = d.stocks.map(s => "<tr><td>" + s.code + `<span class="name">${s.name}</span></td>` +
+    `<th class="sortable${sortKey === w.key ? " sorted" : ""}" data-k="${w.key}">${w.label}${arrow(w.key)}<small>${w.dates[0].slice(5).replace("-", "/")}〜${w.dates.at(-1).slice(5).replace("-", "/")}</small></th>`).join("") + "</tr>";
+  document.querySelectorAll("th.sortable").forEach(th => th.onclick = () => clickHead(th.dataset.k));
+  let rows = D.stocks.slice();
+  if (sortKey) {
+    // 値の無い銘柄(上場前など)は並び順によらず末尾
+    rows.sort((a, b) => {
+      const x = a.w[sortKey]?.i5, y = b.w[sortKey]?.i5;
+      if (x == null && y == null) return 0;
+      if (x == null) return 1;
+      if (y == null) return -1;
+      return (y - x) * sortDir;
+    });
+  }
+  document.getElementById("body").innerHTML = rows.map(s => "<tr><td>" + s.code + `<span class="name">${s.name}</span></td>` +
     win.map(w => {
       const x = s.w[w.key];
-      if (!x) return '<td class="none">—</td>';
+      if (!x) return `<td class="none">${s.note && s.note[w.key] ? s.note[w.key] : "—"}</td>`;
       return `<td><span class="val ${x.complete ? sign(x.i5) : "part"}">${x.i5 > 0 ? "+" : ""}${fmt(x.i5, 3)}</span>` +
         `<span class="sub">${x.un > 0 ? "+" : ""}${fmt(x.un)}万株${x.complete ? "" : `(${x.days}日分)`}</span></td>`;
     }).join("") + "</tr>").join("");
-  const sel = document.getElementById("winSel");
-  sel.innerHTML = win.map(w => `<option value="${w.key}">${w.label}</option>`).join("");
-  sel.value = win.at(-1).key;
-  sel.onchange = renderDetail;
-  renderDetail();
-}).catch(e => { document.getElementById("updated").innerHTML = '<span class="err">読み込みエラー: ' + e + "</span>"; });
-function renderDetail() {
-  const k = document.getElementById("winSel").value;
-  document.getElementById("detail").innerHTML = D.stocks.map(s => {
-    const x = s.w[k];
-    const name = s.code + `<span class="name">${s.name}</span>`;
-    if (!x) return `<tr><td>${name}</td><td class="none" colspan="8">未取得</td></tr>`;
-    return `<tr><td>${name}</td><td>${fmt(x.ur)}</td><td>${fmt(x.ks)}</td><td>${fmt(x.hb)}</td>` +
-      `<td class="val ${sign(x.un)}">${fmt(x.un)}</td><td class="val ${x.complete ? sign(x.i5) : "part"}">${fmt(x.i5, 3)}</td>` +
-      `<td>${fmt(x.vol)}</td><td>${fmt(x.ur_pct)}%</td><td>${fmt(s.shares_man)}</td></tr>`;
-  }).join("");
 }
 </script>
