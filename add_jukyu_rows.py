@@ -34,7 +34,7 @@ def main():
         if len(p) != 9:
             sys.exit(f"列数が9でない: {line.strip()}")
         v = [float(x) / div for x in p[1:]]
-        r = {"date": p[0], **{k: round(x, 1) for k, x in zip(KEYS, v)}}
+        r = {"date": p[0], **{k: round(x, 3) for k, x in zip(KEYS, v)}}
         buy = r["gb"] + r["kb"] + r["hb"]
         sell = r["gs"] + r["ks"] + r["hs"] + r["ur"]
         if max(abs(buy - r["vol"]), abs(sell - r["vol"])) > 1.0:
