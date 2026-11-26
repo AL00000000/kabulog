@@ -121,6 +121,55 @@
    "name": "アクセルスペースHD",
    "market": "東G",
    "shares": 66641000
+  },
+  {
+   "code": "2914",
+   "name": "JT",
+   "market": "東P",
+   "shares": 2000000000,
+   "shares_asof": "2026-11-26（株探）"
+  },
+  {
+   "code": "6857",
+   "name": "アドバンテスト",
+   "market": "東P",
+   "shares": 732000000,
+   "shares_asof": "2026-11-26（株探）"
+  },
+  {
+   "code": "6920",
+   "name": "レーザーテック",
+   "market": "東P",
+   "shares": 94286400,
+   "shares_asof": "2026-11-26（株探）"
+  },
+  {
+   "code": "1570",
+   "name": "日経レバ(ETF)",
+   "market": "東E",
+   "shares": 13480000,
+   "shares_asof": "2026-11-26（株探）"
+  },
+  {
+   "code": "5803",
+   "name": "フジクラ",
+   "market": "東P",
+   "shares": 1775180526,
+   "shares_asof": "2026-11-26（株探）"
+  },
+  {
+   "code": "4062",
+   "name": "イビデン",
+   "market": "東P",
+   "shares": 572514483,
+   "shares_asof": "2026-11-26（株探）"
+  },
+  {
+   "code": "6981",
+   "name": "村田製作所",
+   "market": "東P",
+   "shares": 1963001843,
+   "shares_asof": "2026-11-26（株探）"
   }
  ]
 }

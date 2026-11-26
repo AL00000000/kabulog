@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>空売り5日集計 | 株ログ</title>
+<style>
+:root{color-scheme:dark;--bg:#0c1420;--panel:#141f30;--line:#2c3c50;--muted:#a4b6ca;--accent:#6bd3ef;--text:#eef4fa;--up:#ff9a8b;--down:#7fc4ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 system-ui,sans-serif}main{max-width:1200px;margin:auto;padding:24px}h1{font-size:23px;margin:0 0 6px}h2{font-size:17px;margin:22px 0 8px}p{margin:6px 0}.muted{color:var(--muted);font-size:13px}.notice{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:12px 16px;margin:14px 0;font-size:13px}.notice ul{margin:4px 0;padding-left:18px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}select{font:inherit;color:var(--text);background:#1a2a3e;border:1px solid #46617b;border-radius:6px;padding:6px 10px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;background:var(--panel);font-size:14px;white-space:nowrap}th,td{border-bottom:1px solid var(--line);padding:8px 12px;text-align:right;vertical-align:top}th{background:#1a2a3e;font-weight:600;font-size:13px}th small{display:block;color:var(--muted);font-weight:400}tr:last-child td{border-bottom:0}td:first-child,th:first-child{text-align:left}
+.name{display:block;font-size:12px;color:var(--muted)}.val{font-weight:600;font-variant-numeric:tabular-nums}.sub{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.up{color:var(--up)}.down{color:var(--down)}.none{color:var(--muted);font-size:13px}.part{color:#ffcc72}.err{color:#ffb5a1}
+@media(max-width:780px){main{padding:12px 16px}h1{font-size:20px}th,td{padding:7px 9px}}
+</style>
+<main>
+<h1>空売り5日集計(指標⑤)</h1>
+<p class="muted" id="updated">読み込み中…</p>
+<div class="notice">
+<ul>
+<li><strong>⑤ = 売残ネット ÷ 発行済株式数(%)</strong>。売残ネット = 空売り + 新規売 − 返済買 を5営業日ぶん合計したもの。<span class="up">プラス</span>は売り建ての積み上がり、<span class="down">マイナス</span>は買い戻し超過。</li>
+<li>出典は松井証券アプリ「売買分析 → 過去情報」。<strong>松井内の約定ではなく、市場全体の出来高を按分した当日推計値</strong>を手で読み取ったもの。</li>
+<li>「空売り」列は当日中に買い戻す高頻度売買を多く含むため、⑤をそのまま信用売り残高の増加とは読めない。</li>
+<li id="selNote"></li>
+<li><span class="part">黄色</span>は5営業日がそろっていない窓(読み取り途中)。「—」は未取得。</li>
+</ul>
+</div>
+<h2>⑤ 売残ネット ÷ 発行済(%)</h2>
+<div class="scroll"><table><thead id="head"></thead><tbody id="body"></tbody></table></div>
+<h2>内訳(万株)</h2>
+<div class="controls"><label>期間 <select id="winSel"></select></label></div>
+<div class="scroll"><table><thead><tr><th>銘柄</th><th>空売り</th><th>新規売</th><th>返済買</th><th>売残ネット</th><th>⑤ %</th><th>出来高</th><th>空売り比率<small>空売り÷出来高</small></th><th>発行済<small>万株</small></th></tr></thead><tbody id="detail"></tbody></table></div>
+<p class="muted">生データ: <a href="./data_karauri5/analysis.json" target="_blank" rel="noopener" style="color:var(--accent)">analysis.json</a>(信用需給分析タブと共通の日次データから集計)</p>
+</main>
+<script>
+const fmt = (v, d = 1) => v == null ? "—" : v.toLocaleString("ja-JP", { minimumFractionDigits: d, maximumFractionDigits: d });
+const sign = v => v == null ? "" : v > 0 ? "up" : v < 0 ? "down" : "";
+let D;
+fetch("./data_karauri5/analysis.json", { cache: "no-cache" }).then(r => r.json()).then(d => {
+  D = d;
+  document.getElementById("updated").textContent = "最終更新: " + (d.generated || "—");
+  document.getElementById("selNote").textContent = "対象銘柄: " + d.selection;
+  const win = d.windows;
+  document.getElementById("head").innerHTML = "<tr><th>銘柄</th>" + win.map(w =>
+    `<th>${w.label}<small>${w.dates[0].slice(5).replace("-", "/")}〜${w.dates.at(-1).slice(5).replace("-", "/")}</small></th>`).join("") + "</tr>";
+  document.getElementById("body").innerHTML = d.stocks.map(s => "<tr><td>" + s.code + `<span class="name">${s.name}</span></td>` +
+    win.map(w => {
+      const x = s.w[w.key];
+      if (!x) return '<td class="none">—</td>';
+      return `<td><span class="val ${x.complete ? sign(x.i5) : "part"}">${x.i5 > 0 ? "+" : ""}${fmt(x.i5, 3)}</span>` +
+        `<span class="sub">${x.un > 0 ? "+" : ""}${fmt(x.un)}万株${x.complete ? "" : `(${x.days}日分)`}</span></td>`;
+    }).join("") + "</tr>").join("");
+  const sel = document.getElementById("winSel");
+  sel.innerHTML = win.map(w => `<option value="${w.key}">${w.label}</option>`).join("");
+  sel.value = win.at(-1).key;
+  sel.onchange = renderDetail;
+  renderDetail();
+}).catch(e => { document.getElementById("updated").innerHTML = '<span class="err">読み込みエラー: ' + e + "</span>"; });
+function renderDetail() {
+  const k = document.getElementById("winSel").value;
+  document.getElementById("detail").innerHTML = D.stocks.map(s => {
+    const x = s.w[k];
+    const name = s.code + `<span class="name">${s.name}</span>`;
+    if (!x) return `<tr><td>${name}</td><td class="none" colspan="8">未取得</td></tr>`;
+    return `<tr><td>${name}</td><td>${fmt(x.ur)}</td><td>${fmt(x.ks)}</td><td>${fmt(x.hb)}</td>` +
+      `<td class="val ${sign(x.un)}">${fmt(x.un)}</td><td class="val ${x.complete ? sign(x.i5) : "part"}">${fmt(x.i5, 3)}</td>` +
+      `<td>${fmt(x.vol)}</td><td>${fmt(x.ur_pct)}%</td><td>${fmt(s.shares_man)}</td></tr>`;
+  }).join("");
+}
+</script>
