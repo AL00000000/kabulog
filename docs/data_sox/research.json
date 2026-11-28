@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-11-21",
+  "researched_at": "2026-11-28",
   "scope": "終値・日中高値の連続更新の始点118日を対象に、直前1〜14暦日のニュース候補を調査。67対象月の検索と企業・政府の発表照合。月単位の検索は全日付の記事精査や網羅を意味しない。",
   "searches": [
     {
@@ -449,7 +449,7 @@
       ]
     }
   ],
-  "drop_research_scope": "190急落日を全履歴から計算。直近は2026/11/16と11/20を追加し、BIS規則・NVIDIA経営交代と決算・調査報道・Anthropic IPOの時系列を照合。近接する好決算や製品発表も機械的な候補に含まれるため、候補への対応は悪材料や原因の認定ではない。全190日の引き金や個別要因の寄与率を確定したものではない。",
+  "drop_research_scope": "191急落日を全履歴から計算。直近は2026/11/24の-7.8801%を追加。11/23のNVIDIA CEO復帰公表、11/24のADI決算と議員声明、Reutersの同日市場報道を照合。11/24引け後のDell決算は当日の原因候補に割り当てない。候補への対応は悪材料や原因の認定ではなく、全191日の引き金や寄与率を確定したものではない。",
   "deepseek_scope": "2025年1月27日の急落、2025年2月27日のNVIDIA決算後下落、複数モデル発表を区別。ショックの回数は未確定。",
   "weekly_updates": [
     {
@@ -565,6 +565,45 @@
         "site.oag.ca.gov November 19 2026 Nvidia Bonta",
         "Reuters November 17 2026 Nvidia 115.8 revenue",
         "site.anthropic.com November 2026 IPO November 19"
+      ]
+    },
+    {
+      "checked_at": "2026-11-28",
+      "period_start": "2026-11-23",
+      "period_end": "2026-11-27",
+      "price_rows_added": 4,
+      "previous_price_end": "2026-11-20",
+      "new_record_dates": [],
+      "drop_dates": [
+        "2026-11-24"
+      ],
+      "new_drop_dates": [
+        "2026-11-24"
+      ],
+      "event_ids": [
+        "nvidia-huang-reinstatement-2026",
+        "adi-2026q4",
+        "senators-huang-reinstatement-2026",
+        "dell-2027q3"
+      ],
+      "reviewed_event_ids": [
+        "nvidia-ceo-transition-2026",
+        "nvidia-sec-accounting-report-2026"
+      ],
+      "conclusion": "11/23・24・25・27の確定日足4日を追加し全8198日。11/26は感謝祭休場、11/27は短縮取引。新高値なし。11/23 +14.0268%、11/24 -7.8801%、11/25 -0.6526%、11/27 +4.6935%。急落計191日、年表は4件追加し132件。NVIDIA復帰と調査継続、ADI見通し、議員声明、Dell AI需要実績を段階・発表時刻を分けて収録。復帰を調査終了とせず、好決算をそのまま下落原因とはしない。冬の市場参加者への認知仮説に直接の裏付け・反証となる資料は今回得ていない。",
+      "preservation_note": "再取得で11/6・11/13・11/20に約0.001〜0.004ポイントの精度差があったため既存8194日を維持し、新規4日のみ採用。",
+      "calendar_source": {
+        "label": "Nasdaq公式休場・短縮取引日",
+        "url": "https://www.nasdaq.com/holiday-trading-hours"
+      },
+      "searches": [
+        "SOX semiconductor stocks November 27 2026 Reuters",
+        "semiconductor November 23 24 25 2026 Nvidia Micron Reuters",
+        "site.investor.nvidia.com November 23 2026 Huang reinstates",
+        "Reuters November 24 2026 chips stocks 7.9 hearing Nvidia",
+        "site.investor.analog.com 2026 November 24 results",
+        "Reuters November 24 2026 Dell AI servers 54.9 revenue",
+        "November 24 2026 Coons Nvidia Reuters"
       ]
     }
   ]

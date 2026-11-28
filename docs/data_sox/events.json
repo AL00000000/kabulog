@@ -1,5 +1,5 @@
 {
-  "researched_at": "2026-11-21",
+  "researched_at": "2026-11-28",
   "scope": "半導体史の主要事象と、高値更新直前1〜14暦日のニュース候補。原因や網羅性を保証しない。",
   "pending": [
     {
@@ -2289,6 +2289,99 @@
         }
       ],
       "checked_at": "2026-11-21"
+    },
+    {
+      "id": "nvidia-huang-reinstatement-2026",
+      "date": "2026-11-23",
+      "title": "NVIDIAがHuangのCEO復帰を公表",
+      "short": "HuangがNVIDIA CEO復帰",
+      "kind": "industry",
+      "evidence": "会社公式発表・8-Kと当日のReuters報道を照合",
+      "note": "NVIDIAは11/23米国寄り前にJensen Huangの社長・CEO・取締役への復帰を公表。8-Kに記載された取締役会決定は11/22だが、公表日の11/23に配置する。KressはCFOを継続。会社は政府高官の意見を受け復帰に国家安全保障上の危険はないと判断したと説明した一方、独立委員会と政府の調査への協力は継続すると明記。疑惑や調査が解決したとの認定ではない。同日のSOX確定終値は+14.0268%。Reutersも復帰発表とAI関連株の反発を結び付けて報じたが、指数全体の上昇をこの発表だけに帰するものではない。",
+      "sources": [
+        {
+          "label": "NVIDIA 11/23：復帰の公式発表・調査継続",
+          "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Board-Reinstates-Jensen-Huang-as-President-CEO-and-Board-Director/"
+        },
+        {
+          "label": "NVIDIA 8-K：決定日11/22・添付公表日11/23",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm"
+        },
+        {
+          "label": "Reuters 11/23：復帰とAI関連株の反発",
+          "url": "https://www.investing.com/news/economy-news/nvidia-reinstates-jensen-huang-as-ceo-igniting-tech-surge-5045917"
+        }
+      ],
+      "checked_at": "2026-11-28"
+    },
+    {
+      "id": "adi-2026q4",
+      "date": "2026-11-24",
+      "title": "Analog Devices決算、次四半期利益見通しが市場予想を下回ると報道",
+      "short": "ADI決算・利益見通し",
+      "kind": "industry",
+      "evidence": "ADI公式発表・公表時刻と当日の報道を照合",
+      "note": "11/24米国寄り前に発表。四半期売上高は43億7,000万ドル。次四半期売上見通しは44億ドル±1億5,000万ドル、調整後EPSは3.82ドル±0.20ドル。会社発表はAI向けだけでなく非AI用途も成長に寄与したと説明。当日のInvesting.comは利益見通しが市場予想未達と報道した。11/24のSOXは-7.8801%で急落日に対応するが、AI関連株全般の反落や政策・統治上の懸念も同時に報じられており、ADI決算だけが指数急落の原因とは確認できない。",
+      "sources": [
+        {
+          "label": "ADI 11/24：公式決算・見通し",
+          "url": "https://www.analog.com/en/newsroom/press-releases/2026/11-24-26-adi-reports-record-4th-qtr-and-fiscal-2026-financial-results.html"
+        },
+        {
+          "label": "ADI配信版：11/24 7:01米東部時間",
+          "url": "https://analogdevices.gcs-web.com/node/30976/pdf"
+        },
+        {
+          "label": "Investing.com 11/24：利益見通しと市場予想の比較",
+          "url": "https://za.investing.com/news/stock-market-news/analog-devices-unveils-lowerthanexpected-firstquarter-earnings-forecast-4594276"
+        },
+        {
+          "label": "Reuters 11/24引け後：半導体7.9%安と併存要因",
+          "url": "https://www.investing.com/news/economy-news/wall-st-futures-dip-as-chip-stocks-cool-after-nvidiafueled-rally-5047567"
+        }
+      ],
+      "checked_at": "2026-11-28"
+    },
+    {
+      "id": "senators-huang-reinstatement-2026",
+      "date": "2026-11-24",
+      "title": "米上院議員5人がHuang復帰への懸念と説明要求を共同声明",
+      "short": "議員がHuang復帰を批判",
+      "kind": "macro",
+      "evidence": "上院委員会の一次声明と同日の議会反応の報道を照合",
+      "note": "Coons、Warren、Wyden、Reed、Cantwellの上院議員5人が、国家安全保障や輸出管理遵守の疑問が残る中での復帰を批判し、政府の介入や判断経緯の説明を要求。議員の問題提起であり、新しい違反認定や輸出禁止の成立とは異なる。11/23の会社による危険はないとの説明と区別して併記する。11/24のSOX急落に近接する政策・統治材料だが、声明の公表時刻と売買の順序や指数への寄与率は確認できない。",
+      "sources": [
+        {
+          "label": "上院銀行委員会 11/24：議員5人の共同声明",
+          "url": "https://www.banking.senate.gov/newsroom/minority/joint-statement-from-senators-coons-warren-wyden-reed-cantwell-on-nvidia-decision-to-reinstate-jensen-huang-as-ceo"
+        },
+        {
+          "label": "Spectrum News 11/24：議会の反応と公聴会計画",
+          "url": "https://spectrumlocalnews.com/nc/triad/politics/2026/11/24/congress-reaction-jensen-huang-nvidia-reinstatement"
+        }
+      ],
+      "checked_at": "2026-11-28"
+    },
+    {
+      "id": "dell-2027q3",
+      "date": "2026-11-24",
+      "market_date": "2026-11-25",
+      "title": "DellがAIサーバー売上・受注残の増加と通期見通し引き上げを発表",
+      "short": "Dell AIサーバー好決算",
+      "kind": "industry",
+      "evidence": "会社公式決算と当日のReuters引け後報道を照合",
+      "note": "11/24米国引け後の公表のため市場対応日は11/25。四半期売上高549億ドル、AI最適化サーバー売上高220億ドル（前年同期比291%増）、AI受注残1,323億ドルと会社発表。通期AIサーバー売上見通しを740億ドルから780億ドルへ引き上げ。AI設備需要の実績・会社見通しを示す資料であり、受注残が全額将来売上になることや投資採算を保証するものではない。11/24の急落より後の発表を、その日の原因候補に混ぜない。11/25のSOXは-0.6526%で、終値の-5%閾値には達しない。",
+      "sources": [
+        {
+          "label": "Dell 11/24：公式決算・AI売上と受注残",
+          "url": "https://investors.delltechnologies.com/news-events/press-releases/detail/1665/dell-technologies-delivers-third-quarter-fiscal-2027-financial-results"
+        },
+        {
+          "label": "Reuters 11/24 21:06 GMT：決算と時間外取引",
+          "url": "https://uk.marketscreener.com/news/dell-lifts-annual-forecasts-after-record-quarter-on-surging-ai-server-demand-ce7851dbdd81f127"
+        }
+      ],
+      "checked_at": "2026-11-28"
     }
   ]
 }
